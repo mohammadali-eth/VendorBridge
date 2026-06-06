@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - name: Install Workspace Dependencies
+        run: npm ci
+
+      - name: Run ESLint Checks
+        run: npm run lint
+
+      - name: Check Formatting Styles
+        run: npx prettier --check "**/*.{js,jsx,json,md,css,prisma}"
