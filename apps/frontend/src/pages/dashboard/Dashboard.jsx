@@ -1,97 +1,143 @@
+import React from 'react';
 import { useAuthStore } from '../../store/auth.store';
-import { FileText, Users, ClipboardList } from 'lucide-react';
+import {
+  useDashboardStats,
+  useDashboardRecentPOs,
+  useDashboardRecentInvoices,
+  useDashboardActivities,
+  useDashboardAnalytics,
+} from '../../features/dashboard/hooks/useDashboard';
+import StatsCards from '../../features/dashboard/components/StatsCards';
+import RecentPOs from '../../features/dashboard/components/RecentPOs';
+import RecentInvoices from '../../features/dashboard/components/RecentInvoices';
+import QuickActions from '../../features/dashboard/components/QuickActions';
+import ApprovalQueue from '../../features/dashboard/components/ApprovalQueue';
+import ActivityFeed from '../../features/dashboard/components/ActivityFeed';
+import AnalyticsCharts from '../../features/dashboard/components/AnalyticsCharts';
+import ErrorState from '../../components/common/ErrorState';
 
 export default function Dashboard() {
   const { user } = useAuthStore();
 
+  // Load Dashboard server states
+  const statsQuery = useDashboardStats();
+  const posQuery = useDashboardRecentPOs();
+  const invoicesQuery = useDashboardRecentInvoices();
+  const activitiesQuery = useDashboardActivities();
+  const analyticsQuery = useDashboardAnalytics();
+
+  const isError =
+    statsQuery.isError ||
+    posQuery.isError ||
+    invoicesQuery.isError ||
+    activitiesQuery.isError ||
+    analyticsQuery.isError;
+
+  const handleRetry = () => {
+    statsQuery.refetch();
+    posQuery.refetch();
+    invoicesQuery.refetch();
+    activitiesQuery.refetch();
+    analyticsQuery.refetch();
+  };
+
   const getRoleLabel = (role) => {
     switch (role) {
       case 'ADMIN':
-        return 'Administrator';
+        return 'System Administrator';
+      case 'PROCUREMENT_MANAGER':
+        return 'Procurement Manager';
       case 'BUYER':
         return 'Buyer Agent';
       case 'SUPPLIER':
         return 'Supplier Partner';
-      case 'PROCUREMENT_MANAGER':
-        return 'Procurement Manager';
       default:
         return 'Portal User';
     }
   };
 
-  const getStats = (role) => {
-    const defaultStats = [
-      { name: 'Active RFQs', value: '12', icon: FileText, change: '+2 this week' },
-      { name: 'Approved Vendors', value: '48', icon: Users, change: '+4 this month' },
-      { name: 'Pending Quotations', value: '24', icon: ClipboardList, change: '-3 from yesterday' },
-    ];
+  if (isError) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <ErrorState
+          message="Could not load the procurement command console. The connection to the backend was interrupted."
+          onRetry={handleRetry}
+        />
+      </div>
+    );
+  }
 
-    if (role === 'SUPPLIER') {
-      return [
-        { name: 'Open RFQs Available', value: '8', icon: FileText, change: '3 expiring soon' },
-        { name: 'My Submitted Quotes', value: '14', icon: ClipboardList, change: '+2 pending decision' },
-        { name: 'Accepted Purchase Orders', value: '5', icon: Users, change: 'All active' },
-      ];
-    }
-
-    return defaultStats;
-  };
-
-  const stats = getStats(user?.role);
+  const today = new Date().toLocaleDateString('en-IN', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-[#111827]">
-          Welcome back, {user?.name || 'User'}!
-        </h2>
-        <p className="text-sm text-slate-500 mt-1">
-          Authorized Role: <span className="font-semibold text-[#714B67]">{getRoleLabel(user?.role)}</span> | 
-          Reviewing your VendorBridge operations console.
-        </p>
+    <div className="space-y-8 pb-12">
+      {/* Welcome & Info Section */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-2 border-b border-[#E5E7EB]">
+        <div>
+          <h2 className="text-2xl font-black text-[#111827] tracking-tight">
+            Welcome back, {user?.name || 'User'}!
+          </h2>
+          <p className="mt-1 text-sm text-slate-500 font-medium">
+            Authorized Role: <span className="font-semibold text-[#714B67]">{getRoleLabel(user?.role)}</span> | 
+            Reviewing your VendorBridge operations command console.
+          </p>
+        </div>
+        <div className="flex flex-row items-center gap-4 bg-white px-5 py-3 rounded-2xl border border-[#E5E7EB] shadow-sm text-xs font-semibold text-slate-600">
+          <div>
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+              System Time
+            </span>
+            {today}
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {stats.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={item.name}
-              className="relative overflow-hidden bg-white border border-[#E5E7EB] rounded-xl p-6 hover:border-[#714B67]/30 transition-all duration-200 shadow-sm"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{item.name}</p>
-                  <p className="mt-2 text-3xl font-bold text-[#111827]">{item.value}</p>
-                </div>
-                <div className="p-3 bg-[#F5EEF4] rounded-xl border border-[#A87D9F]/10">
-                  <Icon className="h-5 w-5 text-[#714B67]" />
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-2">
-                <span className="text-xs font-medium text-slate-500">{item.change}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/* 1. KPI Cards Row */}
+      <StatsCards
+        stats={statsQuery.data}
+        loading={statsQuery.isLoading}
+      />
 
-      <div className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm">
-        <h3 className="font-bold text-base text-[#111827] mb-4">Platform Updates</h3>
-        <div className="space-y-4">
-          {[
-            { action: 'RFQ-2026-004 published for logistics services', time: '2 hours ago', user: 'Procurement team' },
-            { action: 'New Quotation submitted for RFQ-2026-002', time: '4 hours ago', user: 'Global Logistics Corp' },
-            { action: 'Supplier registration status verified', time: '1 day ago', user: 'System Admin' },
-          ].map((activity, idx) => (
-            <div key={idx} className="flex justify-between items-center text-sm border-b border-[#E5E7EB] pb-3 last:border-0 last:pb-0">
-              <div>
-                <p className="text-[#111827] font-semibold">{activity.action}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{activity.user}</p>
-              </div>
-              <span className="text-xs text-slate-400 font-medium">{activity.time}</span>
-            </div>
-          ))}
+      {/* 2. Recharts Analytics Spend Charts (Upper Section) */}
+      <AnalyticsCharts
+        spendHistory={analyticsQuery.data?.spendHistory}
+        spendDistribution={analyticsQuery.data?.spendDistribution}
+        loading={analyticsQuery.isLoading}
+      />
+
+      {/* 3. Main Operational Grid (Lower Section) */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        {/* Left column (2/3 width on desktop): POs & Invoices tables */}
+        <div className="lg:col-span-2 space-y-8">
+          <RecentPOs
+            pos={posQuery.data}
+            loading={posQuery.isLoading}
+          />
+
+          <RecentInvoices
+            invoices={invoicesQuery.data}
+            loading={invoicesQuery.isLoading}
+          />
+        </div>
+
+        {/* Right column (1/3 width on desktop): Quick Actions, Pending Approvals, Activity Feed */}
+        <div className="space-y-8">
+          <QuickActions />
+
+          <ApprovalQueue
+            queue={analyticsQuery.data?.approvalQueue}
+            loading={analyticsQuery.isLoading}
+          />
+
+          <ActivityFeed
+            activities={activitiesQuery.data}
+            loading={activitiesQuery.isLoading}
+          />
         </div>
       </div>
     </div>

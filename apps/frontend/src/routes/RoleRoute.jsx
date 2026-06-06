@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../store/auth.store';
+import { ROLE_MAP } from '../config/rbac';
 
 export default function RoleRoute({ allowedRoles }) {
   const { user, isAuthenticated, isLoading } = useAuthStore();
@@ -17,7 +18,12 @@ export default function RoleRoute({ allowedRoles }) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
+  const userRoleMapped = ROLE_MAP[user.role] || user.role;
+  const hasAccess = allowedRoles.some(
+    (role) => role === user.role || role === userRoleMapped
+  );
+
+  if (!hasAccess) {
     return <Navigate to="/unauthorized" replace />;
   }
 
