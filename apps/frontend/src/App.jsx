@@ -72,6 +72,8 @@ export default function App() {
     });
   }, [refreshSession]);
 
+
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9FAFB] text-[#111827]">
@@ -98,8 +100,8 @@ export default function App() {
         {/* Protected Dashboard Layout */}
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            
+           <Route path="/dashboard" element={<Dashboard />} />
+
             {/* Restricted Route: Only Admin & Procurement Manager */}
             <Route element={<RoleRoute allowedRoles={['ADMIN', 'PROCUREMENT_MANAGER']} />}>
               <Route path="/vendors" element={<VendorsPlaceholder />} />
