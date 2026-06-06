@@ -45,7 +45,8 @@
     "@hookform/resolvers": "^3.6.0",
     "lucide-react": "^0.395.0",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
