@@ -20,11 +20,17 @@ export default function QuotationItemTable() {
   // Recalculate totals and subtotal dynamically
   useEffect(() => {
     let newSubtotal = 0;
+    let maxDelivery = 0;
     items.forEach((item, index) => {
       const qty = Number(item.quantity) || 0;
       const price = Number(item.unitPrice) || 0;
       const total = qty * price;
       newSubtotal += total;
+
+      const itemDelivery = Number(item.deliveryDays) || 0;
+      if (itemDelivery > maxDelivery) {
+        maxDelivery = itemDelivery;
+      }
 
       // Update individual item total field in the form state silently
       if (item.total !== total) {
@@ -33,6 +39,9 @@ export default function QuotationItemTable() {
     });
 
     setValue('subtotal', newSubtotal);
+    if (maxDelivery > 0) {
+      setValue('deliveryDays', maxDelivery);
+    }
   }, [items, setValue]);
 
   const formatCurrency = (val) => {
@@ -55,16 +64,19 @@ export default function QuotationItemTable() {
           <table className="min-w-full divide-y divide-slate-100 text-left text-xs">
             <thead className="bg-slate-50/70">
               <tr>
-                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[45%]">
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[35%]">
                   Item
                 </th>
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[15%] text-center">
                   Quantity
                 </th>
-                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[20%]">
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[18%]">
                   Unit Price (₹) <span className="text-rose-500">*</span>
                 </th>
-                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[20%] text-right">
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[18%] text-center">
+                  Delivery (days) <span className="text-rose-500">*</span>
+                </th>
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[14%] text-right">
                   Total
                 </th>
               </tr>
@@ -105,6 +117,21 @@ export default function QuotationItemTable() {
                       </div>
                       {itemErrors?.unitPrice && (
                         <p className="text-rose-600 text-[10px] mt-1 font-medium">{itemErrors.unitPrice.message}</p>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 align-middle">
+                      <div className="relative max-w-[120px] mx-auto">
+                        <input
+                          type="number"
+                          placeholder="7"
+                          {...register(`items.${index}.deliveryDays`, { valueAsNumber: true })}
+                          className={`w-full bg-slate-50 border ${
+                            itemErrors?.deliveryDays ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-250 focus:ring-[#714B67]'
+                          } rounded-xl py-1.5 px-3 text-xs text-center focus:outline-none focus:ring-2`}
+                        />
+                      </div>
+                      {itemErrors?.deliveryDays && (
+                        <p className="text-rose-600 text-[10px] mt-1 font-medium text-center">{itemErrors.deliveryDays.message}</p>
                       )}
                     </td>
                     <td className="px-5 py-4 text-right font-black text-slate-800">

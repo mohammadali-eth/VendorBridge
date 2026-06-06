@@ -51,4 +51,9 @@ export const vendorsApi = {
   bulkDeleteVendors: async (ids: string[]): Promise<void> => {
     await api.post('/vendors/bulk-delete', { ids });
   },
+
+  bulkImportVendors: async (vendors: any[]): Promise<any> => {
+    const response = await api.post('/vendors/import', { vendors });
+    return response.data;
+  },
 };
