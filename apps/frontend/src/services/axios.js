@@ -96,12 +96,14 @@ api.interceptors.response.use(
         processQueue(refreshError, null);
         isRefreshing = false;
         
-        // Clear auth store if refresh fails (session expired)
-        useAuthStore.getState().logoutStore();
+        const status = refreshError.response?.status;
+        if (status === 401 || status === 403) {
+          useAuthStore.getState().logoutStore();
+        }
         
         return Promise.reject({
-          message: 'Session expired. Please sign in again.',
-          status: 401,
+          message: status === 401 || status === 403 ? 'Session expired. Please sign in again.' : 'Unable to refresh session. Please try again.',
+          status: status || 500,
           originalError: refreshError,
         });
       }
