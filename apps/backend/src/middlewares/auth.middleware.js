@@ -28,7 +28,7 @@ export async function protect(req, res, next) {
 
     req.user = user;
     next();
-  } catch (err) {
+  } catch {
     return next(new AppError('Invalid token. Please log in again.', 401));
   }
 }
