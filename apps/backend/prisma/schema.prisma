@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -42,17 +42,17 @@ enum PoStatus {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  email     String   @unique
+  id        String          @id @default(uuid()) @db.Uuid
+  email     String          @unique
   password  String
   name      String
-  role      Role     @default(VENDOR)
-  vendorId  String?  @db.Uuid
-  vendor    Vendor?  @relation(fields: [vendorId], references: [id], onDelete: SetNull)
-  rfqs      Rfq[]    @relation("ProcurementRfqs")
+  role      Role            @default(VENDOR)
+  vendorId  String?         @db.Uuid
+  vendor    Vendor?         @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  rfqs      Rfq[]           @relation("ProcurementRfqs")
   pos       PurchaseOrder[] @relation("ProcurementPos")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
   @@map("users")
 }
