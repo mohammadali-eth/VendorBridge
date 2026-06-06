@@ -31,7 +31,7 @@ async function main() {
       email: 'procurement@vendorbridge.com',
       password: passwordHash,
       name: 'Procurement Manager',
-      role: 'PROCUREMENT',
+      role: 'PROCUREMENT_MANAGER',
     },
   });
 
@@ -53,7 +53,7 @@ async function main() {
       email: 'sales@acmesupplies.com',
       password: passwordHash,
       name: 'Alice Johnson',
-      role: 'VENDOR',
+      role: 'SUPPLIER',
       vendorId: vendor.id,
     },
   });

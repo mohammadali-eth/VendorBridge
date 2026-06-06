@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -9,8 +9,9 @@ generator client {
 
 enum Role {
   ADMIN
-  PROCUREMENT
-  VENDOR
+  BUYER
+  SUPPLIER
+  PROCUREMENT_MANAGER
 }
 
 enum VendorStatus {
@@ -46,7 +47,7 @@ model User {
   email     String          @unique
   password  String
   name      String
-  role      Role            @default(VENDOR)
+  role      Role            @default(SUPPLIER)
   vendorId  String?         @db.Uuid
   vendor    Vendor?         @relation(fields: [vendorId], references: [id], onDelete: SetNull)
   rfqs      Rfq[]           @relation("ProcurementRfqs")
