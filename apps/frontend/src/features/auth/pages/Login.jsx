@@ -27,18 +27,7 @@ export default function Login() {
   });
 
   const redirectForRole = (role) => {
-    switch (role) {
-      case 'BUYER':
-        return '/buyer/dashboard';
-      case 'SUPPLIER':
-        return '/supplier/dashboard';
-      case 'PROCUREMENT_MANAGER':
-        return '/manager/dashboard';
-      case 'ADMIN':
-        return '/admin/dashboard';
-      default:
-        return '/dashboard';
-    }
+    return '/dashboard';
   };
 
   const onSubmit = async (data) => {
