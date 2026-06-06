@@ -15,7 +15,9 @@ import {
   Search,
   CheckSquare,
   History,
-  BarChart3
+  BarChart3,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import NotificationPanel from '../activity/NotificationPanel';
@@ -28,6 +30,17 @@ export default function DashboardLayout() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    return localStorage.getItem('sidebar_collapsed') === 'true';
+  });
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem('sidebar_collapsed', String(next));
+      return next;
+    });
+  };
 
   const loadNotifications = async () => {
     try {
@@ -128,10 +141,30 @@ export default function DashboardLayout() {
   return (
     <div className="flex h-screen bg-[#F9FAFB] text-[#111827] overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#1e141c] text-slate-300 border-r border-[#E5E7EB] flex flex-col">
-        <div className="h-16 flex items-center gap-2 px-6 border-b border-white/5">
-          <Shield className="h-6 w-6 text-[#A87D9F]" />
-          <span className="font-bold text-lg tracking-wider text-white">VendorBridge</span>
+      <aside className={`bg-[#1e141c] text-slate-300 border-r border-[#E5E7EB] flex flex-col transition-all duration-300 ${
+        isSidebarCollapsed ? 'w-20' : 'w-64'
+      }`}>
+        <div className={`h-16 flex items-center justify-between px-4 border-b border-white/5 ${
+          isSidebarCollapsed ? 'justify-center' : ''
+        }`}>
+          {!isSidebarCollapsed && (
+            <div className="flex items-center gap-2 pl-2">
+              <Shield className="h-6 w-6 text-[#A87D9F] shrink-0" />
+              <span className="font-bold text-lg tracking-wider text-white">VendorBridge</span>
+            </div>
+          )}
+          {isSidebarCollapsed && (
+            <Shield className="h-6 w-6 text-[#A87D9F] shrink-0" />
+          )}
+          <button
+            onClick={toggleSidebar}
+            title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            className={`p-1.5 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors cursor-pointer ${
+              isSidebarCollapsed ? 'mt-1' : ''
+            }`}
+          >
+            {isSidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          </button>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
@@ -145,14 +178,17 @@ export default function DashboardLayout() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                title={isSidebarCollapsed ? item.name : undefined}
+                className={`flex items-center gap-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  isSidebarCollapsed ? 'justify-center px-0' : 'px-4'
+                } ${
                   isActive
                     ? 'bg-[#714B67] text-white'
                     : 'text-slate-400 hover:bg-white/5 hover:text-white'
                 }`}
               >
-                <Icon className="h-4 w-4" />
-                {item.name}
+                <Icon className="h-4 w-4 shrink-0" />
+                {!isSidebarCollapsed && <span className="truncate">{item.name}</span>}
               </Link>
             );
           })}
@@ -160,10 +196,13 @@ export default function DashboardLayout() {
         <div className="p-4 border-t border-white/5">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-white/5 hover:text-red-300 transition-colors cursor-pointer"
+            title={isSidebarCollapsed ? 'Logout' : undefined}
+            className={`flex items-center gap-3 w-full py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-white/5 hover:text-red-300 transition-colors cursor-pointer ${
+              isSidebarCollapsed ? 'justify-center px-0' : 'px-4'
+            }`}
           >
-            <LogOut className="h-4 w-4" />
-            Logout
+            <LogOut className="h-4 w-4 shrink-0" />
+            {!isSidebarCollapsed && <span>Logout</span>}
           </button>
         </div>
       </aside>

@@ -87,3 +87,13 @@ export const useBulkDeleteVendors = () => {
     },
   });
 };
+
+export const useBulkImportVendors = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: vendorsApi.bulkImportVendors,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['vendors', 'list'] });
+    },
+  });
+};

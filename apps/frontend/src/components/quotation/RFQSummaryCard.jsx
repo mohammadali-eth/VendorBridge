@@ -31,7 +31,20 @@ export default function RFQSummaryCard({ rfq }) {
   };
 
   const rfqNumber = `RFQ-${new Date(rfq.createdAt).getFullYear()}-${rfq.title.charCodeAt(0) || 101}`;
-  const items = Array.isArray(rfq.items) ? rfq.items : [];
+  const rawItems = rfq.items;
+  const items = (() => {
+    if (!rawItems) return [];
+    if (Array.isArray(rawItems)) return rawItems;
+    if (typeof rawItems === 'string') {
+      try {
+        const parsed = JSON.parse(rawItems);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (_) {
+        return [];
+      }
+    }
+    return [];
+  })();
 
   return (
     <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs text-left space-y-6">
