@@ -1,0 +1,8 @@
+import { z } from 'zod';
+
+export const approvalSchema = z.object({
+  comment: z
+    .string()
+    .min(10, { message: 'Remarks must be at least 10 characters long' })
+    .max(500, { message: 'Remarks cannot exceed 500 characters' }),
+});
