@@ -74,6 +74,17 @@ export default function AuditTrailTable({ auditLogs = [] }) {
                       hour: '2-digit',
                       minute: '2-digit',
                     })}
+                    {(() => {
+                      if (!log.timestamp) return '';
+                      const d = new Date(log.timestamp);
+                      return isNaN(d.getTime()) ? '' : d.toLocaleString('en-IN', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      });
+                    })()}
                   </td>
                   <td className="py-2.5 px-4 text-slate-500 max-w-xs truncate" title={log.remarks}>
                     {log.remarks}

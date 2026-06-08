@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { AppError } from '@vendorbridge/shared';
+import { AppError } from '../utils/appError.js';
 import prisma from '../config/db.js';
 
 export async function protect(req, res, next) {
@@ -9,6 +9,8 @@ export async function protect(req, res, next) {
       token = req.headers.authorization.split(' ')[1];
     } else if (req.cookies && req.cookies.jwt) {
       token = req.cookies.jwt;
+    } else if (req.query && req.query.token) {
+      token = req.query.token;
     }
 
     if (!token) {

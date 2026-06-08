@@ -71,6 +71,15 @@ export default function ApprovalChain({ history = [], currentLevel }) {
                     Processed: {new Date(step.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </span>
                 )}
+                {step.date && (() => {
+                  const d = new Date(step.date);
+                  if (isNaN(d.getTime())) return null;
+                  return (
+                    <span className="text-[9px] text-slate-400 font-bold block mt-1">
+                      Processed: {d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  );
+                })()}
 
                 {step.remarks && (
                   <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mt-2">

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
-import { loginSchema } from '@vendorbridge/validators';
+import { loginSchema } from '../../../validators';
 import { useAuthStore } from '../../../store/auth.store';
 
 export default function Login() {
@@ -27,18 +27,7 @@ export default function Login() {
   });
 
   const redirectForRole = (role) => {
-    switch (role) {
-      case 'BUYER':
-        return '/buyer/dashboard';
-      case 'SUPPLIER':
-        return '/supplier/dashboard';
-      case 'PROCUREMENT_MANAGER':
-        return '/manager/dashboard';
-      case 'ADMIN':
-        return '/admin/dashboard';
-      default:
-        return '/dashboard';
-    }
+    return '/dashboard';
   };
 
   const onSubmit = async (data) => {

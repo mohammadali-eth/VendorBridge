@@ -13,6 +13,7 @@ export default function NotificationPanel({
 
   return (
     <div className="fixed inset-y-0 right-0 w-80 bg-white border-l border-slate-200 shadow-2xl z-55 flex flex-col text-left transition-all">
+    <div className="fixed inset-y-0 right-0 w-80 bg-white border-l border-slate-200 shadow-2xl z-[9999] flex flex-col text-left transition-all">
       {/* Header */}
       <div className="p-4 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
