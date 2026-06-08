@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
+    "@tanstack/react-query": "^5.40.0",
+    "@vendorbridge/constants": "*",
+    "@vendorbridge/shared": "*",
+    "@vendorbridge/types": "*",
+    "@vendorbridge/validators": "*",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
