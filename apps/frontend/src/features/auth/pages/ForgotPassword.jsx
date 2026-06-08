@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { forgotPasswordSchema } from '@vendorbridge/validators';
+import { forgotPasswordSchema } from '../../../validators';
 import { forgotPassword } from '../services/auth.api';
 
 export default function ForgotPassword() {

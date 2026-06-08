@@ -7,7 +7,7 @@ import {
   registerStep1Schema,
   registerStep2Schema,
   registerStep3Schema,
-} from '@vendorbridge/validators';
+} from '../../../validators';
 import { useAuthStore } from '../../../store/auth.store';
 
 export default function Register() {
@@ -60,18 +60,7 @@ export default function Register() {
   });
 
   const redirectForRole = (role) => {
-    switch (role) {
-      case 'BUYER':
-        return '/buyer/dashboard';
-      case 'SUPPLIER':
-        return '/supplier/dashboard';
-      case 'PROCUREMENT_MANAGER':
-        return '/manager/dashboard';
-      case 'ADMIN':
-        return '/admin/dashboard';
-      default:
-        return '/dashboard';
-    }
+    return '/dashboard';
   };
 
   const onStep1Submit = (data) => {

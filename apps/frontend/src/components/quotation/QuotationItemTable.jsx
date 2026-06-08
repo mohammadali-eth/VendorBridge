@@ -64,12 +64,17 @@ export default function QuotationItemTable() {
           <table className="min-w-full divide-y divide-slate-100 text-left text-xs">
             <thead className="bg-slate-50/70">
               <tr>
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[45%]">
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[35%]">
                   Item
                 </th>
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[15%] text-center">
                   Quantity
                 </th>
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[18%]">
+                  Unit Price (₹) <span className="text-rose-500">*</span>
+                </th>
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[20%] text-right">
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[18%]">
                   Unit Price (₹) <span className="text-rose-500">*</span>
                 </th>
