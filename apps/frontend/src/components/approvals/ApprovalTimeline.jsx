@@ -10,6 +10,32 @@ export default function ApprovalTimeline({ timeline = [] }) {
       </div>
 
       <div className="relative border-l border-slate-100 ml-2.5 pl-5 space-y-4">
+        {timeline.map((item, index) => (
+          <div key={index} className="relative">
+            {/* Timeline node dot */}
+            <div className="absolute -left-[26px] top-1.5 h-3.5 w-3.5 rounded-full bg-slate-100 border-2 border-slate-300 flex items-center justify-center">
+              <div className="h-1.5 w-1.5 rounded-full bg-[#714B67]" />
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-xs font-black text-slate-800">{item.action}</span>
+                <span className="text-[10px] text-slate-400 font-semibold shrink-0">
+                  {new Date(item.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-2 text-[10px] text-slate-500 font-semibold">
+                <span>By: {item.user}</span>
+                <span>{new Date(item.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}</span>
+              </div>
+              {item.remarks && (
+                <p className="text-[11px] text-slate-500 italic mt-0.5 leading-snug">
+                  "{item.remarks}"
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
         {timeline.map((item, index) => {
           const actionText = item.action || item.title || 'Action';
           const userText = item.user || item.description || 'System';

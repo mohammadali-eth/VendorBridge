@@ -48,6 +48,19 @@ enum PoStatus {
 }
 
 model User {
+  id               String            @id @default(uuid()) @db.Uuid
+  email            String            @unique
+  password         String
+  name             String
+  role             Role              @default(SUPPLIER)
+  vendorId         String?           @db.Uuid
+  vendor           Vendor?           @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  rfqs             Rfq[]             @relation("ProcurementRfqs")
+  pos              PurchaseOrder[]   @relation("ProcurementPos")
+  vendorSelections VendorSelection[]
+  notifications    Notification[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   id        String          @id @default(auto()) @map("_id") @db.ObjectId
   email     String          @unique
   password  String
@@ -97,6 +110,24 @@ model Vendor {
   @@map("vendors")
 }
 
+model Rfq {
+  id                String      @id @default(uuid()) @db.Uuid
+  title             String
+  description       String
+  category          String      @default("Product")
+  priority          String      @default("Medium")
+  startDate         DateTime    @default(now())
+  deadline          DateTime
+  items             Json        @default("[]")
+  attachments       Json        @default("[]")
+  assignedVendorIds String[]    @default([])
+  status            RfqStatus   @default(DRAFT)
+  createdById       String      @db.Uuid
+  createdBy         User        @relation("ProcurementRfqs", fields: [createdById], references: [id], onDelete: Restrict)
+  quotations        Quotation[]
+  vendorSelections  VendorSelection[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 
 
   @@map("rfqs")
@@ -108,6 +139,8 @@ model Quotation {
   rfq              Rfq             @relation(fields: [rfqId], references: [id], onDelete: Cascade)
   vendorId         String          @db.ObjectId
   vendor           Vendor          @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  price            Decimal         @db.Decimal(12, 2)
+  deliveryTimeline String          @default("")
   comments         String?
   items            Json            @default("[]")
   deliveryDays     Int             @default(0)
@@ -235,5 +268,6 @@ model Report {
   filters     Json     @default("{}")
 
   @@map("reports")
+}
 }
 

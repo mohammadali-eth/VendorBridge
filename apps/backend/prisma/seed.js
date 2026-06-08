@@ -130,6 +130,14 @@ async function main() {
       name: 'Bob Miller',
       role: 'SUPPLIER',
       vendorId: techparts.id,
+    },
+  });
+
+  // 6. Create Vendor 3: Global Office Co
+  const officeco = await prisma.vendor.create({
+    data: {
+      name: 'Global Office Co',
+      email: 'info@globaloffice.com',
       status: 'ACTIVE',
     },
   });
@@ -143,6 +151,38 @@ async function main() {
       address: '77 Stationery Road, Logistics Park, IL',
       registrationNumber: 'REG-556102-G',
       status: 'APPROVED',
+    },
+  });
+
+  // Create User for Global Office Co
+  const officecoUser = await prisma.user.create({
+    data: {
+      email: 'sales@globaloffice.com',
+      password: passwordHash,
+      name: 'Claire Davis',
+      role: 'SUPPLIER',
+      vendorId: officeco.id,
+    },
+  });
+
+  // 7. Create RFQs (created by Procurement Manager or Buyer)
+  const rfq1 = await prisma.rfq.create({
+    data: {
+      title: 'Laptop Procurement 2026',
+      description: 'Procurement of 50 enterprise-grade laptops for engineering team. Needs 32GB RAM, 1TB SSD.',
+      deadline: new Date('2026-06-30T18:30:00.000Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
+    },
+  });
+
+  const rfq2 = await prisma.rfq.create({
+    data: {
+      title: 'Office Stationery Supply',
+      description: 'Annual contract for supply of custom notebooks, pens, markers, and print paper.',
+      deadline: new Date('2026-06-25T18:30:00.000Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
     },
   });
 
@@ -188,6 +228,9 @@ async function main() {
     data: {
       title: 'High-Speed Server Infrastructure',
       description: 'Hosting infrastructure renewal. Querying quotes for 5 dedicated GPU instances.',
+      deadline: new Date('2026-07-15T18:30:00.000Z'),
+      status: 'PUBLISHED',
+      createdById: buyer.id,
       category: 'IT Infrastructure',
       deadline: new Date('2026-07-15T18:30:00.000Z'),
       status: 'PUBLISHED',
@@ -200,6 +243,12 @@ async function main() {
     data: {
       title: 'Logistics and Shipping Services',
       description: 'Request for quotes for freight forwarders and local courier delivery services.',
+      deadline: new Date('2026-07-20T18:30:00.000Z'),
+      status: 'DRAFT',
+      createdById: procurement.id,
+    },
+  });
+
       category: 'Services',
       deadline: new Date('2026-07-20T18:30:00.000Z'),
       status: 'DRAFT',
@@ -276,6 +325,10 @@ async function main() {
     data: {
       rfqId: rfq1.id,
       vendorId: techparts.id,
+      price: 4500000.00, // ₹45L
+      deliveryTimeline: '15 Days',
+      comments: 'Offering Lenovo ThinkPad P1 Gen 6 with 3-year warranty support.',
+      status: 'UNDER_REVIEW',
       price: 365000.00, // Adjusted to 3.65L to match June peak in graph
       deliveryTimeline: '15 Days',
       comments: 'Offering Lenovo ThinkPad P1 Gen 6 with 3-year warranty support.',
@@ -312,6 +365,12 @@ async function main() {
       deliveryTimeline: '7 Days',
       comments: 'Includes 10% discount on first-time orders.',
       status: 'REJECTED',
+    },
+  });
+
+  // 9. Create Purchase Orders
+  // PO-001: Acme Supplies Group (Accepted/Delivered)
+  await prisma.purchaseOrder.create({
       items: JSON.stringify([{ item: 'Stationery Catalog', qty: 1, price: 92000 }]),
       deliveryDays: 7,
       subtotal: 92000.00,
@@ -400,6 +459,9 @@ async function main() {
     },
   });
 
+  // PO-002: TechParts Corp (Draft/Pending Approval)
+  // We link to TechParts' laptop quote which is under review (represented as Draft PO)
+  await prisma.purchaseOrder.create({
   // PO-002: TechParts Corp (Delivered) - June
   const po2 = await prisma.purchaseOrder.create({
     data: {
@@ -407,6 +469,8 @@ async function main() {
       quotationId: quote1.id,
       vendorId: techparts.id,
       buyerId: buyer.id,
+      totalAmount: 4500000.00,
+      status: 'DRAFT',
       totalAmount: 365000.00, // Adjusted to 3.65L to match June peak
       status: 'DELIVERED',
     },

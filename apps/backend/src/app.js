@@ -66,6 +66,7 @@ app.use('/api/v1/purchase-orders', poRouter);
 app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/activity', activityRouter);
 app.use('/api/v1/reports', reportsRouter);
+app.post('/api/v1/vendor-selection', protect, createVendorSelection);
 app.use('/api/v1/users', usersRouter);
 app.post('/api/v1/vendor-selection', protect, createVendorSelection);
 
