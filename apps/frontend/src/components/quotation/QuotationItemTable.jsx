@@ -71,7 +71,7 @@ export default function QuotationItemTable() {
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[15%] text-center">
                   Quantity
                 </th>
-                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[20%]">
+                <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[18%]">
                   Unit Price (₹) <span className="text-rose-500">*</span>
                 </th>
                 <th scope="col" className="px-5 py-3 font-semibold text-slate-500 w-[20%] text-right">

@@ -130,10 +130,11 @@ async function main() {
       name: 'Bob Miller',
       role: 'SUPPLIER',
       vendorId: techparts.id,
+      status: 'ACTIVE',
     },
   });
 
-  // 6. Create Vendor 3: Global Office Co
+  // 6. Create Vendor 3: Global Office Co (Global Steel Ltd in UI)
   const officeco = await prisma.vendor.create({
     data: {
       name: 'Global Office Co',
@@ -154,25 +155,29 @@ async function main() {
     },
   });
 
-  // Create User for Global Office Co
+  // Create User for Global Steel Ltd
   const officecoUser = await prisma.user.create({
     data: {
-      email: 'sales@globaloffice.com',
+      email: 'supplier@vendorbridge.com',
       password: passwordHash,
-      name: 'Claire Davis',
+      name: 'Global Steel Ltd (Vendor)',
       role: 'SUPPLIER',
       vendorId: officeco.id,
+      status: 'ACTIVE',
     },
   });
 
   // 7. Create RFQs (created by Procurement Manager or Buyer)
+  // Current Month RFQs (June)
   const rfq1 = await prisma.rfq.create({
     data: {
       title: 'Laptop Procurement 2026',
       description: 'Procurement of 50 enterprise-grade laptops for engineering team. Needs 32GB RAM, 1TB SSD.',
+      category: 'IT Hardware',
       deadline: new Date('2026-06-30T18:30:00.000Z'),
       status: 'PUBLISHED',
       createdById: procurement.id,
+      assignedVendorIds: [techparts.id, acme.id],
     },
   });
 
@@ -180,9 +185,11 @@ async function main() {
     data: {
       title: 'Office Stationery Supply',
       description: 'Annual contract for supply of custom notebooks, pens, markers, and print paper.',
+      category: 'Office Supplies',
       deadline: new Date('2026-06-25T18:30:00.000Z'),
       status: 'PUBLISHED',
       createdById: procurement.id,
+      assignedVendorIds: [acme.id, officeco.id],
     },
   });
 
@@ -228,6 +235,7 @@ async function main() {
     data: {
       title: 'High-Speed Server Infrastructure',
       description: 'Hosting infrastructure renewal. Querying quotes for 5 dedicated GPU instances.',
+      category: 'IT Infrastructure',
       deadline: new Date('2026-07-15T18:30:00.000Z'),
       status: 'PUBLISHED',
       createdById: buyer.id,
@@ -243,9 +251,72 @@ async function main() {
     data: {
       title: 'Logistics and Shipping Services',
       description: 'Request for quotes for freight forwarders and local courier delivery services.',
+      category: 'Services',
       deadline: new Date('2026-07-20T18:30:00.000Z'),
       status: 'DRAFT',
       createdById: procurement.id,
+      assignedVendorIds: [acme.id],
+    },
+  });
+
+  // Historical RFQs
+  const rfqJan = await prisma.rfq.create({
+    data: {
+      title: 'Office Paper Bulk',
+      description: 'Bulk paper supply for Q1.',
+      category: 'Office Supplies',
+      deadline: new Date('2026-01-25T10:00:00Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
+      createdAt: new Date('2026-01-05T10:00:00Z'),
+    },
+  });
+
+  const rfqFeb = await prisma.rfq.create({
+    data: {
+      title: 'Facility Security Services',
+      description: 'Security team services contract.',
+      category: 'Services',
+      deadline: new Date('2026-02-25T10:00:00Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
+      createdAt: new Date('2026-02-05T10:00:00Z'),
+    },
+  });
+
+  const rfqMar = await prisma.rfq.create({
+    data: {
+      title: 'Promotional Merchandise',
+      description: 'Branded T-shirts and mugs.',
+      category: 'Others',
+      deadline: new Date('2026-03-25T10:00:00Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
+      createdAt: new Date('2026-03-05T10:00:00Z'),
+    },
+  });
+
+  const rfqApr = await prisma.rfq.create({
+    data: {
+      title: 'Data Center Rack Space',
+      description: 'Data center lease extension.',
+      category: 'IT Infrastructure',
+      deadline: new Date('2026-04-25T10:00:00Z'),
+      status: 'PUBLISHED',
+      createdById: buyer.id,
+      createdAt: new Date('2026-04-05T10:00:00Z'),
+    },
+  });
+
+  const rfqMay = await prisma.rfq.create({
+    data: {
+      title: 'Ergonomic Office Desks',
+      description: 'Desks for development floor.',
+      category: 'Office Supplies',
+      deadline: new Date('2026-05-25T10:00:00Z'),
+      status: 'PUBLISHED',
+      createdById: procurement.id,
+      createdAt: new Date('2026-05-05T10:00:00Z'),
     },
   });
 
@@ -325,7 +396,7 @@ async function main() {
     data: {
       rfqId: rfq1.id,
       vendorId: techparts.id,
-      price: 4500000.00, // ₹45L
+      price: 365000.00, // Adjusted to 3.65L to match June peak in graph
       deliveryTimeline: '15 Days',
       comments: 'Offering Lenovo ThinkPad P1 Gen 6 with 3-year warranty support.',
       status: 'UNDER_REVIEW',
@@ -365,8 +436,80 @@ async function main() {
       deliveryTimeline: '7 Days',
       comments: 'Includes 10% discount on first-time orders.',
       status: 'REJECTED',
+      items: JSON.stringify([{ item: 'Stationery Catalog', qty: 1, price: 92000 }]),
+      deliveryDays: 7,
+      subtotal: 92000.00,
+      grandTotal: 92000.00,
     },
   });
+
+  // Quotation 4 on Server Infrastructure by OfficeCo (Submitted)
+  const quote4 = await prisma.quotation.create({
+    data: {
+      rfqId: rfq3.id,
+      vendorId: officeco.id,
+      price: 1500000.00, // ₹15L
+      deliveryTimeline: '10 Days',
+      comments: 'Providing premium dedicated server instances with SLA agreement.',
+      status: 'SUBMITTED',
+      items: JSON.stringify([{ item: 'GPU Instances', qty: 5, price: 300000 }]),
+      deliveryDays: 10,
+      subtotal: 1500000.00,
+      grandTotal: 1500000.00,
+    },
+  });
+
+  // Historical Quotations
+  const quoteJan = await prisma.quotation.create({
+    data: {
+      rfqId: rfqJan.id,
+      vendorId: acme.id,
+      price: 120000.00,
+      status: 'ACCEPTED',
+      createdAt: new Date('2026-01-10T10:00:00Z'),
+    },
+  });
+
+  const quoteFeb = await prisma.quotation.create({
+    data: {
+      rfqId: rfqFeb.id,
+      vendorId: techparts.id,
+      price: 180000.00,
+      status: 'ACCEPTED',
+      createdAt: new Date('2026-02-10T10:00:00Z'),
+    },
+  });
+
+  const quoteMar = await prisma.quotation.create({
+    data: {
+      rfqId: rfqMar.id,
+      vendorId: officeco.id,
+      price: 150000.00,
+      status: 'ACCEPTED',
+      createdAt: new Date('2026-03-10T10:00:00Z'),
+    },
+  });
+
+  const quoteApr = await prisma.quotation.create({
+    data: {
+      rfqId: rfqApr.id,
+      vendorId: techparts.id,
+      price: 320000.00,
+      status: 'ACCEPTED',
+      createdAt: new Date('2026-04-10T10:00:00Z'),
+    },
+  });
+
+  const quoteMay = await prisma.quotation.create({
+    data: {
+      rfqId: rfqMay.id,
+      vendorId: acme.id,
+      price: 240000.00,
+      status: 'ACCEPTED',
+      createdAt: new Date('2026-05-10T10:00:00Z'),
+    },
+  });
+
 
   // 9. Create Purchase Orders
   // PO-001: Acme Supplies Group (Accepted/Delivered)

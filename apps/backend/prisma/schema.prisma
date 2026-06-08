@@ -53,6 +53,7 @@ model User {
   password         String
   name             String
   role             Role              @default(SUPPLIER)
+  status           String            @default("ACTIVE")
   vendorId         String?           @db.Uuid
   vendor           Vendor?           @relation(fields: [vendorId], references: [id], onDelete: SetNull)
   rfqs             Rfq[]             @relation("ProcurementRfqs")
