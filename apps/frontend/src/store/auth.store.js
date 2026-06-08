@@ -56,6 +56,19 @@ export const useAuthStore = create((set) => ({
     });
   },
 
+  setTestingRole: (targetRole) => {
+    // TEMPORARY ROLE SWITCHER FOR DEVELOPMENT TESTING
+    // REMOVE BEFORE PRODUCTION RELEASE
+    set((state) => {
+      if (!state.user) return {};
+      const updatedUser = { ...state.user, role: targetRole };
+      return {
+        role: targetRole,
+        user: updatedUser,
+      };
+    });
+  },
+
   login: async (email, password) => {
     set({ isLoading: true });
     try {
@@ -101,7 +114,12 @@ export const useAuthStore = create((set) => ({
       useAuthStore.getState().setUser(user, accessToken);
       return user;
     } catch (error) {
-      useAuthStore.getState().logoutStore();
+      const status = error.response?.status;
+      if (status === 401 || status === 403) {
+        useAuthStore.getState().logoutStore();
+      } else {
+        set({ isLoading: false });
+      }
       throw error;
     }
   },

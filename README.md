@@ -1,5 +1,3 @@
-# 🚀 VendorBridge – Procurement & Vendor Management ERP
-
 <p align="center">
   <h3 align="center">Streamlining Procurement Through Automation, Transparency, and Vendor Collaboration</h3>
 </p>
