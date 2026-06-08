@@ -10,10 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
-    "@vendorbridge/constants": "*",
-    "@vendorbridge/shared": "*",
-    "@vendorbridge/types": "*",
-    "@vendorbridge/validators": "*",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "lucide-react": "^0.395.0",

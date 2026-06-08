@@ -7,7 +7,7 @@ import {
   registerStep1Schema,
   registerStep2Schema,
   registerStep3Schema,
-} from '@vendorbridge/validators';
+} from '../../../validators';
 import { useAuthStore } from '../../../store/auth.store';
 
 export default function Register() {

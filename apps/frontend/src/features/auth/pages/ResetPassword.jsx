@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useParams } from 'react-router-dom';
 import { Lock, Eye, EyeOff, CheckCircle2, ArrowRight } from 'lucide-react';
-import { resetPasswordSchema } from '@vendorbridge/validators';
+import { resetPasswordSchema } from '../../../validators';
 import { resetPassword } from '../services/auth.api';
 
 export default function ResetPassword() {
