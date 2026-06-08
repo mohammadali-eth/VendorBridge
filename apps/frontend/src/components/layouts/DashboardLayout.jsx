@@ -15,7 +15,6 @@ import {
   Search,
   CheckSquare,
   History,
-  BarChart3
   BarChart3,
   ChevronLeft,
   ChevronRight
@@ -229,70 +228,6 @@ export default function DashboardLayout() {
                 placeholder="Search..."
                 className="w-full bg-slate-50 border border-[#E5E7EB] rounded-xl py-1.5 pl-9 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
               />
-            </div>
-          </div>
-
-          {/* Header Right: Notifications & Profile */}
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              onClick={() => setIsPanelOpen(!isPanelOpen)}
-              className="relative p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
-            >
-              <Bell size={20} />
-              {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A87D9F] opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#714B67]"></span>
-                </span>
-              )}
-            </button>
-
-            <div className="h-6 w-px bg-slate-200" />
-
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-3 cursor-pointer focus:outline-none hover:opacity-90 transition-opacity"
-              >
-                <div className="text-right hidden sm:block">
-                  <p className="text-sm font-semibold text-[#111827]">{user?.name || 'Guest'}</p>
-                  <p className="text-xs text-slate-500 font-medium capitalize">
-                    {ROLE_DISPLAY_NAMES[activeRoleKey] || activeRoleKey}
-                  </p>
-                </div>
-                <div className="h-9 w-9 rounded-xl bg-[#F5EEF4] border border-[#A87D9F]/20 text-[#714B67] flex items-center justify-center font-bold uppercase text-sm">
-                  {user?.name?.[0] || 'U'}
-                </div>
-              </button>
-
-              {dropdownOpen && (
-                <>
-                  <div
-                    className="fixed inset-0 z-30"
-                    onClick={() => setDropdownOpen(false)}
-                  />
-                  <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl border border-[#E5E7EB] bg-white p-1 shadow-lg ring-1 ring-black/5 focus:outline-none z-40">
-                    <button
-                      onClick={() => {
-                        setDropdownOpen(false);
-                        navigate('/settings');
-                      }}
-                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-left text-xs text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
-                    >
-                      Settings
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-left text-xs text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
             </div>
           </div>
 

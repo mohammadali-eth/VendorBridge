@@ -31,7 +31,6 @@ export default function RFQSummaryCard({ rfq }) {
   };
 
   const rfqNumber = `RFQ-${new Date(rfq.createdAt).getFullYear()}-${rfq.title.charCodeAt(0) || 101}`;
-  const items = Array.isArray(rfq.items) ? rfq.items : [];
   const rawItems = rfq.items;
   const items = (() => {
     if (!rawItems) return [];
