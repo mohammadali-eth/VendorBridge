@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { UserPlus, Shield, CheckCircle, XCircle, Trash2, Edit } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { UserPlus, Shield, Trash2 } from 'lucide-react';
 import Badge from '../../components/common/Badge';
 import { userService } from '../../services/userService';
 
@@ -21,7 +21,7 @@ export default function UserManagement() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
       const data = await userService.getUsers();
@@ -31,11 +31,12 @@ export default function UserManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const handleToggleStatus = async (id) => {
     try {

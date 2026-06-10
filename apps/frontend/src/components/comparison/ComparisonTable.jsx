@@ -1,6 +1,5 @@
 import React from 'react';
-import { Star, ShieldAlert, Check, Milestone, Zap, DollarSign } from 'lucide-react';
-import Badge from '../common/Badge';
+import { Star, ShieldAlert, Check, Zap, DollarSign } from 'lucide-react';
 
 export default function ComparisonTable({
   quotations = [],

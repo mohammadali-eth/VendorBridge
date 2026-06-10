@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Search, X, Loader2, Plus, Check } from 'lucide-react';
 import { rfqService } from '../../services/rfq.service';
-import Badge from '../common/Badge';
 
 export default function VendorSelector() {
   const {

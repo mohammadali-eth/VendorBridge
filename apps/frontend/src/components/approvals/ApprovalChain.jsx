@@ -85,7 +85,7 @@ export default function ApprovalChain({ history = [], currentLevel }) {
                   <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mt-2">
                     <span className="text-[9px] uppercase font-black text-slate-400 block tracking-wider">Remarks</span>
                     <p className="text-[11px] text-slate-600 font-medium mt-0.5 leading-snug">
-                      "{step.remarks}"
+                      &quot;{step.remarks}&quot;
                     </p>
                   </div>
                 )}

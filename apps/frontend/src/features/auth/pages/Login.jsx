@@ -26,7 +26,7 @@ export default function Login() {
     },
   });
 
-  const redirectForRole = (role) => {
+  const redirectForRole = () => {
     return '/dashboard';
   };
 
@@ -34,12 +34,12 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const user = await login(data.email, data.password);
+      await login(data.email, data.password);
       
       // If remember me is set, we could write to localStorage, but refreshes are cookie based.
       // We can handle local storage flag if desired, but session cookies do the heavy lifting.
       
-      navigate(redirectForRole(user.role));
+      navigate(redirectForRole());
     } catch (err) {
       setError(err || 'Invalid credentials');
     } finally {

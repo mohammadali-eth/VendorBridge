@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 export default function QuotationItemTable() {
@@ -15,7 +15,8 @@ export default function QuotationItemTable() {
     name: 'items',
   });
 
-  const items = watch('items') || [];
+  const watchedItems = watch('items');
+  const items = useMemo(() => watchedItems || [], [watchedItems]);
 
   // Recalculate totals and subtotal dynamically
   useEffect(() => {

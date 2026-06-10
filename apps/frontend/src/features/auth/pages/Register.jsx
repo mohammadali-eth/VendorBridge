@@ -59,7 +59,7 @@ export default function Register() {
     defaultValues: { role: formData.role },
   });
 
-  const redirectForRole = (role) => {
+  const redirectForRole = () => {
     return '/dashboard';
   };
 
@@ -83,8 +83,8 @@ export default function Register() {
     try {
       const submitData = { ...formData };
       delete submitData.confirmPassword;
-      const user = await registerAction(submitData);
-      navigate(redirectForRole(user.role));
+      await registerAction(submitData);
+      navigate(redirectForRole());
     } catch (err) {
       setError(err || 'Registration failed');
     } finally {

@@ -1,26 +1,16 @@
 import React from 'react';
 import { FileText, ClipboardList, ShieldAlert, FileSpreadsheet, Receipt, UserPlus, CheckCircle2 } from 'lucide-react';
 
-export default function ActivityItem({ item }) {
-  const getIcon = () => {
-    switch (item.module) {
-      case 'RFQ':
-        return FileText;
-      case 'Quotation':
-        return ClipboardList;
-      case 'Approval':
-        return ShieldAlert;
-      case 'PO':
-        return FileSpreadsheet;
-      case 'Invoice':
-        return Receipt;
-      case 'Vendor':
-        return UserPlus;
-      default:
-        return CheckCircle2;
-    }
-  };
+const ICON_MAP = {
+  RFQ: FileText,
+  Quotation: ClipboardList,
+  Approval: ShieldAlert,
+  PO: FileSpreadsheet,
+  Invoice: Receipt,
+  Vendor: UserPlus,
+};
 
+export default function ActivityItem({ item }) {
   const getStatusColor = () => {
     if (item.action.toLowerCase().includes('reject') || item.status === 'Rejected') {
       return 'bg-rose-500 border-rose-500';
@@ -31,12 +21,13 @@ export default function ActivityItem({ item }) {
     return 'bg-[#714B67] border-[#714B67]';
   };
 
-  const Icon = getIcon();
+  const IconComponent = ICON_MAP[item.module] || CheckCircle2;
+
 
   return (
     <div className="relative pl-6 pb-6 last:pb-2">
       <div className={`absolute -left-2 top-1 h-4.5 w-4.5 rounded-full border-2 border-white flex items-center justify-center text-white ${getStatusColor()}`}>
-        <Icon size={10} />
+        <IconComponent size={10} />
       </div>
       <div className="text-left">
         <span className="text-xs font-black text-slate-800 block">{item.action}</span>

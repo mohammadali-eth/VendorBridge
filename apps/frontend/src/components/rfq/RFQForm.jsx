@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Calendar, Tag } from 'lucide-react';
+
 import ItemTable from './ItemTable';
 import VendorSelector from './VendorSelector';
 
@@ -19,7 +19,7 @@ export default function RFQForm() {
         {/* RFQ's title */}
         <div>
           <label className="text-xs font-bold text-slate-700 block mb-1">
-            RFQ's title*
+            RFQ&apos;s title*
           </label>
           <input
             type="text"

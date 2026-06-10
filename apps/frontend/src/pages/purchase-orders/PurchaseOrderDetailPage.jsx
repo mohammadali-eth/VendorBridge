@@ -98,7 +98,6 @@ export default function PurchaseOrderDetailPage() {
     return [];
   })();
   const subtotal = parseFloat(po.quotation?.subtotal?.toString() || 0);
-  const gstPercent = parseFloat(po.quotation?.gstPercent?.toString() || 9);
   const cgst = subtotal * 0.09;
   const sgst = subtotal * 0.09;
   const totalTax = cgst + sgst;

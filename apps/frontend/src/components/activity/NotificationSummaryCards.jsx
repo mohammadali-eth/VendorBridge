@@ -4,7 +4,6 @@ import { FileText, ShieldAlert, Receipt, ShieldCheck } from 'lucide-react';
 
 export default function NotificationSummaryCards({ timeline = [], notifications = [] }) {
   const rfqLogs = timeline.filter((l) => l.module === 'RFQ');
-  const approvalLogs = timeline.filter((l) => l.module === 'Approval');
   const invoiceLogs = timeline.filter((l) => l.module === 'Invoice' || l.module === 'PO');
   const totalLogs = timeline.length;
 

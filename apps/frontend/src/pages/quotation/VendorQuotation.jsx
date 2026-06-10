@@ -23,7 +23,6 @@ export default function VendorQuotation() {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [isSubmitMode, setIsSubmitMode] = useState(true);
   const [toast, setToast] = useState(null);
-  const [resolvedVendorId, setResolvedVendorId] = useState(null);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -56,7 +55,6 @@ export default function VendorQuotation() {
           const firstVendor = vendorsData.vendors?.[0];
           finalVendorId = firstVendor?.id || 'a0000000-0000-0000-0000-000000000001'; // Fallback UUID
         }
-        setResolvedVendorId(finalVendorId);
         methods.setValue('vendorId', finalVendorId);
 
         // 2. Fetch RFQ

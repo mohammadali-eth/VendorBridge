@@ -52,6 +52,7 @@ export default function DashboardLayout() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadNotifications();
     const interval = setInterval(loadNotifications, 8000);
     return () => clearInterval(interval);

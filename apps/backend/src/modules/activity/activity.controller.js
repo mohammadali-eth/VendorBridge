@@ -1,5 +1,4 @@
 import prisma from '../../config/db.js';
-import { AppError } from '../../middlewares/error.middleware.js';
 
 /**
  * GET /api/v1/activity/timeline

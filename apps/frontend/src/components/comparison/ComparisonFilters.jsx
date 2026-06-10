@@ -1,5 +1,5 @@
 import React from 'react';
-import { SlidersHorizontal, ArrowUpDown, ShieldCheck, Clock, CircleDollarSign } from 'lucide-react';
+import { SlidersHorizontal, ShieldCheck, Clock, CircleDollarSign } from 'lucide-react';
 
 export default function ComparisonFilters({
   sortBy,

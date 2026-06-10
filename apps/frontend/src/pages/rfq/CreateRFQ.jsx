@@ -86,7 +86,7 @@ export default function CreateRFQ() {
           <ArrowLeft className="h-3.5 w-3.5" />
           Back
         </button>
-        <h2 className="text-2xl font-black text-[#111827] tracking-tight">Create RFQ's</h2>
+        <h2 className="text-2xl font-black text-[#111827] tracking-tight">Create RFQs</h2>
         <p className="mt-1 text-sm text-slate-500 font-medium">
           new request for quotation
         </p>

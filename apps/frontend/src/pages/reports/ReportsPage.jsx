@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import reportsService from '../../services/reportsService';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
@@ -11,9 +11,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
   LineChart,
   Line,
 } from 'recharts';
@@ -25,13 +22,9 @@ import {
   Award,
   Clock,
   Sparkles,
-  RefreshCw,
   Search,
   CheckCircle2,
-  ChevronUp,
 } from 'lucide-react';
-
-const COLORS = ['#714B67', '#8A6080', '#A37799', '#BC8EB3', '#D5A5CD'];
 
 export default function ReportsPage() {
   const [summary, setSummary] = useState(null);
@@ -56,12 +49,12 @@ export default function ReportsPage() {
   const [exportFormat, setExportFormat] = useState('PDF');
   const [deptFilter, setDeptFilter] = useState('All');
   const [vendorFilter, setVendorFilter] = useState('All');
-  const [poStatusFilter, setPoStatusFilter] = useState('All');
+
 
   // Search
   const [vendorSearch, setVendorSearch] = useState('');
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [sum, cats, vends, trnds, po, inv, hist] = await Promise.all([
         reportsService.getSummary(),
@@ -85,11 +78,12 @@ export default function ReportsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadData();
-  }, []);
+  }, [loadData]);
 
   const showToast = (message) => {
     setToast(message);
@@ -103,7 +97,7 @@ export default function ReportsPage() {
       await reportsService.generateReport({
         name: reportType,
         format: exportFormat,
-        filters: { department: deptFilter, vendor: vendorFilter, status: poStatusFilter },
+        filters: { department: deptFilter, vendor: vendorFilter, status: 'All' },
       });
       showToast(`${reportType} (${exportFormat}) compiled successfully!`);
       const updatedHistory = await reportsService.getReports();

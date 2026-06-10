@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 
-export default function WorkflowTracker({ currentLevel, status }) {
+export default function WorkflowTracker({ status }) {
   // Determine current active step (1-indexed)
   // 1. RFQ Created
   // 2. Quotation Received

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import invoiceService from '../../services/invoiceService';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
-import { Loader2, ArrowLeft, Download, Printer, Mail, DollarSign, Ban, CheckCircle2 } from 'lucide-react';
+import { Loader2, ArrowLeft, Download, Printer, Mail, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth.store';
 
 export default function InvoiceDetailPage() {
@@ -32,7 +32,10 @@ export default function InvoiceDetailPage() {
         setLoading(false);
       }
     }
-    if (invoiceId) loadData();
+    if (invoiceId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      loadData();
+    }
   }, [invoiceId]);
 
   const showToast = (message, type = 'success') => {
@@ -114,7 +117,6 @@ export default function InvoiceDetailPage() {
   })();
 
   const subtotal = parseFloat(invoice.subtotal?.toString() || 0);
-  const gstPercent = parseFloat(invoice.purchaseOrder?.quotation?.gstPercent?.toString() || 9);
   const cgst = subtotal * 0.09;
   const sgst = subtotal * 0.09;
   const totalTax = cgst + sgst;

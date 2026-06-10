@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import activityService from '../../services/activityService';
 import NotificationSummaryCards from '../../components/activity/NotificationSummaryCards';
 import TimelineFilters from '../../components/activity/TimelineFilters';
 import ActivityTimeline from '../../components/activity/ActivityTimeline';
 import AuditLogFilters from '../../components/activity/AuditLogFilters';
 import AuditLogTable from '../../components/activity/AuditLogTable';
-import NotificationPanel from '../../components/activity/NotificationPanel';
 import Card from '../../components/common/Card';
-import { Loader2, Bell, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Loader2, RefreshCw } from 'lucide-react';
 
 export default function ActivityLogsPage() {
   const [timeline, setTimeline] = useState([]);
@@ -16,8 +15,6 @@ export default function ActivityLogsPage() {
 
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [toast, setToast] = useState(null);
 
   // Filter states
   const [timelineFilter, setTimelineFilter] = useState('ALL');
@@ -26,7 +23,7 @@ export default function ActivityLogsPage() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const loadData = async (showRefreshIndicator = false) => {
+  const loadData = useCallback(async (showRefreshIndicator = false) => {
     if (showRefreshIndicator) setRefreshing(true);
     try {
       const [timelineData, notificationData, auditData] = await Promise.all([
@@ -48,48 +45,14 @@ export default function ActivityLogsPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
-
-  useEffect(() => {
-    loadData();
   }, [timelineFilter, search, moduleFilter, startDate, endDate]);
 
-  const showToast = (message) => {
-    setToast(message);
-    setTimeout(() => setToast(null), 3500);
-  };
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+  }, [loadData]);
 
-  const handleMarkRead = async (id) => {
-    try {
-      await activityService.markAsRead(id);
-      showToast('Notification marked as read');
-      loadData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
-  const handleMarkAllRead = async () => {
-    try {
-      await activityService.markAllAsRead();
-      showToast('All notifications marked as read');
-      loadData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleClearNotification = async (id) => {
-    try {
-      await activityService.clearNotification(id);
-      showToast('Notification cleared');
-      loadData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const unreadCount = notifications.filter((n) => !n.read).length;
 
   if (loading && timeline.length === 0) {
     return (
@@ -102,13 +65,6 @@ export default function ActivityLogsPage() {
 
   return (
     <div className="space-y-8 text-left pb-16 relative">
-      {/* Toast popup */}
-      {toast && (
-        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border border-emerald-500 bg-emerald-600 text-white transition-all">
-          <CheckCircle2 size={16} />
-          <span>{toast}</span>
-        </div>
-      )}
 
       {/* Header section with actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">

@@ -43,7 +43,9 @@ export default function ApprovalWorkflowPage() {
   // Sync remarks from loaded data
   useEffect(() => {
     if (approvalData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRemarks(approvalData.remarks || '');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setInternalNotes(approvalData.internalNotes || '');
     }
   }, [approvalData]);
@@ -123,7 +125,6 @@ export default function ApprovalWorkflowPage() {
 
   // Authorize Roles
   const isApprover = user?.role === 'PROCUREMENT_MANAGER' || user?.role === 'ADMIN';
-  const isFinance = user?.role === 'BUYER'; // Buyer maps to finance actions or simple reviews
 
   const canTakeAction = isApprover && approvalData.status === 'PENDING';
 
@@ -188,7 +189,7 @@ export default function ApprovalWorkflowPage() {
                   Final Decision Remarks
                 </span>
                 <p className="text-xs font-semibold text-slate-700 mt-1">
-                  "{approvalData.remarks}"
+                  &quot;{approvalData.remarks}&quot;
                 </p>
               </div>
             )

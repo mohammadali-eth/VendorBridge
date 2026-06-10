@@ -36,63 +36,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Scaffolded placeholder pages based on project requirements
-const VendorsPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Vendors Registry</h2>
-    <p className="text-slate-500 text-sm">Review, verify, and register corporate vendors in the ecosystem.</p>
-  </div>
-);
-
-const RfqPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Requests for Quotation (RFQs)</h2>
-    <p className="text-slate-500 text-sm">Publish and manage procurement RFQs for verified vendors.</p>
-  </div>
-);
-
-const QuotationsPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Quotations Log</h2>
-    <p className="text-slate-500 text-sm">Analyze quotations submitted by vendors in response to open RFQs.</p>
-  </div>
-);
-
-const ApprovalsPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Approvals Inbox</h2>
-    <p className="text-slate-500 text-sm">Review, authorize, or reject purchase requisitions and supplier contracts.</p>
-  </div>
-);
-
-const PurchaseOrdersPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Purchase Orders</h2>
-    <p className="text-slate-500 text-sm">Issue and track purchase orders generated from accepted quotations.</p>
-  </div>
-);
-
-const InvoicesPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Invoices Management</h2>
-    <p className="text-slate-500 text-sm">Monitor received vendor invoices, payment schedules, and status tracking.</p>
-  </div>
-);
-
-const ReportsPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">Reports & Analytics</h2>
-    <p className="text-slate-500 text-sm">Generate automated spending analysis, supplier performance reports, and cost savings metrics.</p>
-  </div>
-);
-
-const ActivityLogsPlaceholder = () => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
-    <h2 className="text-xl font-bold text-[#111827] mb-2">System Activity Logs</h2>
-    <p className="text-slate-500 text-sm">Audit trail records of user operations, state changes, and transaction histories.</p>
-  </div>
-);
-
 const SettingsPlaceholder = () => (
   <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
     <h2 className="text-xl font-bold text-[#111827] mb-2">System Settings</h2>

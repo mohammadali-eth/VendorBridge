@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Loader2, ArrowLeft, Award, Zap, ShieldCheck, Trophy, Sparkles } from 'lucide-react';
 import { quotationsService } from '../../services/quotations.service';
@@ -12,7 +12,6 @@ export default function QuotationComparison() {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null); // Contains rfqTitle, rfqNumber, quotations array
-  const [filteredQuotes, setFilteredQuotes] = useState([]);
   const [toast, setToast] = useState(null);
 
   // Filter & Sort State
@@ -33,7 +32,7 @@ export default function QuotationComparison() {
   };
 
   // Load Data
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const result = await quotationsService.getComparison(rfqId);
       setData(result);
@@ -50,17 +49,16 @@ export default function QuotationComparison() {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    if (rfqId) {
-      loadData();
-    }
   }, [rfqId]);
 
-  // Apply filters and sorting
   useEffect(() => {
-    if (!data?.quotations) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+  }, [loadData]);
+
+  // Apply filters and sorting
+  const filteredQuotes = useMemo(() => {
+    if (!data?.quotations) return [];
 
     let quotes = [...data.quotations];
 
@@ -86,7 +84,7 @@ export default function QuotationComparison() {
       return 0;
     });
 
-    setFilteredQuotes(quotes);
+    return quotes;
   }, [data, sortBy, priceRange, minRating, maxDelivery]);
 
   // Calculate Summary metrics

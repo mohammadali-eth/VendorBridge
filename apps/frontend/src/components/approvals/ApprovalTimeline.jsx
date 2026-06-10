@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from '../common/Card';
-import { Clock } from 'lucide-react';
 
 export default function ApprovalTimeline({ timeline = [] }) {
   return (
@@ -49,7 +48,7 @@ export default function ApprovalTimeline({ timeline = [] }) {
                 </div>
                 {item.remarks && (
                   <p className="text-[11px] text-slate-500 italic mt-0.5 leading-snug">
-                    "{item.remarks}"
+                    &quot;{item.remarks}&quot;
                   </p>
                 )}
               </div>

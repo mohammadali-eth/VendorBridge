@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { quotationsService } from '../../services/quotations.service';
-import { Loader2, ClipboardList, CheckCircle2, ChevronRight, Eye, FileSpreadsheet, PlusCircle } from 'lucide-react';
+import { Loader2, ClipboardList, FileSpreadsheet, PlusCircle } from 'lucide-react';
 import Badge from '../../components/common/Badge';
 
 export default function QuotationsPage() {
