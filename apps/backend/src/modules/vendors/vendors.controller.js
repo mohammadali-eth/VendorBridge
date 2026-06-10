@@ -28,7 +28,7 @@ export async function getVendors(req, res, next) {
       page = 1,
       limit = 10,
       sortBy = 'createdAt',
-      sortOrder = 'desc'
+      sortOrder = 'desc',
     } = req.query;
 
     const pageNum = parseInt(page, 10) || 1;
@@ -47,7 +47,7 @@ export async function getVendors(req, res, next) {
         { phone: { contains: searchString, mode: 'insensitive' } },
         { code: { contains: searchString, mode: 'insensitive' } },
         { gstNumber: { contains: searchString, mode: 'insensitive' } },
-        { contactPerson: { contains: searchString, mode: 'insensitive' } }
+        { contactPerson: { contains: searchString, mode: 'insensitive' } },
       ];
     }
 
@@ -78,10 +78,10 @@ export async function getVendors(req, res, next) {
         skip,
         take: limitNum,
         orderBy: {
-          [sortBy]: sortOrder.toLowerCase() === 'asc' ? 'asc' : 'desc'
-        }
+          [sortBy]: sortOrder.toLowerCase() === 'asc' ? 'asc' : 'desc',
+        },
       }),
-      prisma.vendor.count({ where })
+      prisma.vendor.count({ where }),
     ]);
 
     res.status(200).json({
@@ -92,9 +92,9 @@ export async function getVendors(req, res, next) {
           total,
           page: pageNum,
           limit: limitNum,
-          totalPages: Math.ceil(total / limitNum)
-        }
-      }
+          totalPages: Math.ceil(total / limitNum),
+        },
+      },
     });
   } catch (error) {
     next(error);
@@ -107,10 +107,16 @@ export async function getVendors(req, res, next) {
  */
 export async function getCategories(req, res, next) {
   try {
-    const categories = ['Manufacturer', 'Distributor', 'Service Provider', 'Contractor', 'Consultant'];
+    const categories = [
+      'Manufacturer',
+      'Distributor',
+      'Service Provider',
+      'Contractor',
+      'Consultant',
+    ];
     res.status(200).json({
       status: 'success',
-      data: categories
+      data: categories,
     });
   } catch (error) {
     next(error);
@@ -126,7 +132,7 @@ export async function getStatuses(req, res, next) {
     const statuses = ['ACTIVE', 'PENDING', 'INACTIVE', 'BLOCKED'];
     res.status(200).json({
       status: 'success',
-      data: statuses
+      data: statuses,
     });
   } catch (error) {
     next(error);
@@ -152,10 +158,10 @@ export async function getVendorById(req, res, next) {
             poNumber: true,
             totalAmount: true,
             status: true,
-            createdAt: true
-          }
-        }
-      }
+            createdAt: true,
+          },
+        },
+      },
     });
 
     if (!vendor) {
@@ -166,14 +172,14 @@ export async function getVendorById(req, res, next) {
     const poStats = await prisma.purchaseOrder.aggregate({
       where: {
         vendorId: id,
-        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] }
+        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] },
       },
       _sum: {
-        totalAmount: true
+        totalAmount: true,
       },
       _count: {
-        id: true
-      }
+        id: true,
+      },
     });
 
     const totalOrders = poStats._count.id || 0;
@@ -185,10 +191,10 @@ export async function getVendorById(req, res, next) {
     // Query real Invoices from PostgreSQL
     const dbInvoices = await prisma.invoice.findMany({
       where: { vendorId: id },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
-    const invoices = dbInvoices.map(inv => ({
+    const invoices = dbInvoices.map((inv) => ({
       id: inv.id,
       invoiceNo: inv.invoiceNumber,
       amount: Number(inv.totalAmount),
@@ -196,8 +202,8 @@ export async function getVendorById(req, res, next) {
       date: inv.createdAt.toLocaleDateString('en-IN', {
         day: '2-digit',
         month: 'short',
-        year: 'numeric'
-      })
+        year: 'numeric',
+      }),
     }));
 
     res.status(200).json({
@@ -209,8 +215,8 @@ export async function getVendorById(req, res, next) {
           totalSpend,
         },
         documents,
-        invoices
-      }
+        invoices,
+      },
     });
   } catch (error) {
     next(error);
@@ -243,12 +249,14 @@ export async function createVendor(req, res, next) {
       state,
       country,
       pincode,
-      status = 'PENDING'
+      status = 'PENDING',
     } = req.body;
 
     // 1. Validation
     if (!name || !category || !gstNumber || !contactPerson || !email) {
-      return next(new AppError('Required fields (Name, Category, GST, Contact, Email) are missing', 400));
+      return next(
+        new AppError('Required fields (Name, Category, GST, Contact, Email) are missing', 400)
+      );
     }
 
     if (!isValidEmail(email)) {
@@ -302,13 +310,13 @@ export async function createVendor(req, res, next) {
         city: city || '',
         state: state || '',
         country: country || 'India',
-        pincode: pincode || ''
-      }
+        pincode: pincode || '',
+      },
     });
 
     res.status(201).json({
       status: 'success',
-      data: newVendor
+      data: newVendor,
     });
   } catch (error) {
     next(error);
@@ -344,16 +352,25 @@ export async function updateVendor(req, res, next) {
       if (!isValidGST(updateData.gstNumber)) {
         return next(new AppError('Invalid GSTIN format', 400));
       }
-      const duplicateGST = await prisma.vendor.findFirst({ where: { gstNumber: updateData.gstNumber } });
+      const duplicateGST = await prisma.vendor.findFirst({
+        where: { gstNumber: updateData.gstNumber },
+      });
       if (duplicateGST) {
         return next(new AppError('Another vendor with this GSTIN already exists', 400));
       }
     }
 
-    if (updateData.registrationNumber && updateData.registrationNumber !== existingVendor.registrationNumber) {
-      const duplicateReg = await prisma.vendor.findFirst({ where: { registrationNumber: updateData.registrationNumber } });
+    if (
+      updateData.registrationNumber &&
+      updateData.registrationNumber !== existingVendor.registrationNumber
+    ) {
+      const duplicateReg = await prisma.vendor.findFirst({
+        where: { registrationNumber: updateData.registrationNumber },
+      });
       if (duplicateReg) {
-        return next(new AppError('Another vendor with this registration number already exists', 400));
+        return next(
+          new AppError('Another vendor with this registration number already exists', 400)
+        );
       }
     }
 
@@ -364,13 +381,13 @@ export async function updateVendor(req, res, next) {
       where: { id },
       data: {
         ...updateData,
-        address
-      }
+        address,
+      },
     });
 
     res.status(200).json({
       status: 'success',
-      data: updatedVendor
+      data: updatedVendor,
     });
   } catch (error) {
     next(error);
@@ -402,7 +419,7 @@ export async function deleteVendor(req, res, next) {
 
     res.status(204).json({
       status: 'success',
-      data: null
+      data: null,
     });
   } catch (error) {
     next(error);
@@ -418,21 +435,23 @@ export async function bulkUpdateVendors(req, res, next) {
     const { ids, status } = req.body;
 
     if (!ids || !Array.isArray(ids) || ids.length === 0 || !status) {
-      return next(new AppError('Invalid request parameters. Vendor IDs array and Status are required.', 400));
+      return next(
+        new AppError('Invalid request parameters. Vendor IDs array and Status are required.', 400)
+      );
     }
 
     await prisma.vendor.updateMany({
       where: {
-        id: { in: ids }
+        id: { in: ids },
       },
       data: {
-        status
-      }
+        status,
+      },
     });
 
     res.status(200).json({
       status: 'success',
-      message: `${ids.length} vendors status updated successfully`
+      message: `${ids.length} vendors status updated successfully`,
     });
   } catch (error) {
     next(error);
@@ -463,7 +482,7 @@ export async function bulkDeleteVendors(req, res, next) {
 
     res.status(200).json({
       status: 'success',
-      message: `${ids.length} vendors deleted successfully`
+      message: `${ids.length} vendors deleted successfully`,
     });
   } catch (error) {
     next(error);
@@ -480,13 +499,13 @@ export async function importVendors(req, res, next) {
     if (!Array.isArray(vendors)) {
       return next(new AppError('Invalid request payload. Expected an array of vendors.', 400));
     }
-    
+
     const results = {
       successCount: 0,
       failCount: 0,
-      errors: []
+      errors: [],
     };
-    
+
     for (let i = 0; i < vendors.length; i++) {
       const v = vendors[i];
       const name = v.name || v.VendorName || v['Vendor Name'];
@@ -500,38 +519,39 @@ export async function importVendors(req, res, next) {
       const city = v.city || v.City || '';
       const state = v.state || v.State || '';
       const status = v.status || v.Status || 'PENDING';
-      const registrationNumber = v.registrationNumber || v['Registration Number'] || `REG-${Date.now()}-${i}`;
-      
+      const registrationNumber =
+        v.registrationNumber || v['Registration Number'] || `REG-${Date.now()}-${i}`;
+
       if (!name || !gstNumber || !contactPerson || !email) {
         results.failCount++;
         results.errors.push(`Row ${i + 1}: Required fields missing`);
         continue;
       }
-      
+
       if (!isValidEmail(email)) {
         results.failCount++;
         results.errors.push(`Row ${i + 1}: Invalid email format (${email})`);
         continue;
       }
-      
+
       if (!isValidGST(gstNumber)) {
         results.failCount++;
         results.errors.push(`Row ${i + 1}: Invalid GSTIN format (${gstNumber})`);
         continue;
       }
-      
+
       // Duplicate check
       const existingEmail = await prisma.vendor.findFirst({ where: { email } });
       const existingGST = await prisma.vendor.findFirst({ where: { gstNumber } });
-      
+
       if (existingEmail || existingGST) {
         results.failCount++;
         results.errors.push(`Row ${i + 1}: Vendor with this email/GSTIN already exists`);
         continue;
       }
-      
+
       const vendorCode = v.code || v.Code || `VND-${Math.floor(1000 + Math.random() * 9000)}`;
-      
+
       await prisma.vendor.create({
         data: {
           name,
@@ -555,15 +575,15 @@ export async function importVendors(req, res, next) {
           state,
           country: v.country || 'India',
           pincode: v.pincode || '',
-        }
+        },
       });
-      
+
       results.successCount++;
     }
-    
+
     res.status(200).json({
       status: 'success',
-      data: results
+      data: results,
     });
   } catch (error) {
     next(error);

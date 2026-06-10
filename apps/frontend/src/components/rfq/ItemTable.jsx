@@ -48,8 +48,7 @@ export default function ItemTable() {
               <th scope="col" className="px-4 py-2.5 font-semibold text-slate-500 w-[20%]">
                 Unit
               </th>
-              <th scope="col" className="px-4 py-2.5 w-[10%] text-center">
-              </th>
+              <th scope="col" className="px-4 py-2.5 w-[10%] text-center"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -64,11 +63,15 @@ export default function ItemTable() {
                       {...register(`items.${index}.name`)}
                       placeholder="e.g. Ergonomic chair"
                       className={`w-full bg-transparent border-0 border-b ${
-                        itemErrors?.name ? 'border-rose-300 focus:border-rose-500 focus:ring-0' : 'border-slate-200 focus:border-[#714B67] focus:ring-0'
+                        itemErrors?.name
+                          ? 'border-rose-300 focus:border-rose-500 focus:ring-0'
+                          : 'border-slate-200 focus:border-[#714B67] focus:ring-0'
                       } py-1.5 focus:outline-none text-xs`}
                     />
                     {itemErrors?.name && (
-                      <p className="text-rose-600 text-[10px] mt-0.5 font-medium">{itemErrors.name.message}</p>
+                      <p className="text-rose-600 text-[10px] mt-0.5 font-medium">
+                        {itemErrors.name.message}
+                      </p>
                     )}
                   </td>
 
@@ -79,11 +82,15 @@ export default function ItemTable() {
                       {...register(`items.${index}.quantity`, { valueAsNumber: true })}
                       placeholder="1"
                       className={`w-full bg-transparent border-0 border-b ${
-                        itemErrors?.quantity ? 'border-rose-300 focus:border-rose-500 focus:ring-0' : 'border-slate-200 focus:border-[#714B67] focus:ring-0'
+                        itemErrors?.quantity
+                          ? 'border-rose-300 focus:border-rose-500 focus:ring-0'
+                          : 'border-slate-200 focus:border-[#714B67] focus:ring-0'
                       } py-1.5 focus:outline-none text-xs`}
                     />
                     {itemErrors?.quantity && (
-                      <p className="text-rose-600 text-[10px] mt-0.5 font-medium">{itemErrors.quantity.message}</p>
+                      <p className="text-rose-600 text-[10px] mt-0.5 font-medium">
+                        {itemErrors.quantity.message}
+                      </p>
                     )}
                   </td>
 
@@ -123,8 +130,7 @@ export default function ItemTable() {
         onClick={handleAddItem}
         className="py-1.5 px-3 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
       >
-        <Plus className="h-3.5 w-3.5 text-slate-400" />
-        + add line item
+        <Plus className="h-3.5 w-3.5 text-slate-400" />+ add line item
       </button>
     </div>
   );

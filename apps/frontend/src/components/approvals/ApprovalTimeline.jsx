@@ -17,13 +17,17 @@ export default function ApprovalTimeline({ timeline = [] }) {
           const formattedTime = (() => {
             if (!ts) return '';
             const d = new Date(ts);
-            return isNaN(d.getTime()) ? '' : d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+            return isNaN(d.getTime())
+              ? ''
+              : d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
           })();
 
           const formattedDate = (() => {
             if (!ts) return '';
             const d = new Date(ts);
-            return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+            return isNaN(d.getTime())
+              ? ''
+              : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
           })();
 
           return (

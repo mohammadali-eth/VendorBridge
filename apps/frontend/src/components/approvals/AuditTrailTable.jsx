@@ -25,7 +25,9 @@ export default function AuditTrailTable({ auditLogs = [] }) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-3">
         <div>
           <h3 className="text-sm font-black text-slate-800 tracking-tight">Audit Trail</h3>
-          <p className="text-[10px] text-slate-400 font-medium">Compliance and change logs history</p>
+          <p className="text-[10px] text-slate-400 font-medium">
+            Compliance and change logs history
+          </p>
         </div>
         <div className="relative text-slate-400 focus-within:text-[#714B67] max-w-xs w-full">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5">
@@ -77,13 +79,15 @@ export default function AuditTrailTable({ auditLogs = [] }) {
                     {(() => {
                       if (!log.timestamp) return '';
                       const d = new Date(log.timestamp);
-                      return isNaN(d.getTime()) ? '' : d.toLocaleString('en-IN', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      });
+                      return isNaN(d.getTime())
+                        ? ''
+                        : d.toLocaleString('en-IN', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          });
                     })()}
                   </td>
                   <td className="py-2.5 px-4 text-slate-500 max-w-xs truncate" title={log.remarks}>

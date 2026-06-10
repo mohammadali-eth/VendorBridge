@@ -9,7 +9,7 @@ export default function PricingSummaryCard() {
   const otherTaxPercent = watch('otherTaxPercent') || 0;
 
   const gstAmount = subtotal * (Number(gstPercent) / 100);
-  const otherTaxAmount = subtotal * (Number(otherTaxPercent) || 0) / 100;
+  const otherTaxAmount = (subtotal * (Number(otherTaxPercent) || 0)) / 100;
   const grandTotal = subtotal + gstAmount + otherTaxAmount;
 
   // Sync grandTotal to RHF state
@@ -29,7 +29,9 @@ export default function PricingSummaryCard() {
     <div className="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 shadow-xl space-y-6 text-left">
       <div>
         <h3 className="text-sm font-bold tracking-tight text-slate-200">Pricing Summary</h3>
-        <p className="text-[10px] text-slate-400 font-medium">Billed pricing metrics auto-calculated in real time.</p>
+        <p className="text-[10px] text-slate-400 font-medium">
+          Billed pricing metrics auto-calculated in real time.
+        </p>
       </div>
 
       <div className="space-y-3.5 text-xs">

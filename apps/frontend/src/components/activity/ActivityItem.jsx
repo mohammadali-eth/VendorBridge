@@ -1,5 +1,13 @@
 import React from 'react';
-import { FileText, ClipboardList, ShieldAlert, FileSpreadsheet, Receipt, UserPlus, CheckCircle2 } from 'lucide-react';
+import {
+  FileText,
+  ClipboardList,
+  ShieldAlert,
+  FileSpreadsheet,
+  Receipt,
+  UserPlus,
+  CheckCircle2,
+} from 'lucide-react';
 
 const ICON_MAP = {
   RFQ: FileText,
@@ -23,10 +31,11 @@ export default function ActivityItem({ item }) {
 
   const IconComponent = ICON_MAP[item.module] || CheckCircle2;
 
-
   return (
     <div className="relative pl-6 pb-6 last:pb-2">
-      <div className={`absolute -left-2 top-1 h-4.5 w-4.5 rounded-full border-2 border-white flex items-center justify-center text-white ${getStatusColor()}`}>
+      <div
+        className={`absolute -left-2 top-1 h-4.5 w-4.5 rounded-full border-2 border-white flex items-center justify-center text-white ${getStatusColor()}`}
+      >
         <IconComponent size={10} />
       </div>
       <div className="text-left">

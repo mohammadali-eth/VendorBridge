@@ -11,8 +11,12 @@ export default function DeliveryInput() {
   return (
     <div className="space-y-4 text-left">
       <div>
-        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Delivery & Taxes</h4>
-        <p className="text-[11px] text-slate-400 font-medium">Specify your delivery timeline and tax percentages.</p>
+        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          Delivery & Taxes
+        </h4>
+        <p className="text-[11px] text-slate-400 font-medium">
+          Specify your delivery timeline and tax percentages.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -30,20 +34,22 @@ export default function DeliveryInput() {
               placeholder="e.g. 7"
               {...register('deliveryDays', { valueAsNumber: true })}
               className={`w-full bg-slate-50 border ${
-                errors.deliveryDays ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-250 focus:ring-[#714B67]'
+                errors.deliveryDays
+                  ? 'border-rose-300 focus:ring-rose-500'
+                  : 'border-slate-250 focus:ring-[#714B67]'
               } rounded-xl pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2`}
             />
           </div>
           {errors.deliveryDays && (
-            <p className="text-rose-600 text-[10px] mt-1 font-medium">{errors.deliveryDays.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-medium">
+              {errors.deliveryDays.message}
+            </p>
           )}
         </div>
 
         {/* GST % */}
         <div>
-          <label className="text-[11px] font-bold text-slate-700 block mb-1">
-            GST %
-          </label>
+          <label className="text-[11px] font-bold text-slate-700 block mb-1">GST %</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Percent className="h-3.5 w-3.5 text-slate-400" />
@@ -53,20 +59,22 @@ export default function DeliveryInput() {
               placeholder="18"
               {...register('gstPercent', { valueAsNumber: true })}
               className={`w-full bg-slate-50 border ${
-                errors.gstPercent ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-250 focus:ring-[#714B67]'
+                errors.gstPercent
+                  ? 'border-rose-300 focus:ring-rose-500'
+                  : 'border-slate-250 focus:ring-[#714B67]'
               } rounded-xl pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2`}
             />
           </div>
           {errors.gstPercent && (
-            <p className="text-rose-600 text-[10px] mt-1 font-medium">{errors.gstPercent.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-medium">
+              {errors.gstPercent.message}
+            </p>
           )}
         </div>
 
         {/* Other Tax % */}
         <div>
-          <label className="text-[11px] font-bold text-slate-700 block mb-1">
-            Other Tax %
-          </label>
+          <label className="text-[11px] font-bold text-slate-700 block mb-1">Other Tax %</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Percent className="h-3.5 w-3.5 text-slate-400" />
@@ -76,12 +84,16 @@ export default function DeliveryInput() {
               placeholder="2"
               {...register('otherTaxPercent', { valueAsNumber: true })}
               className={`w-full bg-slate-50 border ${
-                errors.otherTaxPercent ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-250 focus:ring-[#714B67]'
+                errors.otherTaxPercent
+                  ? 'border-rose-300 focus:ring-rose-500'
+                  : 'border-slate-250 focus:ring-[#714B67]'
               } rounded-xl pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2`}
             />
           </div>
           {errors.otherTaxPercent && (
-            <p className="text-rose-600 text-[10px] mt-1 font-medium">{errors.otherTaxPercent.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-medium">
+              {errors.otherTaxPercent.message}
+            </p>
           )}
         </div>
       </div>

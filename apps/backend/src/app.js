@@ -75,21 +75,26 @@ app.post('/api/v1/vendor-selection', protect, createVendorSelection);
 app.get('/exports/:filename', (req, res) => {
   const { filename } = req.params;
   const ext = filename.split('.').pop().toLowerCase();
-  
+
   if (ext === 'pdf') {
     res.setHeader('Content-Type', 'application/pdf');
   } else if (ext === 'csv') {
     res.setHeader('Content-Type', 'text/csv');
   } else if (ext === 'xlsx' || ext === 'xls') {
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
   } else {
     res.setHeader('Content-Type', 'application/octet-stream');
   }
-  
+
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-  
+
   if (ext === 'csv') {
-    res.send(`Report Title,${filename.split('.')[0].replace(/-/g, ' ')}\nGenerated At,${new Date().toISOString()}\nStatus,COMPLETED\n\nMetric,Value\nTotal Spend,1500000\nActive Vendors,45\nPending Approvals,3`);
+    res.send(
+      `Report Title,${filename.split('.')[0].replace(/-/g, ' ')}\nGenerated At,${new Date().toISOString()}\nStatus,COMPLETED\n\nMetric,Value\nTotal Spend,1500000\nActive Vendors,45\nPending Approvals,3`
+    );
   } else if (ext === 'pdf') {
     const pdfContent = `%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >> /MediaBox [0 0 612 792] /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 120 >>\nstream\nBT\n/F1 24 Tf\n100 700 Td\n(VendorBridge Procurement Report) Tj\n0 -40 Td\n/F1 14 Tf\n(Generated Mock File: ${filename}) Tj\n0 -20 Td\n(Status: COMPLETED) Tj\nET\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000056 00000 n\n0000000111 00000 n\n0000000244 00000 n\ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n414\n%%EOF`;
     res.send(Buffer.from(pdfContent, 'utf-8'));
@@ -102,21 +107,26 @@ app.get('/exports/:filename', (req, res) => {
 app.get('/exports/:filename', (req, res) => {
   const { filename } = req.params;
   const ext = filename.split('.').pop().toLowerCase();
-  
+
   if (ext === 'pdf') {
     res.setHeader('Content-Type', 'application/pdf');
   } else if (ext === 'csv') {
     res.setHeader('Content-Type', 'text/csv');
   } else if (ext === 'xlsx' || ext === 'xls') {
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
   } else {
     res.setHeader('Content-Type', 'application/octet-stream');
   }
-  
+
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-  
+
   if (ext === 'csv') {
-    res.send(`Report Title,${filename.split('.')[0].replace(/-/g, ' ')}\nGenerated At,${new Date().toISOString()}\nStatus,COMPLETED\n\nMetric,Value\nTotal Spend,1500000\nActive Vendors,45\nPending Approvals,3`);
+    res.send(
+      `Report Title,${filename.split('.')[0].replace(/-/g, ' ')}\nGenerated At,${new Date().toISOString()}\nStatus,COMPLETED\n\nMetric,Value\nTotal Spend,1500000\nActive Vendors,45\nPending Approvals,3`
+    );
   } else if (ext === 'pdf') {
     const pdfContent = `%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >> /MediaBox [0 0 612 792] /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 120 >>\nstream\nBT\n/F1 24 Tf\n100 700 Td\n(VendorBridge Procurement Report) Tj\n0 -40 Td\n/F1 14 Tf\n(Generated Mock File: ${filename}) Tj\n0 -20 Td\n(Status: COMPLETED) Tj\nET\nendstream\nendobj\nxref\n0 5\n0000000000 65535 f\n0000000009 00000 n\n0000000056 00000 n\n0000000111 00000 n\n0000000244 00000 n\ntrailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n414\n%%EOF`;
     res.send(Buffer.from(pdfContent, 'utf-8'));

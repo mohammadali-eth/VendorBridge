@@ -163,7 +163,8 @@ async function main() {
   const rfq1 = await prisma.rfq.create({
     data: {
       title: 'Laptop Procurement 2026',
-      description: 'Procurement of 50 enterprise-grade laptops for engineering team. Needs 32GB RAM, 1TB SSD.',
+      description:
+        'Procurement of 50 enterprise-grade laptops for engineering team. Needs 32GB RAM, 1TB SSD.',
       category: 'IT Hardware',
       deadline: new Date('2026-06-30T18:30:00.000Z'),
       status: 'PUBLISHED',
@@ -175,7 +176,8 @@ async function main() {
   const rfq2 = await prisma.rfq.create({
     data: {
       title: 'Office Stationery Supply',
-      description: 'Annual contract for supply of custom notebooks, pens, markers, and print paper.',
+      description:
+        'Annual contract for supply of custom notebooks, pens, markers, and print paper.',
       category: 'Office Supplies',
       deadline: new Date('2026-06-25T18:30:00.000Z'),
       status: 'PUBLISHED',
@@ -269,21 +271,20 @@ async function main() {
     },
   });
 
-
   // 8. Create Quotations submitted by Vendors
   // Quotation 1 on Laptop Procurement by TechParts
   const quote1 = await prisma.quotation.create({
     data: {
       rfqId: rfq1.id,
       vendorId: techparts.id,
-      price: 365000.00, // Adjusted to 3.65L to match June peak in graph
+      price: 365000.0, // Adjusted to 3.65L to match June peak in graph
       deliveryTimeline: '15 Days',
       comments: 'Offering Lenovo ThinkPad P1 Gen 6 with 3-year warranty support.',
       status: 'SUBMITTED',
       items: JSON.stringify([{ item: 'Lenovo ThinkPad', qty: 50, price: 7300 }]),
       deliveryDays: 15,
-      subtotal: 365000.00,
-      grandTotal: 365000.00,
+      subtotal: 365000.0,
+      grandTotal: 365000.0,
     },
   });
 
@@ -292,14 +293,14 @@ async function main() {
     data: {
       rfqId: rfq2.id,
       vendorId: acme.id,
-      price: 85000.00, // ₹85,000
+      price: 85000.0, // ₹85,000
       deliveryTimeline: '5 Days',
       comments: 'Full catalog delivery. Free custom embossing included on bulk notebook orders.',
       status: 'ACCEPTED',
       items: JSON.stringify([{ item: 'Notebooks & Pens', qty: 1, price: 85000 }]),
       deliveryDays: 5,
-      subtotal: 85000.00,
-      grandTotal: 85000.00,
+      subtotal: 85000.0,
+      grandTotal: 85000.0,
     },
   });
 
@@ -308,14 +309,14 @@ async function main() {
     data: {
       rfqId: rfq2.id,
       vendorId: officeco.id,
-      price: 92000.00, // ₹92,000
+      price: 92000.0, // ₹92,000
       deliveryTimeline: '7 Days',
       comments: 'Includes 10% discount on first-time orders.',
       status: 'REJECTED',
       items: JSON.stringify([{ item: 'Stationery Catalog', qty: 1, price: 92000 }]),
       deliveryDays: 7,
-      subtotal: 92000.00,
-      grandTotal: 92000.00,
+      subtotal: 92000.0,
+      grandTotal: 92000.0,
     },
   });
 
@@ -324,14 +325,14 @@ async function main() {
     data: {
       rfqId: rfq3.id,
       vendorId: officeco.id,
-      price: 1500000.00, // ₹15L
+      price: 1500000.0, // ₹15L
       deliveryTimeline: '10 Days',
       comments: 'Providing premium dedicated server instances with SLA agreement.',
       status: 'SUBMITTED',
       items: JSON.stringify([{ item: 'GPU Instances', qty: 5, price: 300000 }]),
       deliveryDays: 10,
-      subtotal: 1500000.00,
-      grandTotal: 1500000.00,
+      subtotal: 1500000.0,
+      grandTotal: 1500000.0,
     },
   });
 
@@ -340,7 +341,7 @@ async function main() {
     data: {
       rfqId: rfqJan.id,
       vendorId: acme.id,
-      price: 120000.00,
+      price: 120000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-01-10T10:00:00Z'),
     },
@@ -350,7 +351,7 @@ async function main() {
     data: {
       rfqId: rfqFeb.id,
       vendorId: techparts.id,
-      price: 180000.00,
+      price: 180000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-02-10T10:00:00Z'),
     },
@@ -360,7 +361,7 @@ async function main() {
     data: {
       rfqId: rfqMar.id,
       vendorId: officeco.id,
-      price: 150000.00,
+      price: 150000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-03-10T10:00:00Z'),
     },
@@ -370,7 +371,7 @@ async function main() {
     data: {
       rfqId: rfqApr.id,
       vendorId: techparts.id,
-      price: 320000.00,
+      price: 320000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-04-10T10:00:00Z'),
     },
@@ -380,12 +381,11 @@ async function main() {
     data: {
       rfqId: rfqMay.id,
       vendorId: acme.id,
-      price: 240000.00,
+      price: 240000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-05-10T10:00:00Z'),
     },
   });
-
 
   // 9. Create Purchase Orders
   // PO-001: Acme Supplies Group (Accepted) - June
@@ -395,7 +395,7 @@ async function main() {
       quotationId: quote2.id,
       vendorId: acme.id,
       buyerId: procurement.id,
-      totalAmount: 85000.00,
+      totalAmount: 85000.0,
       status: 'ACCEPTED',
     },
   });
@@ -407,7 +407,7 @@ async function main() {
       quotationId: quote1.id,
       vendorId: techparts.id,
       buyerId: buyer.id,
-      totalAmount: 365000.00, // Adjusted to 3.65L to match June peak
+      totalAmount: 365000.0, // Adjusted to 3.65L to match June peak
       status: 'DELIVERED',
     },
   });
@@ -419,7 +419,7 @@ async function main() {
       quotationId: quoteJan.id,
       vendorId: acme.id,
       buyerId: procurement.id,
-      totalAmount: 120000.00,
+      totalAmount: 120000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-01-15T10:00:00Z'),
     },
@@ -431,7 +431,7 @@ async function main() {
       quotationId: quoteFeb.id,
       vendorId: techparts.id,
       buyerId: procurement.id,
-      totalAmount: 180000.00,
+      totalAmount: 180000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-02-15T10:00:00Z'),
     },
@@ -443,7 +443,7 @@ async function main() {
       quotationId: quoteMar.id,
       vendorId: officeco.id,
       buyerId: procurement.id,
-      totalAmount: 150000.00,
+      totalAmount: 150000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-03-15T10:00:00Z'),
     },
@@ -455,7 +455,7 @@ async function main() {
       quotationId: quoteApr.id,
       vendorId: techparts.id,
       buyerId: buyer.id,
-      totalAmount: 320000.00,
+      totalAmount: 320000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-04-15T10:00:00Z'),
     },
@@ -467,12 +467,11 @@ async function main() {
       quotationId: quoteMay.id,
       vendorId: acme.id,
       buyerId: procurement.id,
-      totalAmount: 240000.00,
+      totalAmount: 240000.0,
       status: 'ACCEPTED',
       createdAt: new Date('2026-05-15T10:00:00Z'),
     },
   });
-
 
   // 9.5 Create Invoices
   // Invoice 1: Acme Supplies Group (Paid)
@@ -484,9 +483,9 @@ async function main() {
       status: 'PAID',
       purchaseOrderId: po1.id,
       vendorId: acme.id,
-      totalAmount: 85000.00,
-      taxAmount: 15000.00,
-      subtotal: 70000.00,
+      totalAmount: 85000.0,
+      taxAmount: 15000.0,
+      subtotal: 70000.0,
       remarks: 'Paid via direct bank transfer.',
     },
   });
@@ -500,9 +499,9 @@ async function main() {
       status: 'OVERDUE',
       purchaseOrderId: po2.id,
       vendorId: techparts.id,
-      totalAmount: 365000.00,
-      taxAmount: 65000.00,
-      subtotal: 300000.00,
+      totalAmount: 365000.0,
+      taxAmount: 65000.0,
+      subtotal: 300000.0,
       remarks: 'Payment delay notification sent.',
     },
   });
@@ -524,7 +523,11 @@ async function main() {
         { level: 1, action: 'APPROVED', user: buyer.email, timestamp: new Date() },
       ]),
       timeline: JSON.stringify([
-        { title: 'Selection Initiated', description: 'Buyer submitted selection for approval', date: new Date() }
+        {
+          title: 'Selection Initiated',
+          description: 'Buyer submitted selection for approval',
+          date: new Date(),
+        },
       ]),
     },
   });

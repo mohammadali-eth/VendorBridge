@@ -11,11 +11,14 @@ const pathRewritePlugin = () => ({
   configureServer(server) {
     server.middlewares.use((req, res, next) => {
       if (req.url && req.url.includes('/@fs/home/mohammad-ali/VendorBridge/')) {
-        req.url = req.url.replace('/@fs/home/mohammad-ali/VendorBridge/', '/@fs/home/mohammad-ali/%0AVendorBridge%0A/');
+        req.url = req.url.replace(
+          '/@fs/home/mohammad-ali/VendorBridge/',
+          '/@fs/home/mohammad-ali/%0AVendorBridge%0A/'
+        );
       }
       next();
     });
-  }
+  },
 });
 
 export default defineConfig({
@@ -33,8 +36,8 @@ export default defineConfig({
         path.resolve(__dirname, '../..'),
         '/home/mohammad-ali',
         '/home/mohammad-ali/VendorBridge',
-        '/home/mohammad-ali/\nVendorBridge\n'
-      ]
+        '/home/mohammad-ali/\nVendorBridge\n',
+      ],
     },
     proxy: {
       '/api/v1': {

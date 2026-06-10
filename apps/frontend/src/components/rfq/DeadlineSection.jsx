@@ -15,7 +15,9 @@ export default function DeadlineSection() {
     <div className="space-y-4 text-left">
       <div>
         <h4 className="text-sm font-bold text-slate-800">Timeline & Deadlines</h4>
-        <p className="text-xs text-slate-500 mt-0.5">Specify when bidding starts and the final submission date.</p>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Specify when bidding starts and the final submission date.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -33,7 +35,9 @@ export default function DeadlineSection() {
               min={todayStr}
               {...register('startDate')}
               className={`w-full bg-slate-50 border ${
-                errors.startDate ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-200 focus:ring-[#714B67]'
+                errors.startDate
+                  ? 'border-rose-300 focus:ring-rose-500'
+                  : 'border-slate-200 focus:ring-[#714B67]'
               } rounded-xl pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2`}
             />
           </div>
@@ -56,12 +60,16 @@ export default function DeadlineSection() {
               min={todayStr}
               {...register('deadline')}
               className={`w-full bg-slate-50 border ${
-                errors.deadline ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-200 focus:ring-[#714B67]'
+                errors.deadline
+                  ? 'border-rose-300 focus:ring-rose-500'
+                  : 'border-slate-200 focus:ring-[#714B67]'
               } rounded-xl pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2`}
             />
           </div>
           {errors.deadline && (
-            <p className="text-rose-600 text-[10px] mt-1 font-semibold">{errors.deadline.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-semibold">
+              {errors.deadline.message}
+            </p>
           )}
         </div>
       </div>

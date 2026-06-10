@@ -9,7 +9,7 @@ import { useAuthStore } from '../../../store/auth.store';
 export default function Login() {
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,10 +35,10 @@ export default function Login() {
     setLoading(true);
     try {
       await login(data.email, data.password);
-      
+
       // If remember me is set, we could write to localStorage, but refreshes are cookie based.
       // We can handle local storage flag if desired, but session cookies do the heavy lifting.
-      
+
       navigate(redirectForRole());
     } catch (err) {
       setError(err || 'Invalid credentials');
@@ -50,12 +50,8 @@ export default function Login() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">
-          Welcome Back
-        </h1>
-        <p className="text-sm text-slate-500 mt-1">
-          Sign in to VendorBridge
-        </p>
+        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">Welcome Back</h1>
+        <p className="text-sm text-slate-500 mt-1">Sign in to VendorBridge</p>
       </div>
 
       {error && (
@@ -66,7 +62,10 @@ export default function Login() {
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="email" className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="email"
+            className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
+          >
             Email Address
           </label>
           <div className="relative">
@@ -88,7 +87,10 @@ export default function Login() {
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="password"
+            className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
+          >
             Password
           </label>
           <div className="relative">

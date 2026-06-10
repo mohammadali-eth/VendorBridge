@@ -89,7 +89,9 @@ export default function QuotationsPage() {
         <div className="space-y-4">
           {rfqs.map((rfq) => {
             const rfqNumber = `RFQ-${new Date(rfq.createdAt).getFullYear()}-${rfq.title.charCodeAt(0) || 101}`;
-            const bidCount = rfq.quotations?.filter((q) => q.status === 'SUBMITTED' || q.status === 'ACCEPTED').length || 0;
+            const bidCount =
+              rfq.quotations?.filter((q) => q.status === 'SUBMITTED' || q.status === 'ACCEPTED')
+                .length || 0;
             const draftCount = rfq.quotations?.filter((q) => q.status === 'DRAFT').length || 0;
 
             // Determine if current supplier already submitted or has a draft
@@ -104,9 +106,7 @@ export default function QuotationsPage() {
                   </Badge>
                 );
               } else {
-                bidStatusBadge = (
-                  <Badge variant="neutral">Not Bidded</Badge>
-                );
+                bidStatusBadge = <Badge variant="neutral">Not Bidded</Badge>;
               }
             }
 
@@ -118,7 +118,9 @@ export default function QuotationsPage() {
                 {/* RFQ Meta Info */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[10px] font-black text-slate-400 tracking-wider">{rfqNumber}</span>
+                    <span className="text-[10px] font-black text-slate-400 tracking-wider">
+                      {rfqNumber}
+                    </span>
                     <Badge variant={getStatusVariant(rfq.status)}>
                       {getStatusLabel(rfq.status)}
                     </Badge>
@@ -126,8 +128,19 @@ export default function QuotationsPage() {
                   </div>
                   <h3 className="text-base font-black text-slate-900 leading-tight">{rfq.title}</h3>
                   <div className="flex items-center gap-4 text-xs font-semibold text-slate-500">
-                    <span>Category: <strong className="text-slate-700">{rfq.category}</strong></span>
-                    <span>Deadline: <strong className="text-slate-700">{new Date(rfq.deadline).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</strong></span>
+                    <span>
+                      Category: <strong className="text-slate-700">{rfq.category}</strong>
+                    </span>
+                    <span>
+                      Deadline:{' '}
+                      <strong className="text-slate-700">
+                        {new Date(rfq.deadline).toLocaleDateString('en-IN', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </strong>
+                    </span>
                   </div>
                 </div>
 
@@ -136,9 +149,17 @@ export default function QuotationsPage() {
                   {/* Counts metrics */}
                   {!isSupplier && (
                     <div className="text-right text-xs shrink-0">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Responses</span>
-                      <strong className="text-slate-800 text-sm font-black">{bidCount} Submitted</strong>
-                      {draftCount > 0 && <span className="text-[10px] text-slate-400 block font-medium">({draftCount} draft)</span>}
+                      <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                        Responses
+                      </span>
+                      <strong className="text-slate-800 text-sm font-black">
+                        {bidCount} Submitted
+                      </strong>
+                      {draftCount > 0 && (
+                        <span className="text-[10px] text-slate-400 block font-medium">
+                          ({draftCount} draft)
+                        </span>
+                      )}
                     </div>
                   )}
 

@@ -31,9 +31,7 @@ export const rfqSchema = z
         })
       )
       .min(1, 'At least 1 line item is required'),
-    assignedVendorIds: z
-      .array(z.string())
-      .min(1, 'At least 1 vendor must be assigned to the RFQ'),
+    assignedVendorIds: z.array(z.string()).min(1, 'At least 1 vendor must be assigned to the RFQ'),
   })
   .refine(
     (data) => {

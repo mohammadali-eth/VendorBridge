@@ -14,19 +14,19 @@ export async function getApprovals(req, res, next) {
           select: {
             title: true,
             createdAt: true,
-          }
+          },
         },
         vendor: {
           select: {
             name: true,
-          }
+          },
         },
         quotation: {
           select: {
             grandTotal: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     res.status(200).json({
@@ -59,16 +59,16 @@ export async function getApproval(req, res, next) {
             deadline: true,
             createdAt: true,
             createdBy: {
-              select: { name: true }
-            }
-          }
+              select: { name: true },
+            },
+          },
         },
         vendor: {
           select: {
             id: true,
             name: true,
             email: true,
-          }
+          },
         },
         quotation: {
           select: {
@@ -79,15 +79,15 @@ export async function getApproval(req, res, next) {
             grandTotal: true,
             deliveryDays: true,
             comments: true,
-          }
+          },
         },
         selectedBy: {
           select: {
             id: true,
             name: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     if (!selection) {
@@ -95,7 +95,9 @@ export async function getApproval(req, res, next) {
     }
 
     // Determine deterministic vendor rating (3.5 - 5.0) based on name string character codes
-    const charSum = selection.vendor.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const charSum = selection.vendor.name
+      .split('')
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const rating = parseFloat((3.5 + (charSum % 16) / 10).toFixed(1));
 
     // Format final response object
@@ -129,12 +131,18 @@ export async function getApproval(req, res, next) {
         deliveryDays: selection.quotation.deliveryDays,
         gstPercent: parseFloat(selection.quotation.gstPercent.toString()),
         otherTaxPercent: parseFloat(selection.quotation.otherTaxPercent.toString()),
-        gstAmount: parseFloat(selection.quotation.subtotal.toString()) * parseFloat(selection.quotation.gstPercent.toString()) / 100,
-        otherTaxAmount: parseFloat(selection.quotation.subtotal.toString()) * parseFloat(selection.quotation.otherTaxPercent.toString()) / 100,
+        gstAmount:
+          (parseFloat(selection.quotation.subtotal.toString()) *
+            parseFloat(selection.quotation.gstPercent.toString())) /
+          100,
+        otherTaxAmount:
+          (parseFloat(selection.quotation.subtotal.toString()) *
+            parseFloat(selection.quotation.otherTaxPercent.toString())) /
+          100,
         discount: 0, // Mocked discount
         finalTotal: parseFloat(selection.quotation.grandTotal.toString()),
         vendorRating: rating,
-      }
+      },
     };
 
     res.status(200).json({
@@ -216,7 +224,7 @@ export async function approveApproval(req, res, next) {
     let auditLogs = Array.isArray(selection.auditLogs) ? selection.auditLogs : [];
 
     const currentLevelIndex = history.findIndex((h) => h.level === selection.currentLevel);
-    
+
     if (currentLevelIndex !== -1) {
       history[currentLevelIndex].status = 'APPROVED';
       history[currentLevelIndex].date = new Date().toISOString();
@@ -275,9 +283,12 @@ export async function approveApproval(req, res, next) {
           quotationId: selection.quotationId,
           vendorId: selection.vendorId,
           buyerId: selection.selectedById,
-          totalAmount: selection.quotationId ? (await prisma.quotation.findUnique({ where: { id: selection.quotationId } })).grandTotal : 0,
+          totalAmount: selection.quotationId
+            ? (await prisma.quotation.findUnique({ where: { id: selection.quotationId } }))
+                .grandTotal
+            : 0,
           status: 'DRAFT',
-        }
+        },
       });
     }
 
@@ -311,7 +322,9 @@ export async function rejectApproval(req, res, next) {
     const userName = req.user.name;
 
     if (!comment || comment.length < 10) {
-      return next(new AppError('Rejection reason is mandatory and must be at least 10 characters long', 400));
+      return next(
+        new AppError('Rejection reason is mandatory and must be at least 10 characters long', 400)
+      );
     }
 
     const selection = await prisma.vendorSelection.findUnique({
@@ -384,7 +397,9 @@ export async function sendBackApproval(req, res, next) {
     const userName = req.user.name;
 
     if (!comment || comment.length < 10) {
-      return next(new AppError('Revision note is mandatory and must be at least 10 characters long', 400));
+      return next(
+        new AppError('Revision note is mandatory and must be at least 10 characters long', 400)
+      );
     }
 
     const selection = await prisma.vendorSelection.findUnique({

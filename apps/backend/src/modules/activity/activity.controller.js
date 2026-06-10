@@ -158,7 +158,14 @@ export async function getAuditLogs(req, res, next) {
 /**
  * Helper to record audit log programmatically
  */
-export async function createAuditEntry({ user, module, action, entity, status = 'Success', ipAddress = '192.168.1.10' }) {
+export async function createAuditEntry({
+  user,
+  module,
+  action,
+  entity,
+  status = 'Success',
+  ipAddress = '192.168.1.10',
+}) {
   try {
     const lastLog = await prisma.auditLog.findFirst({
       orderBy: { createdAt: 'desc' },

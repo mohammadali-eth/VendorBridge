@@ -50,7 +50,9 @@ export default function RFQSummary({ isPublishMode }) {
       <div className="space-y-4">
         {/* Title */}
         <div>
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">RFQ Title</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            RFQ Title
+          </span>
           <p className="text-xs font-bold text-slate-100 truncate mt-1">
             {title ? title : 'Untitled Procurement Request'}
           </p>
@@ -79,13 +81,19 @@ export default function RFQSummary({ isPublishMode }) {
           <div>
             <div className="flex items-center gap-1.5 text-slate-400">
               <Users className="h-3.5 w-3.5" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Assigned Vendors</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">
+                Assigned Vendors
+              </span>
             </div>
             <p className="mt-1 text-base font-black text-slate-100">{assignedVendorIds.length}</p>
           </div>
           <div>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Est. Budget</span>
-            <p className="mt-1 text-base font-black text-[#A87D9F]">{formatCurrency(totalBudget)}</p>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+              Est. Budget
+            </span>
+            <p className="mt-1 text-base font-black text-[#A87D9F]">
+              {formatCurrency(totalBudget)}
+            </p>
           </div>
         </div>
 
@@ -93,7 +101,9 @@ export default function RFQSummary({ isPublishMode }) {
         <div className="pt-3 border-t border-slate-800 flex items-center gap-2">
           <Calendar className="h-4 w-4 text-[#A87D9F]" />
           <div className="min-w-0">
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Submission Deadline</span>
+            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+              Submission Deadline
+            </span>
             <span className="text-xs font-bold text-slate-200 block mt-0.5 truncate">
               {getFormattedDate(deadline)}
             </span>
@@ -107,7 +117,10 @@ export default function RFQSummary({ isPublishMode }) {
           <AlertCircle className="h-4 w-4 shrink-0 text-amber-400" />
           <div>
             <span className="font-bold block mb-0.5">Missing Required Fields</span>
-            <span>You must complete the title, add at least one line item, set a deadline, and select a vendor before publishing.</span>
+            <span>
+              You must complete the title, add at least one line item, set a deadline, and select a
+              vendor before publishing.
+            </span>
           </div>
         </div>
       )}

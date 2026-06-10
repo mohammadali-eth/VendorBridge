@@ -3,19 +3,21 @@ import { z } from 'zod';
 export const quotationSchema = z.object({
   rfqId: z.string().uuid(),
   vendorId: z.string().uuid(),
-  items: z.array(
-    z.object({
-      name: z.string(),
-      quantity: z.number().min(1),
-      unit: z.string(),
-      description: z.string().optional().nullable(),
-      unitPrice: z
-        .number({ invalid_type_error: 'Unit Price must be a valid number' })
-        .min(1, 'Unit Price must be greater than 0'),
-      total: z.number().optional(),
-      deliveryDays: z.number().optional(),
-    })
-  ).min(1, 'Quotation must contain at least one item'),
+  items: z
+    .array(
+      z.object({
+        name: z.string(),
+        quantity: z.number().min(1),
+        unit: z.string(),
+        description: z.string().optional().nullable(),
+        unitPrice: z
+          .number({ invalid_type_error: 'Unit Price must be a valid number' })
+          .min(1, 'Unit Price must be greater than 0'),
+        total: z.number().optional(),
+        deliveryDays: z.number().optional(),
+      })
+    )
+    .min(1, 'Quotation must contain at least one item'),
   deliveryDays: z
     .number({ invalid_type_error: 'Delivery time is required' })
     .min(1, 'Delivery timeline must be at least 1 day'),

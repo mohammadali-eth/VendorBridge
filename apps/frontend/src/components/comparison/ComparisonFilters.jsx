@@ -35,7 +35,9 @@ export default function ComparisonFilters({
 
       {/* Sorting Buttons */}
       <div className="space-y-2">
-        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Sort Quotations By</span>
+        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+          Sort Quotations By
+        </span>
         <div className="grid grid-cols-3 gap-1.5">
           <button
             type="button"

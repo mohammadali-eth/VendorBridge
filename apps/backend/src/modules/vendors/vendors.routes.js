@@ -9,7 +9,7 @@ import {
   deleteVendor,
   bulkUpdateVendors,
   bulkDeleteVendors,
-  importVendors
+  importVendors,
 } from './vendors.controller.js';
 import { protect } from '../../middlewares/auth.middleware.js';
 

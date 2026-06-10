@@ -17,7 +17,7 @@ export async function createRfq(req, res, next) {
       items = [],
       attachments = [],
       assignedVendorIds = [],
-      status = 'DRAFT'
+      status = 'DRAFT',
     } = req.body;
 
     const createdById = req.user.id; // From auth.middleware
@@ -31,7 +31,11 @@ export async function createRfq(req, res, next) {
       if (!items || !Array.isArray(items) || items.length === 0) {
         return next(new AppError('At least one line item is required to publish an RFQ', 400));
       }
-      if (!assignedVendorIds || !Array.isArray(assignedVendorIds) || assignedVendorIds.length === 0) {
+      if (
+        !assignedVendorIds ||
+        !Array.isArray(assignedVendorIds) ||
+        assignedVendorIds.length === 0
+      ) {
         return next(new AppError('At least one vendor must be assigned to publish an RFQ', 400));
       }
     }
@@ -57,13 +61,13 @@ export async function createRfq(req, res, next) {
         items: items,
         attachments: attachments,
         assignedVendorIds: assignedVendorIds,
-        createdById
-      }
+        createdById,
+      },
     });
 
     res.status(201).json({
       status: 'success',
-      data: rfq
+      data: rfq,
     });
   } catch (error) {
     next(error);
@@ -82,12 +86,12 @@ export async function uploadAttachments(req, res, next) {
       name: file.name || 'document.pdf',
       size: file.size || 2500000, // Default 2.5MB
       type: file.type || 'application/pdf',
-      url: `/uploads/mock_${Date.now()}_${file.name || 'document.pdf'}`
+      url: `/uploads/mock_${Date.now()}_${file.name || 'document.pdf'}`,
     }));
 
     res.status(200).json({
       status: 'success',
-      data: uploaded
+      data: uploaded,
     });
   } catch (error) {
     next(error);
@@ -231,20 +235,70 @@ export async function createVendorSelection(req, res, next) {
 
     // Initial approval chain
     const initialHistory = [
-      { level: 1, approverName: 'Rahul Mehta', role: 'Procurement Head', status: 'PENDING', date: null, remarks: '' },
-      { level: 2, approverName: 'Priya Shah', role: 'Finance Manager', status: 'PENDING', date: null, remarks: '' },
-      { level: 3, approverName: 'Akbar Husain', role: 'Department Head', status: 'PENDING', date: null, remarks: '' },
-      { level: 4, approverName: 'Vikram Malhotra', role: 'Procurement Director', status: 'PENDING', date: null, remarks: '' }
+      {
+        level: 1,
+        approverName: 'Rahul Mehta',
+        role: 'Procurement Head',
+        status: 'PENDING',
+        date: null,
+        remarks: '',
+      },
+      {
+        level: 2,
+        approverName: 'Priya Shah',
+        role: 'Finance Manager',
+        status: 'PENDING',
+        date: null,
+        remarks: '',
+      },
+      {
+        level: 3,
+        approverName: 'Akbar Husain',
+        role: 'Department Head',
+        status: 'PENDING',
+        date: null,
+        remarks: '',
+      },
+      {
+        level: 4,
+        approverName: 'Vikram Malhotra',
+        role: 'Procurement Director',
+        status: 'PENDING',
+        date: null,
+        remarks: '',
+      },
     ];
 
     const initialTimeline = [
-      { action: 'RFQ Created', user: 'System Auto', timestamp: rfq.createdAt.toISOString(), status: 'COMPLETED', remarks: 'RFQ successfully initialized' },
-      { action: 'Vendor Selected', user: req.user.name, timestamp: new Date().toISOString(), status: 'COMPLETED', remarks: 'Vendor bid approved for authorization chain' }
+      {
+        action: 'RFQ Created',
+        user: 'System Auto',
+        timestamp: rfq.createdAt.toISOString(),
+        status: 'COMPLETED',
+        remarks: 'RFQ successfully initialized',
+      },
+      {
+        action: 'Vendor Selected',
+        user: req.user.name,
+        timestamp: new Date().toISOString(),
+        status: 'COMPLETED',
+        remarks: 'Vendor bid approved for authorization chain',
+      },
     ];
 
     const initialAudit = [
-      { action: 'RFQ Created', performedBy: 'System Auto', timestamp: rfq.createdAt.toISOString(), remarks: 'RFQ published' },
-      { action: 'Selection Initiated', performedBy: req.user.name, timestamp: new Date().toISOString(), remarks: 'Pushed to approval chain' }
+      {
+        action: 'RFQ Created',
+        performedBy: 'System Auto',
+        timestamp: rfq.createdAt.toISOString(),
+        remarks: 'RFQ published',
+      },
+      {
+        action: 'Selection Initiated',
+        performedBy: req.user.name,
+        timestamp: new Date().toISOString(),
+        remarks: 'Pushed to approval chain',
+      },
     ];
 
     // Create the vendor selection record

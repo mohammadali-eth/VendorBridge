@@ -83,7 +83,8 @@ export default function Dashboard() {
             Welcome back, {user?.name || 'User'}!
           </h2>
           <p className="mt-1 text-sm text-slate-500 font-medium">
-            Authorized Role: <span className="font-semibold text-[#714B67]">{getRoleLabel(user?.role)}</span> | 
+            Authorized Role:{' '}
+            <span className="font-semibold text-[#714B67]">{getRoleLabel(user?.role)}</span> |
             Reviewing your VendorBridge operations command console.
           </p>
         </div>
@@ -98,10 +99,7 @@ export default function Dashboard() {
       </div>
 
       {/* 1. KPI Cards Row */}
-      <StatsCards
-        stats={statsQuery.data}
-        loading={statsQuery.isLoading}
-      />
+      <StatsCards stats={statsQuery.data} loading={statsQuery.isLoading} />
 
       {/* 2. Recharts Analytics Spend Charts (Upper Section) */}
       <AnalyticsCharts
@@ -114,15 +112,9 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Left column (2/3 width on desktop): POs & Invoices tables */}
         <div className="lg:col-span-2 space-y-8">
-          <RecentPOs
-            pos={posQuery.data}
-            loading={posQuery.isLoading}
-          />
+          <RecentPOs pos={posQuery.data} loading={posQuery.isLoading} />
 
-          <RecentInvoices
-            invoices={invoicesQuery.data}
-            loading={invoicesQuery.isLoading}
-          />
+          <RecentInvoices invoices={invoicesQuery.data} loading={invoicesQuery.isLoading} />
         </div>
 
         {/* Right column (1/3 width on desktop): Quick Actions, Pending Approvals, Activity Feed */}
@@ -134,10 +126,7 @@ export default function Dashboard() {
             loading={analyticsQuery.isLoading}
           />
 
-          <ActivityFeed
-            activities={activitiesQuery.data}
-            loading={activitiesQuery.isLoading}
-          />
+          <ActivityFeed activities={activitiesQuery.data} loading={activitiesQuery.isLoading} />
         </div>
       </div>
     </div>

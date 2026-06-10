@@ -57,7 +57,8 @@ export default function CreateRFQ() {
         navigate('/dashboard');
       }, 2000);
     } catch (err) {
-      const msg = err.response?.data?.message || 'Failed to save RFQ. Please check validation requirements.';
+      const msg =
+        err.response?.data?.message || 'Failed to save RFQ. Please check validation requirements.';
       showToast(msg, 'error');
     } finally {
       setLoading(false);
@@ -87,18 +88,22 @@ export default function CreateRFQ() {
           Back
         </button>
         <h2 className="text-2xl font-black text-[#111827] tracking-tight">Create RFQs</h2>
-        <p className="mt-1 text-sm text-slate-500 font-medium">
-          new request for quotation
-        </p>
+        <p className="mt-1 text-sm text-slate-500 font-medium">new request for quotation</p>
       </div>
 
       {/* Stepper bar */}
       <div className="flex items-center gap-2 max-w-xl">
-        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-[#714B67] bg-[#714B67] text-white font-black text-xs">1</div>
+        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-[#714B67] bg-[#714B67] text-white font-black text-xs">
+          1
+        </div>
         <div className="flex-1 h-[2px] bg-[#714B67]"></div>
-        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-slate-300 text-slate-400 font-bold text-xs bg-white">2</div>
+        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-slate-300 text-slate-400 font-bold text-xs bg-white">
+          2
+        </div>
         <div className="flex-1 h-[2px] bg-slate-200"></div>
-        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-slate-300 text-slate-400 font-bold text-xs bg-white">3</div>
+        <div className="flex items-center justify-center h-8 w-8 rounded-full border-2 border-slate-300 text-slate-400 font-bold text-xs bg-white">
+          3
+        </div>
       </div>
 
       <FormProvider {...methods}>

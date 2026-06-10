@@ -50,7 +50,6 @@ export default function ReportsPage() {
   const [deptFilter, setDeptFilter] = useState('All');
   const [vendorFilter, setVendorFilter] = useState('All');
 
-
   // Search
   const [vendorSearch, setVendorSearch] = useState('');
 
@@ -125,7 +124,7 @@ export default function ReportsPage() {
     try {
       const data = await reportsService.downloadReport(id);
       showToast(`Downloading file...`);
-      
+
       const link = document.createElement('a');
       link.href = data.url;
       link.setAttribute('download', data.url.split('/').pop());
@@ -259,9 +258,7 @@ export default function ReportsPage() {
             <span className="text-lg font-black text-slate-800 tracking-tight">
               {summary?.invoiceCompletionRate || '0'}%
             </span>
-            <span className="text-[10px] text-slate-400 font-medium block mt-1">
-              Invoices Paid
-            </span>
+            <span className="text-[10px] text-slate-400 font-medium block mt-1">Invoices Paid</span>
           </div>
         </Card>
 
@@ -274,9 +271,7 @@ export default function ReportsPage() {
             <span className="text-lg font-black text-slate-800 tracking-tight">
               {summary?.pendingApprovals || '0'}
             </span>
-            <span className="text-[10px] text-rose-500 font-bold block mt-1">
-              Action Required
-            </span>
+            <span className="text-[10px] text-rose-500 font-bold block mt-1">Action Required</span>
           </div>
         </Card>
 
@@ -308,7 +303,9 @@ export default function ReportsPage() {
               <div key={idx} className="space-y-1 text-xs font-semibold">
                 <div className="flex justify-between text-slate-700">
                   <span>{cat.name}</span>
-                  <span className="font-bold">₹{cat.amount?.toLocaleString('en-IN')} ({cat.percentage}%)</span>
+                  <span className="font-bold">
+                    ₹{cat.amount?.toLocaleString('en-IN')} ({cat.percentage}%)
+                  </span>
                 </div>
                 <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
                   <div
@@ -438,7 +435,9 @@ export default function ReportsPage() {
                 key={v}
                 onClick={() => setTrendView(v)}
                 className={`py-1 px-3 rounded-lg text-[10px] font-bold ${
-                  trendView === v ? 'bg-[#714B67] text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                  trendView === v
+                    ? 'bg-[#714B67] text-white'
+                    : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
                 }`}
               >
                 {v}
@@ -471,19 +470,33 @@ export default function ReportsPage() {
           <div className="grid grid-cols-4 gap-2 pt-2 text-center text-xs font-semibold">
             <div className="bg-slate-50 p-2.5 rounded-2xl">
               <span className="text-[10px] text-slate-400 block font-bold leading-none">Total</span>
-              <span className="text-sm font-black text-slate-800 block mt-1">{poStats?.total || 0}</span>
+              <span className="text-sm font-black text-slate-800 block mt-1">
+                {poStats?.total || 0}
+              </span>
             </div>
             <div className="bg-emerald-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-emerald-600 block font-bold leading-none">Approved</span>
-              <span className="text-sm font-black text-emerald-700 block mt-1">{poStats?.approved || 0}</span>
+              <span className="text-[10px] text-emerald-600 block font-bold leading-none">
+                Approved
+              </span>
+              <span className="text-sm font-black text-emerald-700 block mt-1">
+                {poStats?.approved || 0}
+              </span>
             </div>
             <div className="bg-rose-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-rose-600 block font-bold leading-none">Rejected</span>
-              <span className="text-sm font-black text-rose-700 block mt-1">{poStats?.rejected || 0}</span>
+              <span className="text-[10px] text-rose-600 block font-bold leading-none">
+                Rejected
+              </span>
+              <span className="text-sm font-black text-rose-700 block mt-1">
+                {poStats?.rejected || 0}
+              </span>
             </div>
             <div className="bg-purple-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-[#714B67] block font-bold leading-none">Drafts</span>
-              <span className="text-sm font-black text-[#714B67] block mt-1">{poStats?.draft || 0}</span>
+              <span className="text-[10px] text-[#714B67] block font-bold leading-none">
+                Drafts
+              </span>
+              <span className="text-sm font-black text-[#714B67] block mt-1">
+                {poStats?.draft || 0}
+              </span>
             </div>
           </div>
 
@@ -495,7 +508,13 @@ export default function ReportsPage() {
                 <YAxis tick={{ fill: '#6B7280', fontSize: 10 }} />
                 <Tooltip />
                 <Legend wrapperStyle={{ fontSize: '10px' }} />
-                <Line type="monotone" dataKey="orders" name="Orders Created" stroke="#714B67" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="orders"
+                  name="Orders Created"
+                  stroke="#714B67"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -509,19 +528,33 @@ export default function ReportsPage() {
           <div className="grid grid-cols-4 gap-2 pt-2 text-center text-xs font-semibold">
             <div className="bg-slate-50 p-2.5 rounded-2xl">
               <span className="text-[10px] text-slate-400 block font-bold leading-none">Paid</span>
-              <span className="text-sm font-black text-slate-800 block mt-1">{invoiceStats?.paid || 0}</span>
+              <span className="text-sm font-black text-slate-800 block mt-1">
+                {invoiceStats?.paid || 0}
+              </span>
             </div>
             <div className="bg-amber-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-amber-600 block font-bold leading-none">Pending</span>
-              <span className="text-sm font-black text-amber-700 block mt-1">{invoiceStats?.pending || 0}</span>
+              <span className="text-[10px] text-amber-600 block font-bold leading-none">
+                Pending
+              </span>
+              <span className="text-sm font-black text-amber-700 block mt-1">
+                {invoiceStats?.pending || 0}
+              </span>
             </div>
             <div className="bg-rose-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-rose-600 block font-bold leading-none">Overdue</span>
-              <span className="text-sm font-black text-rose-700 block mt-1">{invoiceStats?.overdue || 0}</span>
+              <span className="text-[10px] text-rose-600 block font-bold leading-none">
+                Overdue
+              </span>
+              <span className="text-sm font-black text-rose-700 block mt-1">
+                {invoiceStats?.overdue || 0}
+              </span>
             </div>
             <div className="bg-emerald-50 p-2.5 rounded-2xl">
-              <span className="text-[10px] text-emerald-600 block font-bold leading-none">Success</span>
-              <span className="text-sm font-black text-emerald-700 block mt-1">{invoiceStats?.successRate || 97}%</span>
+              <span className="text-[10px] text-emerald-600 block font-bold leading-none">
+                Success
+              </span>
+              <span className="text-sm font-black text-emerald-700 block mt-1">
+                {invoiceStats?.successRate || 97}%
+              </span>
             </div>
           </div>
 
@@ -533,7 +566,13 @@ export default function ReportsPage() {
                 <YAxis tick={{ fill: '#6B7280', fontSize: 10 }} />
                 <Tooltip />
                 <Legend wrapperStyle={{ fontSize: '10px' }} />
-                <Line type="monotone" dataKey="invoices" name="Invoices Paid" stroke="#10B981" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="invoices"
+                  name="Invoices Paid"
+                  stroke="#10B981"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -583,7 +622,10 @@ export default function ReportsPage() {
         <h3 className="text-xs font-black text-slate-800 uppercase tracking-tight border-b border-slate-100 pb-2">
           Generate Custom Procurement Reports
         </h3>
-        <form onSubmit={handleGenerateReport} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+        <form
+          onSubmit={handleGenerateReport}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end"
+        >
           {/* Report Type */}
           <div className="space-y-1">
             <label className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">

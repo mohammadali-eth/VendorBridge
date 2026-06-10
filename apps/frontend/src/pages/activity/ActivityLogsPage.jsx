@@ -23,36 +23,37 @@ export default function ActivityLogsPage() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const loadData = useCallback(async (showRefreshIndicator = false) => {
-    if (showRefreshIndicator) setRefreshing(true);
-    try {
-      const [timelineData, notificationData, auditData] = await Promise.all([
-        activityService.getTimeline(timelineFilter),
-        activityService.getNotifications(),
-        activityService.getAuditLogs({
-          search,
-          module: moduleFilter,
-          startDate,
-          endDate,
-        }),
-      ]);
-      setTimeline(timelineData || []);
-      setNotifications(notificationData || []);
-      setAuditLogs(auditData || []);
-    } catch (err) {
-      console.error('Failed to load activity details', err);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, [timelineFilter, search, moduleFilter, startDate, endDate]);
+  const loadData = useCallback(
+    async (showRefreshIndicator = false) => {
+      if (showRefreshIndicator) setRefreshing(true);
+      try {
+        const [timelineData, notificationData, auditData] = await Promise.all([
+          activityService.getTimeline(timelineFilter),
+          activityService.getNotifications(),
+          activityService.getAuditLogs({
+            search,
+            module: moduleFilter,
+            startDate,
+            endDate,
+          }),
+        ]);
+        setTimeline(timelineData || []);
+        setNotifications(notificationData || []);
+        setAuditLogs(auditData || []);
+      } catch (err) {
+        console.error('Failed to load activity details', err);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    },
+    [timelineFilter, search, moduleFilter, startDate, endDate]
+  );
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadData();
   }, [loadData]);
-
-
 
   if (loading && timeline.length === 0) {
     return (
@@ -65,11 +66,12 @@ export default function ActivityLogsPage() {
 
   return (
     <div className="space-y-8 text-left pb-16 relative">
-
       {/* Header section with actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">
         <div>
-          <h2 className="text-2xl font-black text-[#111827] tracking-tight">Activity Logs & Notifications</h2>
+          <h2 className="text-2xl font-black text-[#111827] tracking-tight">
+            Activity Logs & Notifications
+          </h2>
           <p className="mt-1 text-sm text-slate-500 font-medium">
             Procurement activity timeline and audit records.
           </p>
@@ -109,7 +111,8 @@ export default function ActivityLogsPage() {
               Audit Logs
             </h3>
             <p className="text-[11px] text-slate-400 font-semibold leading-relaxed">
-              Immutable procurement logs and chronological history record chain. Access or deletion operations are restricted.
+              Immutable procurement logs and chronological history record chain. Access or deletion
+              operations are restricted.
             </p>
             <AuditLogFilters
               search={search}

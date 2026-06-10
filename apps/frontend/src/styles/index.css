@@ -4,20 +4,20 @@
 
 :root {
   --ink: #583b51;
-  --primary: #714B67;
-  --primary-text: #FFFFFF;
+  --primary: #714b67;
+  --primary-text: #ffffff;
 
-  --background: #FFFFFF;
+  --background: #ffffff;
   --text: #111827;
 
-  --accent: #A87D9F;
-  --accent-light: #F5EEF4;
+  --accent: #a87d9f;
+  --accent-light: #f5eef4;
 
-  --success: #16A34A;
-  --warning: #F59E0B;
-  --danger: #DC2626;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
 
-  --border: #E5E7EB;
+  --border: #e5e7eb;
 }
 
 @layer base {
@@ -25,11 +25,17 @@
     background-color: var(--background);
     color: var(--text);
     @apply antialiased selection:bg-[#714B67] selection:text-white;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family:
+      'Inter',
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
   /* Form focus styles */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     @apply focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-shadow duration-150;
   }
 }

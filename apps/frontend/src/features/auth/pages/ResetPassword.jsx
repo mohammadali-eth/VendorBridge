@@ -49,11 +49,10 @@ export default function ResetPassword() {
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-xl font-bold text-[#111827]">
-            Password Updated
-          </h1>
+          <h1 className="text-xl font-bold text-[#111827]">Password Updated</h1>
           <p className="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
-            Your password has been reset successfully. You can now log in using your new credentials.
+            Your password has been reset successfully. You can now log in using your new
+            credentials.
           </p>
         </div>
 
@@ -72,9 +71,7 @@ export default function ResetPassword() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">
-          Set New Password
-        </h1>
+        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">Set New Password</h1>
         <p className="text-sm text-slate-500 mt-1 max-w-xs mx-auto">
           Please choose a strong password that meets the security requirements.
         </p>
@@ -88,7 +85,10 @@ export default function ResetPassword() {
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="password" className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="password"
+            className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
+          >
             New Password
           </label>
           <div className="relative">
@@ -111,12 +111,17 @@ export default function ResetPassword() {
             </button>
           </div>
           {errors.password && (
-            <p className="mt-1 text-xs text-[#DC2626] font-medium leading-relaxed">{errors.password.message}</p>
+            <p className="mt-1 text-xs text-[#DC2626] font-medium leading-relaxed">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
+          >
             Confirm New Password
           </label>
           <div className="relative">
@@ -132,7 +137,9 @@ export default function ResetPassword() {
             />
           </div>
           {errors.confirmPassword && (
-            <p className="mt-1 text-xs text-[#DC2626] font-medium">{errors.confirmPassword.message}</p>
+            <p className="mt-1 text-xs text-[#DC2626] font-medium">
+              {errors.confirmPassword.message}
+            </p>
           )}
         </div>
 

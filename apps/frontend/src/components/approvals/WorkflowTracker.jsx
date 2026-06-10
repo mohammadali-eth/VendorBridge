@@ -50,10 +50,10 @@ export default function WorkflowTracker({ status }) {
                     isCompleted
                       ? 'bg-[#714B67] text-white'
                       : isActive
-                      ? isRejected
-                        ? 'bg-rose-600 text-white animate-pulse'
-                        : 'bg-[#A87D9F] text-white border-2 border-[#714B67]/20 shadow-md ring-4 ring-[#F5EEF4]'
-                      : 'bg-slate-100 text-slate-400 border border-slate-200'
+                        ? isRejected
+                          ? 'bg-rose-600 text-white animate-pulse'
+                          : 'bg-[#A87D9F] text-white border-2 border-[#714B67]/20 shadow-md ring-4 ring-[#F5EEF4]'
+                        : 'bg-slate-100 text-slate-400 border border-slate-200'
                   }`}
                 >
                   {isCompleted ? (

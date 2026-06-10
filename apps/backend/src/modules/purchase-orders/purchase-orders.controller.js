@@ -13,10 +13,10 @@ export async function getPurchaseOrders(req, res, next) {
         quotation: {
           select: {
             id: true,
-            rfq: { select: { title: true } }
-          }
-        }
-      }
+            rfq: { select: { title: true } },
+          },
+        },
+      },
     });
 
     res.status(200).json({
@@ -43,10 +43,10 @@ export async function getPurchaseOrder(req, res, next) {
         quotation: {
           include: {
             rfq: true,
-          }
+          },
         },
         invoices: true,
-      }
+      },
     });
 
     if (!po) {
@@ -98,7 +98,7 @@ export async function createInvoiceFromPo(req, res, next) {
       include: {
         vendor: true,
         quotation: true,
-      }
+      },
     });
 
     if (!po) {
@@ -121,7 +121,9 @@ export async function createInvoiceFromPo(req, res, next) {
     const taxAmount = gstAmount + otherTaxAmount;
     const totalAmount = subtotal.toNumber() + taxAmount;
 
-    const resolvedDueDate = dueDate ? new Date(dueDate) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    const resolvedDueDate = dueDate
+      ? new Date(dueDate)
+      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
     const invoice = await prisma.invoice.create({
       data: {
@@ -139,18 +141,18 @@ export async function createInvoiceFromPo(req, res, next) {
         purchaseOrder: {
           include: {
             quotation: {
-              include: { rfq: true }
-            }
-          }
+              include: { rfq: true },
+            },
+          },
         },
         vendor: true,
-      }
+      },
     });
 
     // Move PO status to DELIVERED
     await prisma.purchaseOrder.update({
       where: { id: po.id },
-      data: { status: 'DELIVERED' }
+      data: { status: 'DELIVERED' },
     });
 
     res.status(201).json({
@@ -171,8 +173,8 @@ export async function getInvoices(req, res, next) {
       orderBy: { createdAt: 'desc' },
       include: {
         vendor: { select: { name: true } },
-        purchaseOrder: { select: { poNumber: true } }
-      }
+        purchaseOrder: { select: { poNumber: true } },
+      },
     });
 
     res.status(200).json({
@@ -198,12 +200,12 @@ export async function getInvoice(req, res, next) {
         purchaseOrder: {
           include: {
             quotation: {
-              include: { rfq: true }
+              include: { rfq: true },
             },
-            buyer: { select: { name: true, email: true } }
-          }
-        }
-      }
+            buyer: { select: { name: true, email: true } },
+          },
+        },
+      },
     });
 
     if (!invoice) {
@@ -235,11 +237,11 @@ export async function updateInvoiceStatus(req, res, next) {
         purchaseOrder: {
           include: {
             quotation: {
-              include: { rfq: true }
-            }
-          }
-        }
-      }
+              include: { rfq: true },
+            },
+          },
+        },
+      },
     });
 
     res.status(200).json({
@@ -293,8 +295,8 @@ export async function downloadInvoicePdf(req, res, next) {
       where: { id },
       include: {
         vendor: true,
-        purchaseOrder: true
-      }
+        purchaseOrder: true,
+      },
     });
 
     if (!invoice) {

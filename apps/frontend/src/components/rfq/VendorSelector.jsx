@@ -65,10 +65,15 @@ export default function VendorSelector() {
           {/* Selected Vendors Box */}
           <div className="border border-slate-200 rounded-2xl p-4 bg-white min-h-[80px] space-y-2">
             {selectedVendors.length === 0 ? (
-              <p className="text-xs text-slate-400 font-medium py-3 text-center">No vendors assigned yet.</p>
+              <p className="text-xs text-slate-400 font-medium py-3 text-center">
+                No vendors assigned yet.
+              </p>
             ) : (
               selectedVendors.map((v) => (
-                <div key={v.id} className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0">
+                <div
+                  key={v.id}
+                  className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0"
+                >
                   <span className="text-xs font-bold text-slate-800">{v.name}</span>
                   <button
                     type="button"
@@ -90,8 +95,7 @@ export default function VendorSelector() {
                 onClick={() => setShowSearch(true)}
                 className="py-1.5 px-3 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
               >
-                <Plus className="h-3.5 w-3.5 text-slate-400" />
-                + add vendor
+                <Plus className="h-3.5 w-3.5 text-slate-400" />+ add vendor
               </button>
             ) : (
               <div className="space-y-2">
@@ -147,7 +151,9 @@ export default function VendorSelector() {
           </div>
 
           {errors.assignedVendorIds && (
-            <p className="text-rose-600 text-xs font-semibold mt-1">{errors.assignedVendorIds.message}</p>
+            <p className="text-rose-600 text-xs font-semibold mt-1">
+              {errors.assignedVendorIds.message}
+            </p>
           )}
         </div>
       )}

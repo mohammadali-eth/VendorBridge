@@ -3,11 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Building, Landmark, ChevronRight, ChevronLeft } from 'lucide-react';
-import {
-  registerStep1Schema,
-  registerStep2Schema,
-  registerStep3Schema,
-} from '../../../validators';
+import { registerStep1Schema, registerStep2Schema, registerStep3Schema } from '../../../validators';
 import { useAuthStore } from '../../../store/auth.store';
 
 export default function Register() {
@@ -52,9 +48,7 @@ export default function Register() {
   });
 
   // Step 3 Form
-  const {
-    handleSubmit: handleSubmit3,
-  } = useForm({
+  const { handleSubmit: handleSubmit3 } = useForm({
     resolver: zodResolver(registerStep3Schema),
     defaultValues: { role: formData.role },
   });
@@ -117,12 +111,8 @@ export default function Register() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">
-          Create Account
-        </h1>
-        <p className="text-sm text-slate-500 mt-1">
-          Join the VendorBridge procurement network
-        </p>
+        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">Create Account</h1>
+        <p className="text-sm text-slate-500 mt-1">Join the VendorBridge procurement network</p>
       </div>
 
       {renderProgress()}
@@ -186,7 +176,9 @@ export default function Register() {
               </button>
             </div>
             {errors1.password && (
-              <p className="mt-1 text-xs text-[#DC2626] font-medium leading-relaxed">{errors1.password.message}</p>
+              <p className="mt-1 text-xs text-[#DC2626] font-medium leading-relaxed">
+                {errors1.password.message}
+              </p>
             )}
           </div>
 
@@ -201,7 +193,9 @@ export default function Register() {
               placeholder="••••••••"
             />
             {errors1.confirmPassword && (
-              <p className="mt-1 text-xs text-[#DC2626] font-medium">{errors1.confirmPassword.message}</p>
+              <p className="mt-1 text-xs text-[#DC2626] font-medium">
+                {errors1.confirmPassword.message}
+              </p>
             )}
           </div>
 
@@ -228,7 +222,9 @@ export default function Register() {
               placeholder="Acme Global Inc"
             />
             {errors2.companyName && (
-              <p className="mt-1 text-xs text-[#DC2626] font-medium">{errors2.companyName.message}</p>
+              <p className="mt-1 text-xs text-[#DC2626] font-medium">
+                {errors2.companyName.message}
+              </p>
             )}
           </div>
 

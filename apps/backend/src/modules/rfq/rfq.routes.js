@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { createRfq, uploadAttachments, getRfq, getRfqComparison, getRfqs } from './rfq.controller.js';
+import {
+  createRfq,
+  uploadAttachments,
+  getRfq,
+  getRfqComparison,
+  getRfqs,
+} from './rfq.controller.js';
 import { protect } from '../../middlewares/auth.middleware.js';
 
 const router = Router();

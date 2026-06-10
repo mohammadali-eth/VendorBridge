@@ -1,11 +1,19 @@
 import React from 'react';
 import Card from '../common/Card';
 
-export default function ApprovalRemarks({ remarks, setRemarks, internalNotes, setInternalNotes, errors = {} }) {
+export default function ApprovalRemarks({
+  remarks,
+  setRemarks,
+  internalNotes,
+  setInternalNotes,
+  errors = {},
+}) {
   return (
     <Card className="text-left space-y-4">
       <div className="border-b border-slate-100 pb-3 mb-2">
-        <h3 className="text-sm font-black text-slate-800 tracking-tight">Remarks & Internal Notes</h3>
+        <h3 className="text-sm font-black text-slate-800 tracking-tight">
+          Remarks & Internal Notes
+        </h3>
       </div>
 
       <div className="space-y-4">
@@ -26,9 +34,13 @@ export default function ApprovalRemarks({ remarks, setRemarks, internalNotes, se
             {errors.remarks ? (
               <span className="text-[10px] text-rose-500 font-bold">{errors.remarks}</span>
             ) : (
-              <span className="text-[10px] text-slate-400 font-medium">Required for rejection / revision.</span>
+              <span className="text-[10px] text-slate-400 font-medium">
+                Required for rejection / revision.
+              </span>
             )}
-            <span className="text-[10px] text-slate-400 font-bold shrink-0">{remarks.length} chars</span>
+            <span className="text-[10px] text-slate-400 font-bold shrink-0">
+              {remarks.length} chars
+            </span>
           </div>
         </div>
 

@@ -11,11 +11,9 @@ export default function AccessDenied() {
         <div className="mx-auto w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600">
           <ShieldAlert size={28} />
         </div>
-        
+
         <div className="space-y-2">
-          <h1 className="text-xl font-black text-[#111827] tracking-tight">
-            Access Denied
-          </h1>
+          <h1 className="text-xl font-black text-[#111827] tracking-tight">Access Denied</h1>
           <p className="text-sm text-slate-500 font-medium">
             You do not have permission to access this page.
           </p>

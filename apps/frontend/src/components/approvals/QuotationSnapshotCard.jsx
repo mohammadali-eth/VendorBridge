@@ -11,7 +11,9 @@ export default function QuotationSnapshotCard({ snapshot }) {
         <h3 className="text-sm font-black text-slate-800 tracking-tight">Quotation Snapshot</h3>
         <div className="flex items-center gap-1 bg-amber-55 px-2 py-0.5 rounded-lg border border-amber-200">
           <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-          <span className="text-[10px] font-black text-amber-800">{snapshot.vendorRating || '4.0'} / 5</span>
+          <span className="text-[10px] font-black text-amber-800">
+            {snapshot.vendorRating || '4.0'} / 5
+          </span>
         </div>
       </div>
 
@@ -22,21 +24,31 @@ export default function QuotationSnapshotCard({ snapshot }) {
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-slate-400 font-bold">Subtotal</span>
-          <span className="text-slate-800 font-black">₹{snapshot.subtotal?.toLocaleString('en-IN')}</span>
+          <span className="text-slate-800 font-black">
+            ₹{snapshot.subtotal?.toLocaleString('en-IN')}
+          </span>
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-slate-400 font-bold">GST ({snapshot.gstPercent}%)</span>
-          <span className="text-slate-800 font-black">₹{snapshot.gstAmount?.toLocaleString('en-IN')}</span>
+          <span className="text-slate-800 font-black">
+            ₹{snapshot.gstAmount?.toLocaleString('en-IN')}
+          </span>
         </div>
         {snapshot.otherTaxPercent > 0 && (
           <div className="flex justify-between text-xs">
-            <span className="text-slate-400 font-bold">Other Tax ({snapshot.otherTaxPercent}%)</span>
-            <span className="text-slate-800 font-black">₹{snapshot.otherTaxAmount?.toLocaleString('en-IN')}</span>
+            <span className="text-slate-400 font-bold">
+              Other Tax ({snapshot.otherTaxPercent}%)
+            </span>
+            <span className="text-slate-800 font-black">
+              ₹{snapshot.otherTaxAmount?.toLocaleString('en-IN')}
+            </span>
           </div>
         )}
         <div className="flex justify-between text-xs">
           <span className="text-slate-400 font-bold">Discount</span>
-          <span className="text-emerald-600 font-black">-₹{snapshot.discount?.toLocaleString('en-IN') || '0'}</span>
+          <span className="text-emerald-600 font-black">
+            -₹{snapshot.discount?.toLocaleString('en-IN') || '0'}
+          </span>
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-slate-400 font-bold">Expected Delivery</span>

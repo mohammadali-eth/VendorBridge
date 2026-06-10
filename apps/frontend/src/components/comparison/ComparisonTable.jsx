@@ -1,10 +1,7 @@
 import React from 'react';
 import { Star, ShieldAlert, Check, Zap, DollarSign } from 'lucide-react';
 
-export default function ComparisonTable({
-  quotations = [],
-  onSelectVendor,
-}) {
+export default function ComparisonTable({ quotations = [], onSelectVendor }) {
   if (quotations.length === 0) {
     return (
       <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center text-slate-500">
@@ -38,7 +35,10 @@ export default function ComparisonTable({
         <table className="min-w-full divide-y divide-slate-100 text-xs">
           <thead>
             <tr className="bg-slate-50/70">
-              <th scope="col" className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider w-[20%]">
+              <th
+                scope="col"
+                className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider w-[20%]"
+              >
                 Criteria
               </th>
               {quotations.map((q) => {
@@ -51,7 +51,9 @@ export default function ComparisonTable({
                       isLowestPrice ? 'bg-emerald-50/20' : ''
                     }`}
                   >
-                    <span className="block text-sm text-[#714B67] truncate max-w-[150px] mx-auto">{q.vendorName}</span>
+                    <span className="block text-sm text-[#714B67] truncate max-w-[150px] mx-auto">
+                      {q.vendorName}
+                    </span>
                     {isLowestPrice && (
                       <span className="inline-flex items-center gap-0.5 mt-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold">
                         <DollarSign className="h-2.5 w-2.5" />
@@ -66,7 +68,10 @@ export default function ComparisonTable({
           <tbody className="divide-y divide-slate-100">
             {/* --- Section Header: Financial --- */}
             <tr className="bg-slate-50/30">
-              <td colSpan={quotations.length + 1} className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]">
+              <td
+                colSpan={quotations.length + 1}
+                className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]"
+              >
                 Financial Metrics
               </td>
             </tr>
@@ -79,7 +84,9 @@ export default function ComparisonTable({
                   <td
                     key={q.vendorId}
                     className={`px-6 py-3.5 text-center font-black text-sm border-l border-slate-100 ${
-                      isLowestPrice ? 'text-emerald-700 bg-emerald-50/20 font-black' : 'text-slate-800'
+                      isLowestPrice
+                        ? 'text-emerald-700 bg-emerald-50/20 font-black'
+                        : 'text-slate-800'
                     }`}
                   >
                     {formatCurrency(q.grandTotal)}
@@ -91,7 +98,10 @@ export default function ComparisonTable({
             <tr>
               <td className="px-6 py-3.5 text-slate-500 font-medium">GST Amount</td>
               {quotations.map((q) => (
-                <td key={q.vendorId} className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100">
+                <td
+                  key={q.vendorId}
+                  className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100"
+                >
                   {formatCurrency((q.subtotal * q.gst) / 100)} ({q.gst}%)
                 </td>
               ))}
@@ -100,7 +110,10 @@ export default function ComparisonTable({
             <tr>
               <td className="px-6 py-3.5 text-slate-500 font-medium">Subtotal</td>
               {quotations.map((q) => (
-                <td key={q.vendorId} className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100">
+                <td
+                  key={q.vendorId}
+                  className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100"
+                >
                   {formatCurrency(q.subtotal)}
                 </td>
               ))}
@@ -108,7 +121,10 @@ export default function ComparisonTable({
 
             {/* --- Section Header: Delivery --- */}
             <tr className="bg-slate-50/30">
-              <td colSpan={quotations.length + 1} className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]">
+              <td
+                colSpan={quotations.length + 1}
+                className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]"
+              >
                 Logistics & Timeline
               </td>
             </tr>
@@ -135,7 +151,10 @@ export default function ComparisonTable({
 
             {/* --- Section Header: Vendor Quality --- */}
             <tr className="bg-slate-50/30">
-              <td colSpan={quotations.length + 1} className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]">
+              <td
+                colSpan={quotations.length + 1}
+                className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]"
+              >
                 Vendor Reputation
               </td>
             </tr>
@@ -155,7 +174,9 @@ export default function ComparisonTable({
                         <Star className="h-3.5 w-3.5 fill-current" />
                       </div>
                       {isHighestRating && (
-                        <span className="px-1.5 py-0.2 bg-[#F5EEF4] text-[#714B67] text-[8px] font-bold rounded">TOP</span>
+                        <span className="px-1.5 py-0.2 bg-[#F5EEF4] text-[#714B67] text-[8px] font-bold rounded">
+                          TOP
+                        </span>
                       )}
                     </div>
                   </td>
@@ -165,7 +186,10 @@ export default function ComparisonTable({
 
             {/* --- Section Header: Commercial --- */}
             <tr className="bg-slate-50/30">
-              <td colSpan={quotations.length + 1} className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]">
+              <td
+                colSpan={quotations.length + 1}
+                className="px-6 py-2 font-bold text-[#714B67] bg-slate-50/50 uppercase tracking-widest text-[9px]"
+              >
                 Contract terms
               </td>
             </tr>
@@ -173,7 +197,10 @@ export default function ComparisonTable({
             <tr>
               <td className="px-6 py-3.5 text-slate-500 font-medium">Payment Terms</td>
               {quotations.map((q) => (
-                <td key={q.vendorId} className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100 truncate max-w-[140px]">
+                <td
+                  key={q.vendorId}
+                  className="px-6 py-3.5 text-center text-slate-600 border-l border-slate-100 truncate max-w-[140px]"
+                >
                   {q.paymentTerms}
                 </td>
               ))}

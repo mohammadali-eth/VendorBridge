@@ -36,7 +36,9 @@ export default function ApprovalChain({ history = [], currentLevel }) {
   return (
     <Card className="text-left">
       <div className="border-b border-slate-100 pb-3 mb-4">
-        <h3 className="text-sm font-black text-slate-800 tracking-tight">Approval Authorization Chain</h3>
+        <h3 className="text-sm font-black text-slate-800 tracking-tight">
+          Approval Authorization Chain
+        </h3>
       </div>
 
       <div className="relative border-l-2 border-slate-100 ml-3 pl-6 space-y-6">
@@ -61,29 +63,48 @@ export default function ApprovalChain({ history = [], currentLevel }) {
                       {step.approverName || 'TBD (Auto Route)'}
                     </span>
                   </div>
-                  <Badge variant={isActive && isPending ? 'info' : getStatusBadgeVariant(step.status)}>
+                  <Badge
+                    variant={isActive && isPending ? 'info' : getStatusBadgeVariant(step.status)}
+                  >
                     {isActive && isPending ? 'Current Approver' : step.status}
                   </Badge>
                 </div>
 
                 {step.date && (
                   <span className="text-[9px] text-slate-400 font-bold block mt-1">
-                    Processed: {new Date(step.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    Processed:{' '}
+                    {new Date(step.date).toLocaleDateString('en-IN', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
                   </span>
                 )}
-                {step.date && (() => {
-                  const d = new Date(step.date);
-                  if (isNaN(d.getTime())) return null;
-                  return (
-                    <span className="text-[9px] text-slate-400 font-bold block mt-1">
-                      Processed: {d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  );
-                })()}
+                {step.date &&
+                  (() => {
+                    const d = new Date(step.date);
+                    if (isNaN(d.getTime())) return null;
+                    return (
+                      <span className="text-[9px] text-slate-400 font-bold block mt-1">
+                        Processed:{' '}
+                        {d.toLocaleDateString('en-IN', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </span>
+                    );
+                  })()}
 
                 {step.remarks && (
                   <div className="bg-slate-50 border border-slate-100 rounded-xl p-2.5 mt-2">
-                    <span className="text-[9px] uppercase font-black text-slate-400 block tracking-wider">Remarks</span>
+                    <span className="text-[9px] uppercase font-black text-slate-400 block tracking-wider">
+                      Remarks
+                    </span>
                     <p className="text-[11px] text-slate-600 font-medium mt-0.5 leading-snug">
                       &quot;{step.remarks}&quot;
                     </p>

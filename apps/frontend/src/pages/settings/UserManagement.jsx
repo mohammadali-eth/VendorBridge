@@ -41,7 +41,7 @@ export default function UserManagement() {
   const handleToggleStatus = async (id) => {
     try {
       const updated = await userService.toggleUserStatus(id);
-      setUsers(users.map(u => (u.id === id ? updated : u)));
+      setUsers(users.map((u) => (u.id === id ? updated : u)));
       showToast(`User status updated to ${updated.status}`);
     } catch (error) {
       showToast(error.response?.data?.message || error.message || 'Failed to update user status');
@@ -52,7 +52,7 @@ export default function UserManagement() {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
       await userService.deleteUser(id);
-      setUsers(users.filter(u => u.id !== id));
+      setUsers(users.filter((u) => u.id !== id));
       showToast('User deleted successfully');
     } catch (error) {
       showToast(error.response?.data?.message || error.message || 'Failed to delete user');
@@ -131,38 +131,39 @@ export default function UserManagement() {
               ) : (
                 users.map((u) => (
                   <tr key={u.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 px-6 font-black text-slate-900">{u.name}</td>
-                  <td className="py-4 px-6 text-slate-500 font-medium">{u.email}</td>
-                  <td className="py-4 px-6">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Shield size={12} className="text-[#714B67]" />
-                      <strong className="text-slate-800">{u.role}</strong>
-                    </span>
-                  </td>
-                  <td className="py-4 px-6">
-                    <Badge variant={u.status === 'ACTIVE' ? 'success' : 'neutral'}>
-                      {u.status}
-                    </Badge>
-                  </td>
-                  <td className="py-4 px-6 text-right space-x-2">
-                    <button
-                      type="button"
-                      onClick={() => handleToggleStatus(u.id)}
-                      className="py-1 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-all font-bold text-[10px] cursor-pointer"
-                    >
-                      {u.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteUser(u.id)}
-                      className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors cursor-pointer inline-flex items-center"
-                      title="Delete User"
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </td>
-                </tr>
-              )))}
+                    <td className="py-4 px-6 font-black text-slate-900">{u.name}</td>
+                    <td className="py-4 px-6 text-slate-500 font-medium">{u.email}</td>
+                    <td className="py-4 px-6">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Shield size={12} className="text-[#714B67]" />
+                        <strong className="text-slate-800">{u.role}</strong>
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <Badge variant={u.status === 'ACTIVE' ? 'success' : 'neutral'}>
+                        {u.status}
+                      </Badge>
+                    </td>
+                    <td className="py-4 px-6 text-right space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleStatus(u.id)}
+                        className="py-1 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-all font-bold text-[10px] cursor-pointer"
+                      >
+                        {u.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteUser(u.id)}
+                        className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors cursor-pointer inline-flex items-center"
+                        title="Delete User"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -174,12 +175,16 @@ export default function UserManagement() {
           <div className="bg-white border border-slate-200 rounded-3xl max-w-md w-full shadow-2xl p-6 space-y-6 text-left">
             <div>
               <h3 className="text-lg font-black text-slate-900 tracking-tight">Add New User</h3>
-              <p className="text-xs text-slate-500 font-medium">Create a new corporate account with custom access roles.</p>
+              <p className="text-xs text-slate-500 font-medium">
+                Create a new corporate account with custom access roles.
+              </p>
             </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-slate-400 block">Full Name</label>
+                <label className="text-[10px] font-bold uppercase text-slate-400 block">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   required
@@ -191,7 +196,9 @@ export default function UserManagement() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-slate-400 block">Email Address</label>
+                <label className="text-[10px] font-bold uppercase text-slate-400 block">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   required
@@ -204,7 +211,9 @@ export default function UserManagement() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 block">Assigned Role</label>
+                  <label className="text-[10px] font-bold uppercase text-slate-400 block">
+                    Assigned Role
+                  </label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -218,7 +227,9 @@ export default function UserManagement() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-slate-400 block">Initial Status</label>
+                  <label className="text-[10px] font-bold uppercase text-slate-400 block">
+                    Initial Status
+                  </label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}

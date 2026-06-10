@@ -44,7 +44,9 @@ export default function ApprovalStatusCard({ data }) {
         <div className="space-y-3">
           <div className="flex justify-between text-xs font-semibold">
             <span className="text-slate-400">Current Approver</span>
-            <span className="text-slate-800 font-bold">{currentStep?.approverName || 'Auto Route'}</span>
+            <span className="text-slate-800 font-bold">
+              {currentStep?.approverName || 'Auto Route'}
+            </span>
           </div>
           <div className="flex justify-between text-xs font-semibold">
             <span className="text-slate-400">Approval Level</span>

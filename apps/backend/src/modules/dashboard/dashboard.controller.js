@@ -15,17 +15,17 @@ export async function getStats(req, res, next) {
 
     // 2. Pending Quotations (Count of all submitted/pending quotations)
     const pendingQuotationsCount = await prisma.quotation.count({
-      where: { status: 'SUBMITTED' }
+      where: { status: 'SUBMITTED' },
     });
 
     // 3. Purchase Orders Total Value (Sum of all POs)
     const posSum = await prisma.purchaseOrder.aggregate({
       where: {
-        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] }
+        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] },
       },
       _sum: {
-        totalAmount: true
-      }
+        totalAmount: true,
+      },
     });
     // Default PO value in Lakhs to match ₹0.0L if database is fresh
     const rawPoValue = Number(posSum._sum.totalAmount || 0);
@@ -35,72 +35,78 @@ export async function getStats(req, res, next) {
     const invoicesGeneratedCount = await prisma.invoice.count();
 
     // 5. Vendor Specific: Assigned RFQs
-    const assignedRfqsCount = vendorId ? await prisma.rfq.count({
-      where: {
-        status: 'PUBLISHED',
-        assignedVendorIds: { has: vendorId }
-      }
-    }) : activeRfqsCount;
+    const assignedRfqsCount = vendorId
+      ? await prisma.rfq.count({
+          where: {
+            status: 'PUBLISHED',
+            assignedVendorIds: { has: vendorId },
+          },
+        })
+      : activeRfqsCount;
 
     // 6. Vendor Specific: Submitted Quotations
-    const submittedQuotationsCount = vendorId ? await prisma.quotation.count({
-      where: {
-        vendorId,
-        status: 'SUBMITTED'
-      }
-    }) : pendingQuotationsCount;
+    const submittedQuotationsCount = vendorId
+      ? await prisma.quotation.count({
+          where: {
+            vendorId,
+            status: 'SUBMITTED',
+          },
+        })
+      : pendingQuotationsCount;
 
     // 7. Vendor Specific: Approved POs
-    const approvedPosCount = vendorId ? await prisma.purchaseOrder.count({
-      where: {
-        vendorId,
-        status: { in: ['ACCEPTED', 'DELIVERED'] }
-      }
-    }) : await prisma.purchaseOrder.count({
-      where: { status: { in: ['ACCEPTED', 'DELIVERED'] } }
-    });
+    const approvedPosCount = vendorId
+      ? await prisma.purchaseOrder.count({
+          where: {
+            vendorId,
+            status: { in: ['ACCEPTED', 'DELIVERED'] },
+          },
+        })
+      : await prisma.purchaseOrder.count({
+          where: { status: { in: ['ACCEPTED', 'DELIVERED'] } },
+        });
 
     // 8. Vendor Specific: Pending Payments Sum
     const pendingPaymentsSum = await prisma.invoice.aggregate({
-      where: vendorId ? {
-        vendorId,
-        status: { in: ['GENERATED', 'SENT', 'PENDING_PAYMENT', 'PARTIALLY_PAID', 'OVERDUE'] }
-      } : {
-        status: { in: ['GENERATED', 'SENT', 'PENDING_PAYMENT', 'PARTIALLY_PAID', 'OVERDUE'] }
-      },
+      where: vendorId
+        ? {
+            vendorId,
+            status: { in: ['GENERATED', 'SENT', 'PENDING_PAYMENT', 'PARTIALLY_PAID', 'OVERDUE'] },
+          }
+        : {
+            status: { in: ['GENERATED', 'SENT', 'PENDING_PAYMENT', 'PARTIALLY_PAID', 'OVERDUE'] },
+          },
       _sum: {
-        totalAmount: true
-      }
+        totalAmount: true,
+      },
     });
     const rawPendingPayments = Number(pendingPaymentsSum._sum.totalAmount || 0);
-    const pendingPaymentsStr = rawPendingPayments > 0 
-      ? `₹${rawPendingPayments.toLocaleString('en-IN')}` 
-      : '₹0';
+    const pendingPaymentsStr =
+      rawPendingPayments > 0 ? `₹${rawPendingPayments.toLocaleString('en-IN')}` : '₹0';
 
     // 9. Manager Specific: Pending Approvals count (Count of PENDING selections)
     const pendingApprovalsCount = await prisma.vendorSelection.count({
-      where: { status: 'PENDING' }
+      where: { status: 'PENDING' },
     });
 
     // 10. Manager Specific: Approved requests
     const approvedRequestsCount = await prisma.vendorSelection.count({
-      where: { status: 'APPROVED' }
+      where: { status: 'APPROVED' },
     });
 
     // 11. Manager Specific: Rejected requests
     const rejectedRequestsCount = await prisma.vendorSelection.count({
-      where: { status: 'REJECTED' }
+      where: { status: 'REJECTED' },
     });
 
     // 12. Manager Specific: Workflow efficiency status
     const totalRequests = approvedRequestsCount + rejectedRequestsCount + pendingApprovalsCount;
-    const workflowStatusVal = totalRequests > 0 
-      ? `${Math.round((approvedRequestsCount / totalRequests) * 100)}%` 
-      : '0%';
+    const workflowStatusVal =
+      totalRequests > 0 ? `${Math.round((approvedRequestsCount / totalRequests) * 100)}%` : '0%';
 
     // 13. Admin: Overdue Invoices
     const overdueInvoicesCount = await prisma.invoice.count({
-      where: { status: 'OVERDUE' }
+      where: { status: 'OVERDUE' },
     });
 
     // 14. Admin: Total Users (Live count from DB)
@@ -112,9 +118,10 @@ export async function getStats(req, res, next) {
     // 16. Admin: Dynamic SLA Delivery Index
     const totalPosCount = await prisma.purchaseOrder.count();
     const deliveredPosCount = await prisma.purchaseOrder.count({
-      where: { status: 'DELIVERED' }
+      where: { status: 'DELIVERED' },
     });
-    const slaValue = totalPosCount > 0 ? (90 + (deliveredPosCount / totalPosCount) * 10).toFixed(1) : '0.0';
+    const slaValue =
+      totalPosCount > 0 ? (90 + (deliveredPosCount / totalPosCount) * 10).toFixed(1) : '0.0';
 
     // Format procurement spend
     let spendValue = '₹0';
@@ -198,8 +205,8 @@ export async function getStats(req, res, next) {
         analyticsSummary: {
           value: `${slaValue}%`,
           subtext: 'SLA delivery index',
-        }
-      }
+        },
+      },
     });
   } catch (error) {
     next(error);
@@ -217,13 +224,13 @@ export async function getRecentPOs(req, res, next) {
       orderBy: { createdAt: 'desc' },
       include: {
         vendor: {
-          select: { name: true }
-        }
-      }
+          select: { name: true },
+        },
+      },
     });
 
     // Map status representation
-    const mappedPos = pos.map(po => {
+    const mappedPos = pos.map((po) => {
       let displayStatus = 'Pending';
       if (po.status === 'ACCEPTED' || po.status === 'DELIVERED') displayStatus = 'Approved';
       else if (po.status === 'DRAFT') displayStatus = 'Draft';
@@ -238,14 +245,14 @@ export async function getRecentPOs(req, res, next) {
         date: po.createdAt.toLocaleDateString('en-IN', {
           day: '2-digit',
           month: 'short',
-          year: 'numeric'
-        })
+          year: 'numeric',
+        }),
       };
     });
 
     res.status(200).json({
       status: 'success',
-      data: mappedPos
+      data: mappedPos,
     });
   } catch (error) {
     next(error);
@@ -263,12 +270,12 @@ export async function getRecentInvoices(req, res, next) {
       orderBy: { createdAt: 'desc' },
       include: {
         vendor: {
-          select: { name: true }
-        }
-      }
+          select: { name: true },
+        },
+      },
     });
 
-    const mappedInvoices = dbInvoices.map(inv => {
+    const mappedInvoices = dbInvoices.map((inv) => {
       let displayStatus = 'Pending';
       if (inv.status === 'PAID') displayStatus = 'Paid';
       else if (inv.status === 'OVERDUE') displayStatus = 'Overdue';
@@ -281,15 +288,15 @@ export async function getRecentInvoices(req, res, next) {
         dueDate: inv.dueDate.toLocaleDateString('en-IN', {
           day: '2-digit',
           month: 'short',
-          year: 'numeric'
+          year: 'numeric',
         }),
-        status: displayStatus
+        status: displayStatus,
       };
     });
 
     res.status(200).json({
       status: 'success',
-      data: mappedInvoices
+      data: mappedInvoices,
     });
   } catch (error) {
     next(error);
@@ -304,10 +311,10 @@ export async function getActivities(req, res, next) {
   try {
     const dbLogs = await prisma.auditLog.findMany({
       take: 5,
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
-    const mappedActivities = dbLogs.map(log => {
+    const mappedActivities = dbLogs.map((log) => {
       const diffMs = Date.now() - new Date(log.createdAt).getTime();
       const diffMins = Math.floor(diffMs / 60000);
       const diffHours = Math.floor(diffMins / 60);
@@ -326,13 +333,13 @@ export async function getActivities(req, res, next) {
         id: log.id,
         user: log.user,
         activity: `${log.action} ${log.entity}`,
-        timestamp
+        timestamp,
       };
     });
 
     res.status(200).json({
       status: 'success',
-      data: mappedActivities
+      data: mappedActivities,
     });
   } catch (error) {
     next(error);
@@ -354,7 +361,7 @@ export async function getAnalytics(req, res, next) {
         month: d.toLocaleString('en-US', { month: 'short' }),
         year: d.getFullYear(),
         num: d.getMonth(),
-        spend: 0
+        spend: 0,
       });
     }
 
@@ -366,12 +373,12 @@ export async function getAnalytics(req, res, next) {
     const pos = await prisma.purchaseOrder.findMany({
       where: {
         status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] },
-        createdAt: { gte: startOfPeriod }
+        createdAt: { gte: startOfPeriod },
       },
       select: {
         totalAmount: true,
-        createdAt: true
-      }
+        createdAt: true,
+      },
     });
 
     for (const po of pos) {
@@ -379,23 +386,23 @@ export async function getAnalytics(req, res, next) {
       const poMonth = poDate.getMonth();
       const poYear = poDate.getFullYear();
 
-      const monthObj = months.find(m => m.num === poMonth && m.year === poYear);
+      const monthObj = months.find((m) => m.num === poMonth && m.year === poYear);
       if (monthObj) {
         monthObj.spend += Number(po.totalAmount || 0);
       }
     }
 
-    const spendHistory = months.map(m => {
+    const spendHistory = months.map((m) => {
       return {
         month: m.month,
-        spend: m.spend
+        spend: m.spend,
       };
     });
 
     // Spend Distribution by Category (Donut Chart)
     const posWithCategory = await prisma.purchaseOrder.findMany({
       where: {
-        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] }
+        status: { in: ['SENT', 'ACCEPTED', 'DELIVERED'] },
       },
       select: {
         totalAmount: true,
@@ -403,12 +410,12 @@ export async function getAnalytics(req, res, next) {
           select: {
             rfq: {
               select: {
-                category: true
-              }
-            }
-          }
-        }
-      }
+                category: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     const categoryTotals = {};
@@ -421,9 +428,9 @@ export async function getAnalytics(req, res, next) {
       totalSpend += amount;
     }
 
-    const spendDistribution = Object.keys(categoryTotals).map(cat => ({
+    const spendDistribution = Object.keys(categoryTotals).map((cat) => ({
       name: cat,
-      value: totalSpend > 0 ? Math.round((categoryTotals[cat] / totalSpend) * 100) : 0
+      value: totalSpend > 0 ? Math.round((categoryTotals[cat] / totalSpend) * 100) : 0,
     }));
 
     // Pending Approvals Queue Table
@@ -434,24 +441,24 @@ export async function getAnalytics(req, res, next) {
           select: {
             title: true,
             priority: true,
-            category: true
-          }
+            category: true,
+          },
         },
         quotation: {
           select: {
-            grandTotal: true
-          }
-        }
+            grandTotal: true,
+          },
+        },
       },
-      take: 5
+      take: 5,
     });
 
-    const approvalQueue = pendingSelections.map(sel => ({
+    const approvalQueue = pendingSelections.map((sel) => ({
       id: sel.id,
       request: `Award RFQ: ${sel.rfq?.title || 'Contract'}`,
       department: sel.rfq?.category || 'Procurement',
       amount: Number(sel.quotation?.grandTotal || 0),
-      priority: sel.rfq?.priority || 'Medium'
+      priority: sel.rfq?.priority || 'Medium',
     }));
 
     res.status(200).json({
@@ -459,8 +466,8 @@ export async function getAnalytics(req, res, next) {
       data: {
         spendHistory,
         spendDistribution,
-        approvalQueue
-      }
+        approvalQueue,
+      },
     });
   } catch (error) {
     next(error);

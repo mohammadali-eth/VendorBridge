@@ -65,9 +65,7 @@ export default function QuotationComparison() {
     // Filters
     quotes = quotes.filter(
       (q) =>
-        q.grandTotal <= priceRange &&
-        q.vendorRating >= minRating &&
-        q.deliveryDays <= maxDelivery
+        q.grandTotal <= priceRange && q.vendorRating >= minRating && q.deliveryDays <= maxDelivery
     );
 
     // Sorting
@@ -205,7 +203,9 @@ export default function QuotationComparison() {
         </button>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-black text-[#111827] tracking-tight">Quotation Comparison</h2>
+            <h2 className="text-2xl font-black text-[#111827] tracking-tight">
+              Quotation Comparison
+            </h2>
             <p className="mt-1 text-sm text-slate-500 font-medium">
               {data?.rfqTitle} ({data?.rfqNumber})
             </p>
@@ -220,10 +220,7 @@ export default function QuotationComparison() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Left main comparison grid */}
         <div className="lg:col-span-3 space-y-6">
-          <ComparisonTable
-            quotations={filteredQuotes}
-            onSelectVendor={handleSelectVendorTrigger}
-          />
+          <ComparisonTable quotations={filteredQuotes} onSelectVendor={handleSelectVendorTrigger} />
         </div>
 
         {/* Right sidebar column */}
@@ -232,8 +229,12 @@ export default function QuotationComparison() {
           {summary && (
             <div className="bg-slate-900 border border-slate-850 rounded-3xl p-5 shadow-xl text-white space-y-5">
               <div>
-                <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400">Comparison Summary</h3>
-                <p className="text-[10px] text-slate-500 font-medium mt-0.5">Key procurement quotation milestones.</p>
+                <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400">
+                  Comparison Summary
+                </h3>
+                <p className="text-[10px] text-slate-500 font-medium mt-0.5">
+                  Key procurement quotation milestones.
+                </p>
               </div>
 
               <div className="space-y-3.5 text-xs">
@@ -243,8 +244,12 @@ export default function QuotationComparison() {
                     <Trophy className="h-3.5 w-3.5" />
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Lowest Cost Vendor</span>
-                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">{summary.lowest.vendorName}</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+                      Lowest Cost Vendor
+                    </span>
+                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">
+                      {summary.lowest.vendorName}
+                    </span>
                     <span className="text-[10px] font-bold text-[#A87D9F]">
                       ₹{summary.lowest.grandTotal.toLocaleString('en-IN')}
                     </span>
@@ -257,9 +262,15 @@ export default function QuotationComparison() {
                     <Zap className="h-3.5 w-3.5" />
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Fastest Delivery</span>
-                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">{summary.fastest.vendorName}</span>
-                    <span className="text-[10px] text-slate-400 font-bold block mt-0.5">{summary.fastest.deliveryDays} Days</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+                      Fastest Delivery
+                    </span>
+                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">
+                      {summary.fastest.vendorName}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold block mt-0.5">
+                      {summary.fastest.deliveryDays} Days
+                    </span>
                   </div>
                 </div>
 
@@ -269,9 +280,15 @@ export default function QuotationComparison() {
                     <ShieldCheck className="h-3.5 w-3.5" />
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Highest Rated Vendor</span>
-                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">{summary.highestRated.vendorName}</span>
-                    <span className="text-[10px] text-slate-400 font-bold block mt-0.5">{summary.highestRated.vendorRating} / 5</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+                      Highest Rated Vendor
+                    </span>
+                    <span className="font-bold text-slate-200 block truncate max-w-[150px]">
+                      {summary.highestRated.vendorName}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold block mt-0.5">
+                      {summary.highestRated.vendorRating} / 5
+                    </span>
                   </div>
                 </div>
 
@@ -284,7 +301,9 @@ export default function QuotationComparison() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Award className="h-3.5 w-3.5 text-[#A87D9F]" />
-                    <span className="text-[9px] font-bold text-[#A87D9F] uppercase tracking-wider">Recommended choice</span>
+                    <span className="text-[9px] font-bold text-[#A87D9F] uppercase tracking-wider">
+                      Recommended choice
+                    </span>
                   </div>
                   <div>
                     <span className="font-black text-slate-100 block truncate max-w-[140px]">

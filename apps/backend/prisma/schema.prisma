@@ -165,24 +165,24 @@ model PurchaseOrder {
 }
 
 model VendorSelection {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  rfqId        String    @db.ObjectId
-  rfq          Rfq       @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  vendorId     String    @db.ObjectId
-  vendor       Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  quotationId  String    @db.ObjectId
-  quotation    Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
-  selectedById String    @db.ObjectId
-  selectedBy   User      @relation(fields: [selectedById], references: [id], onDelete: Restrict)
-  status       String    @default("PENDING")
-  currentLevel Int       @default(1)
-  remarks      String?
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  rfqId         String    @db.ObjectId
+  rfq           Rfq       @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  vendorId      String    @db.ObjectId
+  vendor        Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  quotationId   String    @db.ObjectId
+  quotation     Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  selectedById  String    @db.ObjectId
+  selectedBy    User      @relation(fields: [selectedById], references: [id], onDelete: Restrict)
+  status        String    @default("PENDING")
+  currentLevel  Int       @default(1)
+  remarks       String?
   internalNotes String?
-  history      Json      @default("[]")
-  timeline     Json      @default("[]")
-  auditLogs    Json      @default("[]")
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  history       Json      @default("[]")
+  timeline      Json      @default("[]")
+  auditLogs     Json      @default("[]")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@map("vendor_selections")
 }

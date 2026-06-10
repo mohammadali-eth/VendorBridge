@@ -142,22 +142,50 @@ export default function InvoiceDetailPage() {
 
   // Build sequential timeline activities dynamically based on status
   const timelineSteps = [
-    { label: 'RFQ Created', date: new Date(invoice.purchaseOrder?.createdAt).getTime() - 86400000 * 2, completed: true },
-    { label: 'Quotation Submitted', date: new Date(invoice.purchaseOrder?.createdAt).getTime() - 86400000, completed: true },
-    { label: 'Quotation Approved', date: new Date(invoice.purchaseOrder?.createdAt).getTime(), completed: true },
-    { label: 'PO Generated', date: new Date(invoice.purchaseOrder?.createdAt).getTime(), completed: true },
+    {
+      label: 'RFQ Created',
+      date: new Date(invoice.purchaseOrder?.createdAt).getTime() - 86400000 * 2,
+      completed: true,
+    },
+    {
+      label: 'Quotation Submitted',
+      date: new Date(invoice.purchaseOrder?.createdAt).getTime() - 86400000,
+      completed: true,
+    },
+    {
+      label: 'Quotation Approved',
+      date: new Date(invoice.purchaseOrder?.createdAt).getTime(),
+      completed: true,
+    },
+    {
+      label: 'PO Generated',
+      date: new Date(invoice.purchaseOrder?.createdAt).getTime(),
+      completed: true,
+    },
     { label: 'Invoice Generated', date: new Date(invoice.invoiceDate).getTime(), completed: true },
-    { label: 'Invoice Sent', date: new Date(invoice.invoiceDate).getTime(), completed: invoice.status === 'SENT' || invoice.status === 'PAID' },
-    { label: 'Payment Received', date: new Date(invoice.updatedAt).getTime(), completed: invoice.status === 'PAID' },
+    {
+      label: 'Invoice Sent',
+      date: new Date(invoice.invoiceDate).getTime(),
+      completed: invoice.status === 'SENT' || invoice.status === 'PAID',
+    },
+    {
+      label: 'Payment Received',
+      date: new Date(invoice.updatedAt).getTime(),
+      completed: invoice.status === 'PAID',
+    },
   ];
 
   return (
     <div className="space-y-8 text-left pb-16 print:p-0 print:space-y-4">
       {/* Toast Alert */}
       {toast && (
-        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
-          toast.type === 'error' ? 'bg-rose-600 border-rose-500' : 'bg-emerald-600 border-emerald-500'
-        }`}>
+        <div
+          className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
+            toast.type === 'error'
+              ? 'bg-rose-600 border-rose-500'
+              : 'bg-emerald-600 border-emerald-500'
+          }`}
+        >
           <CheckCircle2 size={16} />
           <span>{toast.message}</span>
         </div>
@@ -176,7 +204,8 @@ export default function InvoiceDetailPage() {
             <h2 className="text-2xl font-black text-[#111827] tracking-tight">Invoice Details</h2>
           </div>
           <p className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-6">
-            Dashboard &rarr; Vendor &rarr; RFQ &rarr; Quotation &rarr; Approval &rarr; PO &rarr; Invoice Details
+            Dashboard &rarr; Vendor &rarr; RFQ &rarr; Quotation &rarr; Approval &rarr; PO &rarr;
+            Invoice Details
           </p>
         </div>
       </div>
@@ -193,7 +222,9 @@ export default function InvoiceDetailPage() {
               </p>
             </div>
             <div className="text-right">
-              <h2 className="text-sm font-black text-slate-800 uppercase tracking-tight">Invoice Receipt</h2>
+              <h2 className="text-sm font-black text-slate-800 uppercase tracking-tight">
+                Invoice Receipt
+              </h2>
               <span className="text-[10px] text-slate-400 font-bold block mt-0.5">
                 Original Duplicate Copy
               </span>
@@ -226,7 +257,9 @@ export default function InvoiceDetailPage() {
               <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
                 Invoice Number
               </span>
-              <span className="text-slate-900 font-black block mt-0.5">{invoice.invoiceNumber}</span>
+              <span className="text-slate-900 font-black block mt-0.5">
+                {invoice.invoiceNumber}
+              </span>
             </div>
             <div>
               <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
@@ -289,7 +322,10 @@ export default function InvoiceDetailPage() {
                         ₹{parseFloat(item.price || item.unitPrice || 0)?.toLocaleString('en-IN')}
                       </td>
                       <td className="py-2.5 px-4 text-right text-slate-900 font-black">
-                        ₹{((item.quantity || 1) * parseFloat(item.price || item.unitPrice || 0))?.toLocaleString('en-IN')}
+                        ₹
+                        {(
+                          (item.quantity || 1) * parseFloat(item.price || item.unitPrice || 0)
+                        )?.toLocaleString('en-IN')}
                       </td>
                     </tr>
                   ))
@@ -422,13 +458,17 @@ export default function InvoiceDetailPage() {
             <div className="relative border-l border-slate-100 ml-2.5 pl-5 space-y-4">
               {timelineSteps.map((step, idx) => (
                 <div key={idx} className="relative">
-                  <div className={`absolute -left-[26px] top-1 h-3 w-3 rounded-full border-2 flex items-center justify-center ${
-                    step.completed ? 'bg-[#714B67] border-[#714B67]' : 'bg-white border-slate-350'
-                  }`}>
+                  <div
+                    className={`absolute -left-[26px] top-1 h-3 w-3 rounded-full border-2 flex items-center justify-center ${
+                      step.completed ? 'bg-[#714B67] border-[#714B67]' : 'bg-white border-slate-350'
+                    }`}
+                  >
                     {step.completed && <div className="h-1 w-1 rounded-full bg-white" />}
                   </div>
                   <div>
-                    <span className={`text-[11px] block ${step.completed ? 'text-slate-800 font-bold' : 'text-slate-400 font-medium'}`}>
+                    <span
+                      className={`text-[11px] block ${step.completed ? 'text-slate-800 font-bold' : 'text-slate-400 font-medium'}`}
+                    >
                       {step.label}
                     </span>
                     <span className="text-[9px] text-slate-400 font-semibold block mt-0.5">

@@ -107,9 +107,13 @@ export default function PurchaseOrderDetailPage() {
     <div className="space-y-8 text-left pb-16">
       {/* Toast Alert */}
       {toast && (
-        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
-          toast.type === 'error' ? 'bg-rose-600 border-rose-500' : 'bg-emerald-600 border-emerald-500'
-        }`}>
+        <div
+          className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
+            toast.type === 'error'
+              ? 'bg-rose-600 border-rose-500'
+              : 'bg-emerald-600 border-emerald-500'
+          }`}
+        >
           <CheckCircle2 size={16} />
           <span>{toast.message}</span>
         </div>
@@ -124,7 +128,9 @@ export default function PurchaseOrderDetailPage() {
           >
             <ArrowLeft size={16} className="text-slate-500" />
           </button>
-          <h2 className="text-2xl font-black text-[#111827] tracking-tight">Purchase Order Details</h2>
+          <h2 className="text-2xl font-black text-[#111827] tracking-tight">
+            Purchase Order Details
+          </h2>
         </div>
         <p className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-6">
           Dashboard &rarr; Vendor &rarr; RFQ &rarr; Quotation &rarr; Approval &rarr; PO Details
@@ -186,7 +192,9 @@ export default function PurchaseOrderDetailPage() {
                 <p className="text-slate-900 font-black">VendorBridge Ltd</p>
                 <p>GSTIN: 2538348AFB</p>
                 <p>123 Business Park, Ahmedabad, India</p>
-                <p className="text-[10px] text-slate-400 mt-1">Contact: {po.buyer?.email || 'procurement@vendorbridge.com'}</p>
+                <p className="text-[10px] text-slate-400 mt-1">
+                  Contact: {po.buyer?.email || 'procurement@vendorbridge.com'}
+                </p>
               </div>
             </Card>
 
@@ -228,13 +236,18 @@ export default function PurchaseOrderDetailPage() {
                   ) : (
                     items.map((item, idx) => (
                       <tr key={idx} className="hover:bg-slate-50/50">
-                        <td className="py-2.5 px-4 text-slate-800 font-black">{item.description}</td>
+                        <td className="py-2.5 px-4 text-slate-800 font-black">
+                          {item.description}
+                        </td>
                         <td className="py-2.5 px-4 text-center">{item.quantity}</td>
                         <td className="py-2.5 px-4 text-right">
                           ₹{parseFloat(item.price || item.unitPrice || 0)?.toLocaleString('en-IN')}
                         </td>
                         <td className="py-2.5 px-4 text-right text-slate-900">
-                          ₹{((item.quantity || 1) * parseFloat(item.price || item.unitPrice || 0))?.toLocaleString('en-IN')}
+                          ₹
+                          {(
+                            (item.quantity || 1) * parseFloat(item.price || item.unitPrice || 0)
+                          )?.toLocaleString('en-IN')}
                         </td>
                       </tr>
                     ))
@@ -290,7 +303,9 @@ export default function PurchaseOrderDetailPage() {
             <Card className="space-y-4">
               <div className="border-b border-slate-100 pb-2">
                 <h4 className="text-xs font-black text-slate-800">Generate Invoice</h4>
-                <p className="text-[10px] text-slate-400 font-semibold">Create official invoice request from PO</p>
+                <p className="text-[10px] text-slate-400 font-semibold">
+                  Create official invoice request from PO
+                </p>
               </div>
 
               <div className="space-y-4">

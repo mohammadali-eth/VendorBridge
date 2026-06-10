@@ -19,9 +19,7 @@ export default function RoleRoute({ allowedRoles }) {
   }
 
   const userRoleMapped = ROLE_MAP[user.role] || user.role;
-  const hasAccess = allowedRoles.some(
-    (role) => role === user.role || role === userRoleMapped
-  );
+  const hasAccess = allowedRoles.some((role) => role === user.role || role === userRoleMapped);
 
   if (!hasAccess) {
     return <Navigate to="/unauthorized" replace />;

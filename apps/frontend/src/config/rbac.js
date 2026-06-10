@@ -7,7 +7,7 @@ export const ROLE_PERMISSIONS = {
     'GENERATE_PO',
     'GENERATE_INVOICE',
     'VIEW_RECORDS',
-    'TRACK_STATUS'
+    'TRACK_STATUS',
   ],
   vendor: [
     'VIEW_ASSIGNED_RFQ',
@@ -15,7 +15,7 @@ export const ROLE_PERMISSIONS = {
     'EDIT_QUOTATION',
     'TRACK_RFQ_STATUS',
     'VIEW_APPROVED_PO',
-    'VIEW_INVOICE_STATUS'
+    'VIEW_INVOICE_STATUS',
   ],
   manager: [
     'VIEW_REQUESTS',
@@ -24,7 +24,7 @@ export const ROLE_PERMISSIONS = {
     'REJECT_REQUESTS',
     'ADD_REMARKS',
     'VIEW_APPROVAL_HISTORY',
-    'MONITOR_WORKFLOW'
+    'MONITOR_WORKFLOW',
   ],
   admin: [
     'MANAGE_USERS',
@@ -36,20 +36,20 @@ export const ROLE_PERMISSIONS = {
     'VIEW_ANALYTICS',
     'VIEW_REPORTS',
     'SYSTEM_CONFIG',
-    'VIEW_ALL_DATA'
-  ]
+    'VIEW_ALL_DATA',
+  ],
 };
 
 export const ROLE_MAP = {
   BUYER: 'procurement_officer',
   SUPPLIER: 'vendor',
   PROCUREMENT_MANAGER: 'manager',
-  ADMIN: 'admin'
+  ADMIN: 'admin',
 };
 
 export const ROLE_DISPLAY_NAMES = {
   procurement_officer: 'Procurement Officer',
   vendor: 'Vendor',
   manager: 'Manager / Approver',
-  admin: 'Admin'
+  admin: 'Admin',
 };

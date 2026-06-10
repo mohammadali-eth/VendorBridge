@@ -72,7 +72,7 @@ export default function useApproval() {
   const handleSaveRemarks = async (id, remarks, internalNotes) => {
     try {
       const updated = await approvalService.updateRemarks(id, remarks, internalNotes);
-      setApprovalData((prev) => prev ? { ...prev, remarks, internalNotes } : null);
+      setApprovalData((prev) => (prev ? { ...prev, remarks, internalNotes } : null));
       return updated;
     } catch (err) {
       console.error(err);

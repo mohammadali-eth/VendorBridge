@@ -39,23 +39,33 @@ export default function VendorSelectionModal({
         {/* Content */}
         <div className="p-6 text-left space-y-4">
           <p className="text-xs text-slate-600 font-medium leading-relaxed">
-            Are you sure you want to select this vendor? This action will save the decision and move the RFQ Status to{' '}
+            Are you sure you want to select this vendor? This action will save the decision and move
+            the RFQ Status to{' '}
             <span className="font-bold text-[#714B67] bg-[#F5EEF4] px-1.5 py-0.5 rounded-md text-[10px] uppercase">
               Pending Approval
-            </span>.
+            </span>
+            .
           </p>
 
           <div className="p-4 bg-slate-50 border border-slate-150 rounded-2xl space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">Vendor Name</span>
+              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">
+                Vendor Name
+              </span>
               <span className="font-black text-slate-800">{selectedVendor.vendorName}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">Grand Total</span>
-              <span className="font-black text-[#714B67]">{formatCurrency(selectedVendor.grandTotal)}</span>
+              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">
+                Grand Total
+              </span>
+              <span className="font-black text-[#714B67]">
+                {formatCurrency(selectedVendor.grandTotal)}
+              </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">Delivery timeline</span>
+              <span className="text-slate-450 font-bold uppercase tracking-wider text-[10px]">
+                Delivery timeline
+              </span>
               <span className="font-bold text-slate-700">{selectedVendor.deliveryDays} Days</span>
             </div>
           </div>

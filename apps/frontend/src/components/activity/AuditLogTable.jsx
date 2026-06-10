@@ -43,7 +43,9 @@ export default function AuditLogTable({ logs = [] }) {
                       minute: '2-digit',
                     })}
                   </td>
-                  <td className="py-3 px-5 text-slate-400 font-mono font-medium">{log.ipAddress}</td>
+                  <td className="py-3 px-5 text-slate-400 font-mono font-medium">
+                    {log.ipAddress}
+                  </td>
                 </tr>
               ))
             )}

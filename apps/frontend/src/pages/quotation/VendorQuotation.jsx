@@ -127,9 +127,7 @@ export default function VendorQuotation() {
       };
       await quotationsService.createQuotation(payload);
       showToast(
-        isSubmitMode
-          ? 'Quotation submitted successfully!'
-          : 'Quotation draft saved successfully!'
+        isSubmitMode ? 'Quotation submitted successfully!' : 'Quotation draft saved successfully!'
       );
       setTimeout(() => {
         navigate('/dashboard');
@@ -183,7 +181,10 @@ export default function VendorQuotation() {
       <RFQSummaryCard rfq={rfq} />
 
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleFormSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <form
+          onSubmit={methods.handleSubmit(handleFormSubmit)}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+        >
           {/* Main Form Fields */}
           <div className="lg:col-span-2 space-y-6 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
             {/* Items table */}

@@ -39,7 +39,9 @@ const queryClient = new QueryClient({
 const SettingsPlaceholder = () => (
   <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm">
     <h2 className="text-xl font-bold text-[#111827] mb-2">System Settings</h2>
-    <p className="text-slate-500 text-sm">Configure authentication, notifications, and profile details.</p>
+    <p className="text-slate-500 text-sm">
+      Configure authentication, notifications, and profile details.
+    </p>
   </div>
 );
 
@@ -51,11 +53,9 @@ const Unauthorized = () => (
       <div className="mx-auto w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600">
         <ShieldAlert size={28} />
       </div>
-      
+
       <div className="space-y-2">
-        <h1 className="text-xl font-black text-[#111827] tracking-tight">
-          Access Denied
-        </h1>
+        <h1 className="text-xl font-black text-[#111827] tracking-tight">Access Denied</h1>
         <p className="text-sm text-slate-500 font-medium">
           You do not have permission to access this page.
         </p>
@@ -147,7 +147,9 @@ export default function App() {
               </Route>
 
               {/* Procurement Officer, Vendor, Manager */}
-              <Route element={<RoleRoute allowedRoles={['procurement_officer', 'vendor', 'manager']} />}>
+              <Route
+                element={<RoleRoute allowedRoles={['procurement_officer', 'vendor', 'manager']} />}
+              >
                 <Route path="/purchase-orders" element={<PurchaseOrdersPage />} />
                 <Route path="/purchase-orders/:poId" element={<PurchaseOrderDetailPage />} />
                 <Route path="/invoices" element={<InvoicesPage />} />

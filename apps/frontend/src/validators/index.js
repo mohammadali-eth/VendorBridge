@@ -15,15 +15,17 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
-export const registerStep1Schema = z.object({
-  name: z.string().trim().min(2, 'Name must be at least 2 characters'),
-  email: z.string().trim().min(1, 'Email is required').email('Invalid email address'),
-  password: strongPasswordSchema,
-  confirmPassword: z.string().min(1, 'Confirm password is required'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+export const registerStep1Schema = z
+  .object({
+    name: z.string().trim().min(2, 'Name must be at least 2 characters'),
+    email: z.string().trim().min(1, 'Email is required').email('Invalid email address'),
+    password: strongPasswordSchema,
+    confirmPassword: z.string().min(1, 'Confirm password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 export const registerStep2Schema = z.object({
   companyName: z.string().trim().min(2, 'Company name is required'),
@@ -49,13 +51,15 @@ export const forgotPasswordSchema = z.object({
   email: z.string().trim().min(1, 'Email is required').email('Invalid email address'),
 });
 
-export const resetPasswordSchema = z.object({
-  password: strongPasswordSchema,
-  confirmPassword: z.string().min(1, 'Confirm password is required'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+export const resetPasswordSchema = z
+  .object({
+    password: strongPasswordSchema,
+    confirmPassword: z.string().min(1, 'Confirm password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 export const vendorProfileSchema = z.object({
   name: z.string().min(2, 'Vendor name is required'),

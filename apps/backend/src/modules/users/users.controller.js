@@ -16,7 +16,7 @@ export async function getUsers(req, res, next) {
         email: true,
         role: true,
         status: true,
-      }
+      },
     });
 
     res.status(200).json({
@@ -65,7 +65,7 @@ export async function createUser(req, res, next) {
         email: true,
         role: true,
         status: true,
-      }
+      },
     });
 
     res.status(201).json({
@@ -104,7 +104,7 @@ export async function toggleUserStatus(req, res, next) {
         email: true,
         role: true,
         status: true,
-      }
+      },
     });
 
     res.status(200).json({

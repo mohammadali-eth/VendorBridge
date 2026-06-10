@@ -135,7 +135,9 @@ export default function InvoicesPage() {
                 {filtered.map((inv) => (
                   <tr key={inv.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="py-4 px-6 font-black text-slate-900">{inv.invoiceNumber}</td>
-                    <td className="py-4 px-6 text-slate-500 font-bold">{inv.purchaseOrder?.poNumber}</td>
+                    <td className="py-4 px-6 text-slate-500 font-bold">
+                      {inv.purchaseOrder?.poNumber}
+                    </td>
                     <td className="py-4 px-6">{inv.vendor?.name}</td>
                     <td className="py-4 px-6 font-black text-slate-900">
                       ₹{parseFloat(inv.totalAmount.toString())?.toLocaleString('en-IN')}

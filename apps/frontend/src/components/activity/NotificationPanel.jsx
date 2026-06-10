@@ -52,9 +52,14 @@ export default function NotificationPanel({
           </div>
         ) : (
           notifications.map((n) => (
-            <div key={n.id} className={`p-4 space-y-2 transition-colors ${n.read ? 'bg-white' : 'bg-purple-50/20'}`}>
+            <div
+              key={n.id}
+              className={`p-4 space-y-2 transition-colors ${n.read ? 'bg-white' : 'bg-purple-50/20'}`}
+            >
               <div className="flex justify-between items-start gap-2">
-                <h4 className={`text-[11px] leading-tight ${n.read ? 'text-slate-700 font-semibold' : 'text-slate-900 font-black'}`}>
+                <h4
+                  className={`text-[11px] leading-tight ${n.read ? 'text-slate-700 font-semibold' : 'text-slate-900 font-black'}`}
+                >
                   {n.title}
                 </h4>
                 <div className="flex items-center gap-1 shrink-0">

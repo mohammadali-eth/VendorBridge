@@ -47,11 +47,9 @@ export default function ForgotPassword() {
             <CheckCircle2 className="h-6 w-6 text-[#16A34A]" />
           </div>
         </div>
-        
+
         <div className="space-y-2">
-          <h1 className="text-xl font-bold text-[#111827]">
-            Check your email
-          </h1>
+          <h1 className="text-xl font-bold text-[#111827]">Check your email</h1>
           <p className="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
             Check your email for reset instructions. We have sent a secure link to your inbox.
           </p>
@@ -89,9 +87,7 @@ export default function ForgotPassword() {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">
-          Reset Password
-        </h1>
+        <h1 className="text-2xl font-bold tracking-tight text-[#111827]">Reset Password</h1>
         <p className="text-sm text-slate-500 mt-1 max-w-xs mx-auto">
           Enter your email and we will send you instructions to reset your password.
         </p>
@@ -105,7 +101,10 @@ export default function ForgotPassword() {
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="email" className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">
+          <label
+            htmlFor="email"
+            className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
+          >
             Email Address
           </label>
           <div className="relative">

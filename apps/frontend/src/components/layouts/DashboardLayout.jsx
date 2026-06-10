@@ -17,7 +17,7 @@ import {
   History,
   BarChart3,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import NotificationPanel from '../activity/NotificationPanel';
@@ -142,21 +142,23 @@ export default function DashboardLayout() {
   return (
     <div className="flex h-screen bg-[#F9FAFB] text-[#111827] overflow-hidden">
       {/* Sidebar */}
-      <aside className={`bg-[#1e141c] text-slate-300 border-r border-[#E5E7EB] flex flex-col transition-all duration-300 ${
-        isSidebarCollapsed ? 'w-20' : 'w-64'
-      }`}>
-        <div className={`h-16 flex items-center justify-between px-4 border-b border-white/5 ${
-          isSidebarCollapsed ? 'justify-center' : ''
-        }`}>
+      <aside
+        className={`bg-[#1e141c] text-slate-300 border-r border-[#E5E7EB] flex flex-col transition-all duration-300 ${
+          isSidebarCollapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        <div
+          className={`h-16 flex items-center justify-between px-4 border-b border-white/5 ${
+            isSidebarCollapsed ? 'justify-center' : ''
+          }`}
+        >
           {!isSidebarCollapsed && (
             <div className="flex items-center gap-2 pl-2">
               <Shield className="h-6 w-6 text-[#A87D9F] shrink-0" />
               <span className="font-bold text-lg tracking-wider text-white">VendorBridge</span>
             </div>
           )}
-          {isSidebarCollapsed && (
-            <Shield className="h-6 w-6 text-[#A87D9F] shrink-0" />
-          )}
+          {isSidebarCollapsed && <Shield className="h-6 w-6 text-[#A87D9F] shrink-0" />}
           <button
             onClick={toggleSidebar}
             title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
@@ -170,10 +172,11 @@ export default function DashboardLayout() {
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
-            
-            const isActive = item.path === '/dashboard' 
-              ? location.pathname === '/dashboard' || location.pathname.endsWith('/dashboard')
-              : location.pathname.startsWith(item.path);
+
+            const isActive =
+              item.path === '/dashboard'
+                ? location.pathname === '/dashboard' || location.pathname.endsWith('/dashboard')
+                : location.pathname.startsWith(item.path);
 
             return (
               <Link
@@ -269,10 +272,7 @@ export default function DashboardLayout() {
 
               {dropdownOpen && (
                 <>
-                  <div
-                    className="fixed inset-0 z-30"
-                    onClick={() => setDropdownOpen(false)}
-                  />
+                  <div className="fixed inset-0 z-30" onClick={() => setDropdownOpen(false)} />
                   <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-xl border border-[#E5E7EB] bg-white p-1 shadow-lg ring-1 ring-black/5 focus:outline-none z-40">
                     <button
                       onClick={() => {
@@ -300,9 +300,14 @@ export default function DashboardLayout() {
             {/* REMOVE BEFORE PRODUCTION RELEASE */}
             <div className="flex items-center gap-3 border border-dashed border-[#A87D9F] bg-[#fdfafc] rounded-xl px-3 py-1.5 shrink-0 select-none">
               <div className="flex flex-col text-left">
-                <span className="text-[9px] font-black text-[#714B67] tracking-wider uppercase">TEST MODE</span>
+                <span className="text-[9px] font-black text-[#714B67] tracking-wider uppercase">
+                  TEST MODE
+                </span>
                 <span className="text-[10px] text-slate-500 font-semibold leading-tight mt-0.5">
-                  Current Role: <span className="font-bold text-[#714B67]">{ROLE_DISPLAY_NAMES[activeRoleKey] || activeRoleKey}</span>
+                  Current Role:{' '}
+                  <span className="font-bold text-[#714B67]">
+                    {ROLE_DISPLAY_NAMES[activeRoleKey] || activeRoleKey}
+                  </span>
                 </span>
               </div>
               <select

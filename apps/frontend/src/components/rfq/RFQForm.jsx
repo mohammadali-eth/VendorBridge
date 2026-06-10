@@ -18,15 +18,15 @@ export default function RFQForm() {
       <div className="space-y-4">
         {/* RFQ's title */}
         <div>
-          <label className="text-xs font-bold text-slate-700 block mb-1">
-            RFQ&apos;s title*
-          </label>
+          <label className="text-xs font-bold text-slate-700 block mb-1">RFQ&apos;s title*</label>
           <input
             type="text"
             {...register('title')}
             placeholder="Office Furniture procurement Q2"
             className={`w-full bg-slate-50 border ${
-              errors.title ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-200 focus:ring-[#714B67]'
+              errors.title
+                ? 'border-rose-300 focus:ring-rose-500'
+                : 'border-slate-200 focus:ring-[#714B67]'
             } rounded-xl py-2 px-3 text-xs focus:outline-none focus:ring-2`}
           />
           {errors.title && (
@@ -36,9 +36,7 @@ export default function RFQForm() {
 
         {/* Category */}
         <div>
-          <label className="text-xs font-bold text-slate-700 block mb-1">
-            Category
-          </label>
+          <label className="text-xs font-bold text-slate-700 block mb-1">Category</label>
           <div className="relative">
             <select
               {...register('category')}
@@ -54,33 +52,35 @@ export default function RFQForm() {
             </select>
           </div>
           {errors.category && (
-            <p className="text-rose-600 text-[10px] mt-1 font-semibold">{errors.category.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-semibold">
+              {errors.category.message}
+            </p>
           )}
         </div>
 
         {/* Deadline */}
         <div>
-          <label className="text-xs font-bold text-slate-700 block mb-1">
-            Deadline*
-          </label>
+          <label className="text-xs font-bold text-slate-700 block mb-1">Deadline*</label>
           <input
             type="date"
             min={todayStr}
             {...register('deadline')}
             className={`w-full bg-slate-50 border ${
-              errors.deadline ? 'border-rose-300 focus:ring-rose-500' : 'border-slate-200 focus:ring-[#714B67]'
+              errors.deadline
+                ? 'border-rose-300 focus:ring-rose-500'
+                : 'border-slate-200 focus:ring-[#714B67]'
             } rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2`}
           />
           {errors.deadline && (
-            <p className="text-rose-600 text-[10px] mt-1 font-semibold">{errors.deadline.message}</p>
+            <p className="text-rose-600 text-[10px] mt-1 font-semibold">
+              {errors.deadline.message}
+            </p>
           )}
         </div>
 
         {/* Description */}
         <div>
-          <label className="text-xs font-bold text-slate-700 block mb-1">
-            Description
-          </label>
+          <label className="text-xs font-bold text-slate-700 block mb-1">Description</label>
           <textarea
             {...register('description')}
             rows={4}

@@ -9,13 +9,13 @@ export async function getSummary(req, res, next) {
     // 1. Total Spend (Sum of accepted POs or approved quotation select)
     const poTotals = await prisma.purchaseOrder.aggregate({
       _sum: { totalAmount: true },
-      where: { NOT: { status: 'CANCELLED' } }
+      where: { NOT: { status: 'CANCELLED' } },
     });
     const totalSpend = parseFloat(poTotals._sum.totalAmount?.toString() || '0');
 
     // 2. Active Vendors
     const activeVendors = await prisma.vendor.count({
-      where: { status: 'APPROVED' }
+      where: { status: 'APPROVED' },
     });
 
     // 3. Purchase Orders Count
@@ -24,16 +24,17 @@ export async function getSummary(req, res, next) {
     // 4. Invoices and completion rates
     const totalInvoices = await prisma.invoice.count();
     const paidInvoices = await prisma.invoice.count({ where: { status: 'PAID' } });
-    const invoiceCompletionRate = totalInvoices > 0 ? Math.round((paidInvoices / totalInvoices) * 100) : 0;
+    const invoiceCompletionRate =
+      totalInvoices > 0 ? Math.round((paidInvoices / totalInvoices) * 100) : 0;
 
     // 5. Pending approvals (vendor selection level 1-4 pending)
     const pendingApprovals = await prisma.vendorSelection.count({
-      where: { status: 'PENDING' }
+      where: { status: 'PENDING' },
     });
 
     // 6. Overdue invoices
     const overdueInvoices = await prisma.invoice.count({
-      where: { status: 'OVERDUE' }
+      where: { status: 'OVERDUE' },
     });
 
     res.status(200).json({
@@ -45,7 +46,7 @@ export async function getSummary(req, res, next) {
         invoiceCompletionRate,
         pendingApprovals,
         overdueInvoices,
-      }
+      },
     });
   } catch (error) {
     next(error);
@@ -63,11 +64,11 @@ export async function getSpendAnalysis(req, res, next) {
         quotation: {
           include: {
             rfq: {
-              select: { category: true }
-            }
-          }
-        }
-      }
+              select: { category: true },
+            },
+          },
+        },
+      },
     });
 
     const categorySpend = {};
@@ -80,10 +81,10 @@ export async function getSpendAnalysis(req, res, next) {
       grandTotal += amount;
     }
 
-    const categories = Object.keys(categorySpend).map(name => ({
+    const categories = Object.keys(categorySpend).map((name) => ({
       name,
       amount: categorySpend[name],
-      percentage: grandTotal > 0 ? Math.round((categorySpend[name] / grandTotal) * 100) : 0
+      percentage: grandTotal > 0 ? Math.round((categorySpend[name] / grandTotal) * 100) : 0,
     }));
 
     res.status(200).json({
@@ -102,8 +103,8 @@ export async function getVendorPerformance(req, res, next) {
   try {
     const vendors = await prisma.vendor.findMany({
       include: {
-        pos: true
-      }
+        pos: true,
+      },
     });
 
     const performance = vendors.map((v) => {
@@ -111,10 +112,13 @@ export async function getVendorPerformance(req, res, next) {
       const charSum = v.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
       const rating = parseFloat((3.5 + (charSum % 16) / 10).toFixed(1));
 
-      const actualSpend = v.pos.reduce((acc, curr) => acc + parseFloat(curr.totalAmount.toString()), 0);
+      const actualSpend = v.pos.reduce(
+        (acc, curr) => acc + parseFloat(curr.totalAmount.toString()),
+        0
+      );
       const posCount = v.pos.length;
-      
-      const deliveredCount = v.pos.filter(po => po.status === 'DELIVERED').length;
+
+      const deliveredCount = v.pos.filter((po) => po.status === 'DELIVERED').length;
       const deliveryRate = posCount > 0 ? Math.round((deliveredCount / posCount) * 100) : 100;
 
       return {
@@ -154,7 +158,7 @@ export async function getProcurementTrends(req, res, next) {
         num: d.getMonth(),
         spend: 0,
         orders: 0,
-        invoices: 0
+        invoices: 0,
       });
     }
 
@@ -167,22 +171,22 @@ export async function getProcurementTrends(req, res, next) {
     const pos = await prisma.purchaseOrder.findMany({
       where: {
         createdAt: { gte: startOfPeriod },
-        NOT: { status: 'CANCELLED' }
+        NOT: { status: 'CANCELLED' },
       },
       select: {
         totalAmount: true,
-        createdAt: true
-      }
+        createdAt: true,
+      },
     });
 
     // Get Invoices in this period
     const invoices = await prisma.invoice.findMany({
       where: {
-        createdAt: { gte: startOfPeriod }
+        createdAt: { gte: startOfPeriod },
       },
       select: {
-        createdAt: true
-      }
+        createdAt: true,
+      },
     });
 
     for (const po of pos) {
@@ -190,7 +194,7 @@ export async function getProcurementTrends(req, res, next) {
       const poMonth = poDate.getMonth();
       const poYear = poDate.getFullYear();
 
-      const monthObj = months.find(m => m.num === poMonth && m.year === poYear);
+      const monthObj = months.find((m) => m.num === poMonth && m.year === poYear);
       if (monthObj) {
         monthObj.spend += parseFloat(po.totalAmount.toString());
         monthObj.orders += 1;
@@ -202,17 +206,17 @@ export async function getProcurementTrends(req, res, next) {
       const invMonth = invDate.getMonth();
       const invYear = invDate.getFullYear();
 
-      const monthObj = months.find(m => m.num === invMonth && m.year === invYear);
+      const monthObj = months.find((m) => m.num === invMonth && m.year === invYear);
       if (monthObj) {
         monthObj.invoices += 1;
       }
     }
 
-    const trends = months.map(m => ({
+    const trends = months.map((m) => ({
       month: m.month,
       spend: m.spend,
       orders: m.orders,
-      invoices: m.invoices
+      invoices: m.invoices,
     }));
 
     res.status(200).json({
@@ -242,7 +246,7 @@ export async function getPoAnalytics(req, res, next) {
         approved: approved + delivered,
         rejected: cancelled,
         draft,
-      }
+      },
     });
   } catch (error) {
     next(error);
@@ -267,7 +271,7 @@ export async function getInvoiceAnalytics(req, res, next) {
         pending,
         overdue,
         successRate: total > 0 ? Math.round((paid / total) * 100) : 0,
-      }
+      },
     });
   } catch (error) {
     next(error);
@@ -290,7 +294,7 @@ export async function generateReport(req, res, next) {
         status: 'COMPLETED',
         url: `/exports/${name.toLowerCase().replace(/\s+/g, '-')}.${format.toLowerCase()}`,
         filters: JSON.stringify(filters),
-      }
+      },
     });
 
     res.status(201).json({
@@ -327,7 +331,7 @@ export async function getReport(req, res, next) {
   try {
     const { id } = req.params;
     const report = await prisma.report.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!report) {
@@ -350,7 +354,7 @@ export async function deleteReport(req, res, next) {
   try {
     const { id } = req.params;
     await prisma.report.delete({
-      where: { id }
+      where: { id },
     });
 
     res.status(200).json({
@@ -369,7 +373,7 @@ export async function downloadReport(req, res, next) {
   try {
     const { id } = req.params;
     const report = await prisma.report.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!report) {
@@ -381,7 +385,7 @@ export async function downloadReport(req, res, next) {
       data: {
         url: report.url,
         message: 'Downloading report payload...',
-      }
+      },
     });
   } catch (error) {
     next(error);

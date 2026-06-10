@@ -33,9 +33,7 @@ export function usePermissions() {
     };
 
     // Find if the route starts with any protected prefix
-    const matchedPrefix = Object.keys(routePermissions).find(prefix => 
-      route.startsWith(prefix)
-    );
+    const matchedPrefix = Object.keys(routePermissions).find((prefix) => route.startsWith(prefix));
 
     if (!matchedPrefix) return true; // Public or default access
     return routePermissions[matchedPrefix].includes(role);

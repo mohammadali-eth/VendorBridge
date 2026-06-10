@@ -105,7 +105,9 @@ export default function AttachmentUploader() {
     <div className="space-y-4 text-left">
       <div>
         <h4 className="text-sm font-bold text-slate-800">RFQ Attachments</h4>
-        <p className="text-xs text-slate-500 mt-0.5">Upload specifications sheets, designs, or standard terms (Max 10MB per file).</p>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Upload specifications sheets, designs, or standard terms (Max 10MB per file).
+        </p>
       </div>
 
       {/* Drag & Drop Area */}
@@ -163,7 +165,10 @@ export default function AttachmentUploader() {
       {attachments.length > 0 && (
         <div className="border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-100">
           {attachments.map((file, index) => (
-            <div key={index} className="p-3 bg-white flex items-center justify-between hover:bg-slate-50/50">
+            <div
+              key={index}
+              className="p-3 bg-white flex items-center justify-between hover:bg-slate-50/50"
+            >
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="p-2 rounded-lg bg-slate-100 text-slate-500">
                   <File className="h-4 w-4" />

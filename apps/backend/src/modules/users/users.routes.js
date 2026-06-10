@@ -8,9 +8,7 @@ const router = Router();
 router.use(protect);
 router.use(restrictTo('ADMIN'));
 
-router.route('/')
-  .get(getUsers)
-  .post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
 router.patch('/:id/toggle-status', toggleUserStatus);
 router.delete('/:id', deleteUser);

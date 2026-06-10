@@ -7,6 +7,7 @@ This document details the backend architectural design patterns, database schema
 ## 1. System Overview
 
 VendorBridge is built using a modern monorepo architecture:
+
 - **Frontend**: Single Page Application (SPA) powered by React, Vite, CSS variables, and Zustand for state management.
 - **Backend**: RESTful API built on Node.js and Express, adhering to an enterprise-grade modular architecture.
 - **Database**: PostgreSQL handled via Prisma ORM for type-safe queries and automated schema migrations.
@@ -45,6 +46,7 @@ sequenceDiagram
 ```
 
 ### 2.2 JWT Verification Middleware
+
 All protected routes verify the `Authorization: Bearer <Access_Token>` header. If expired, the frontend automatically issues a `/auth/refresh-token` handshake to acquire a new short-lived access token silently.
 
 ---
@@ -53,12 +55,12 @@ All protected routes verify the `Authorization: Bearer <Access_Token>` header. I
 
 Strict permissions are configured on both the frontend dashboard routing/components and backend endpoint guards.
 
-| Role | Description | Allowed Operations | REST Scope Constraints |
-| :--- | :--- | :--- | :--- |
-| **Admin** | System Administrator | Manage users, register vendors, inspect system-wide audit logs and analytics. | System-wide scope. |
-| **Procurement Manager** | Procurement Lead | Approve/reject vendor selections, create and edit RFQs, generate POs and Invoices. | Approval workflows & PO authorization. |
-| **Buyer** | Procurement Officer | Create RFQs, review quotations, submit vendor selections for approval. | Operational level RFQ & Bidding. |
-| **Supplier** | Registered Vendor | View assigned RFQs, submit/revise bids, check POs, generate invoices. | Scoped strictly to their `vendorId`. |
+| Role                    | Description          | Allowed Operations                                                                 | REST Scope Constraints                 |
+| :---------------------- | :------------------- | :--------------------------------------------------------------------------------- | :------------------------------------- |
+| **Admin**               | System Administrator | Manage users, register vendors, inspect system-wide audit logs and analytics.      | System-wide scope.                     |
+| **Procurement Manager** | Procurement Lead     | Approve/reject vendor selections, create and edit RFQs, generate POs and Invoices. | Approval workflows & PO authorization. |
+| **Buyer**               | Procurement Officer  | Create RFQs, review quotations, submit vendor selections for approval.             | Operational level RFQ & Bidding.       |
+| **Supplier**            | Registered Vendor    | View assigned RFQs, submit/revise bids, check POs, generate invoices.              | Scoped strictly to their `vendorId`.   |
 
 ---
 

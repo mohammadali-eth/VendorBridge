@@ -132,13 +132,15 @@ export default function ApprovalWorkflowPage() {
     <div className="space-y-8 text-left pb-16">
       {/* Toast Alert */}
       {toast && (
-        <div className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
-          toast.type === 'error'
-            ? 'bg-rose-600 border-rose-500'
-            : toast.type === 'warning'
-            ? 'bg-amber-600 border-amber-500'
-            : 'bg-emerald-600 border-emerald-500'
-        }`}>
+        <div
+          className={`fixed bottom-5 right-5 z-[9999] flex items-center gap-2 py-3 px-5 rounded-2xl shadow-xl text-xs font-bold border transition-all text-white ${
+            toast.type === 'error'
+              ? 'bg-rose-600 border-rose-500'
+              : toast.type === 'warning'
+                ? 'bg-amber-600 border-amber-500'
+                : 'bg-emerald-600 border-emerald-500'
+          }`}
+        >
           <CheckCircle2 size={16} />
           <span>{toast.message}</span>
         </div>
@@ -157,8 +159,8 @@ export default function ApprovalWorkflowPage() {
             <h2 className="text-2xl font-black text-[#111827] tracking-tight">Approval Workflow</h2>
           </div>
           <p className="mt-1 text-sm text-slate-500 font-medium ml-6">
-            RFQ: <strong className="text-slate-700">{approvalData.rfqTitle}</strong> &middot; Vendor:{' '}
-            <strong className="text-slate-700">{approvalData.vendorName}</strong>
+            RFQ: <strong className="text-slate-700">{approvalData.rfqTitle}</strong> &middot;
+            Vendor: <strong className="text-slate-700">{approvalData.vendorName}</strong>
           </p>
         </div>
       </div>
@@ -171,9 +173,9 @@ export default function ApprovalWorkflowPage() {
         {/* Left Column: Chain and Remarks */}
         <div className="lg:col-span-2 space-y-6">
           <ApprovalSummaryCard data={approvalData} />
-          
+
           <ApprovalChain history={approvalData.history} currentLevel={approvalData.currentLevel} />
-          
+
           {canTakeAction ? (
             <ApprovalRemarks
               remarks={remarks}
